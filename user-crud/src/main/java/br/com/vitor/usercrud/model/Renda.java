@@ -12,12 +12,12 @@ public class Renda extends Receita{
     @OneToOne
     private Conta conta;
 
-    public Renda(Double valor, String descricao, LocalDateTime data, Boolean fixo, Categoria categoria, Conta conta) {
-        super(valor, descricao, data, fixo, categoria);
+    public Renda(Double valor, String descricao, Boolean fixo, Categoria categoria, Conta conta) {
+        super(valor, descricao, fixo, categoria);
         this.conta = conta;
     }
 
-    public Renda() {
+    public Renda(Renda renda) {
     }
 
     public Long getId() {

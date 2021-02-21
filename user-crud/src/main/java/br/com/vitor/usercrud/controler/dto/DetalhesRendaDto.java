@@ -1,24 +1,45 @@
-package br.com.vitor.usercrud.model;
+package br.com.vitor.usercrud.controler.dto;
+
+import br.com.vitor.usercrud.model.Categoria;
+import br.com.vitor.usercrud.model.Conta;
+import br.com.vitor.usercrud.model.Renda;
 
 import java.time.LocalDateTime;
 
-public abstract class Receita {
+public class DetalhesRendaDto {
 
+    private Long id;
+    private Conta conta;
     private Double valor;
     private String descricao;
     private LocalDateTime data;
     private Boolean fixo;
     private Categoria categoria;
 
-    public Receita(Double valor, String descricao, Boolean fixo, Categoria categoria) {
-        this.valor = valor;
-        this.descricao = descricao;
-        this.data = LocalDateTime.now();
-        this.fixo = fixo;
-        this.categoria = categoria;
+    public DetalhesRendaDto(Renda renda) {
+        this.id = renda.getId();
+        this.conta = renda.getConta();
+        this.valor = renda.getValor();
+        this.descricao = renda.getDescricao();
+        this.data = renda.getData();
+        this.fixo = renda.getFixo();
+        this.categoria = renda.getCategoria();
     }
 
-    public Receita() {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Conta getConta() {
+        return conta;
+    }
+
+    public void setConta(Conta conta) {
+        this.conta = conta;
     }
 
     public Double getValor() {
