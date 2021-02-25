@@ -5,7 +5,7 @@ import br.com.vitor.usercrud.model.Usuario;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UsuarioDto {
+public class UsuarioDto implements CommonDto{
 
     private Long id;
     private String email;
