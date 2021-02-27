@@ -1,14 +1,9 @@
 package br.com.vitor.usercrud.controler;
 
 import br.com.vitor.usercrud.controler.dto.DetalhesRendaDto;
-import br.com.vitor.usercrud.controler.dto.DetalhesUsuarioDto;
 import br.com.vitor.usercrud.controler.dto.RendaDto;
-import br.com.vitor.usercrud.controler.dto.UsuarioDto;
 import br.com.vitor.usercrud.controler.form.RendaForm;
-import br.com.vitor.usercrud.controler.form.UsuarioForm;
-import br.com.vitor.usercrud.model.Receita;
 import br.com.vitor.usercrud.model.Renda;
-import br.com.vitor.usercrud.model.Usuario;
 import br.com.vitor.usercrud.repository.RendaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +31,7 @@ public class RendaControler {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<Receita> cadastrar(@RequestBody @Valid RendaForm form, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<Renda> cadastrar(@RequestBody @Valid RendaForm form, UriComponentsBuilder uriBuilder) {
         Renda renda = form.converter();
         rendaRepository.save(renda);
 

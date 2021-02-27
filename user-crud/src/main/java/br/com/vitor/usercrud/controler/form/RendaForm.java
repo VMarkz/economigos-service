@@ -29,6 +29,9 @@ public class RendaForm implements CommonForm{
     @NotEmpty
     @NotNull
     private Categoria categoria;
+    @NotEmpty
+    @NotNull
+    private LocalDateTime dataRecebimento;
 
     public Conta getConta() {
         return conta;
@@ -71,7 +74,7 @@ public class RendaForm implements CommonForm{
     }
 
     public Renda converter() {
-        return new Renda(this.valor, this.descricao, this.fixo, this.categoria, this.conta);
+        return new Renda(this.conta, this.valor, this.descricao, this.dataRecebimento, this.fixo, this.categoria);
     }
 
     public Renda atualizar(Long id, RendaRepository rendaRepository) {

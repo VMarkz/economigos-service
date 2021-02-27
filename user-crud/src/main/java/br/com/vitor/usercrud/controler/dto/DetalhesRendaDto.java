@@ -23,7 +23,7 @@ public class DetalhesRendaDto {
         this.descricao = renda.getDescricao();
         this.data = renda.getData();
         this.fixo = renda.getFixo();
-        this.categoria = renda.getCategoria();
+        //this.categoria = renda.getCategoria();
     }
 
     public Long getId() {
