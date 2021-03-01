@@ -8,13 +8,13 @@ public class DetalhesUsuarioDto {
 
     private Long id;
     private String email;
-    private String nome;
+    private String usuario;
     private LocalDateTime dataCriacao;
 
     public DetalhesUsuarioDto(Usuario usuario) {
         this.id = usuario.getId();
         this.email = usuario.getEmail();
-        this.nome = usuario.getNome();
+        this.usuario = usuario.getUsuario();
         this.dataCriacao = usuario.getDataCriacao();
     }
 
@@ -34,12 +34,10 @@ public class DetalhesUsuarioDto {
         this.email = email;
     }
 
-    public String getNome() {
-        return nome;
-    }
+    public String getUsuario() { return usuario; }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
     public LocalDateTime getDataCriacao() {
