@@ -1,18 +1,22 @@
 package br.com.vitor.usercrud.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public abstract class Contabil {
+@DiscriminatorColumn(name = "tipo", length = 1, discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorValue("P")
+public abstract class Contabil{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(insertable=false, updatable=false)
+    private String tipo;
     private Double valor;
     private String descricao;
-    private LocalDateTime data;
+    private LocalDateTime dataPagamento;
     private Boolean fixo;
     @ManyToOne
     private Categoria categoria;
@@ -20,7 +24,7 @@ public abstract class Contabil {
     public Contabil(Double valor, String descricao, Boolean fixo, Categoria categoria) {
         this.valor = valor;
         this.descricao = descricao;
-        this.data = LocalDateTime.now();
+        this.dataPagamento = LocalDateTime.now();
         this.fixo = fixo;
         this.categoria = categoria;
     }
@@ -44,12 +48,12 @@ public abstract class Contabil {
         this.descricao = descricao;
     }
 
-    public LocalDateTime getData() {
-        return data;
+    public LocalDateTime getDataPagamento() {
+        return dataPagamento;
     }
 
-    public void setData(LocalDateTime data) {
-        this.data = data;
+    public void setDataPagamento(LocalDateTime dataPagamento) {
+        this.dataPagamento = dataPagamento;
     }
 
     public Boolean getFixo() {

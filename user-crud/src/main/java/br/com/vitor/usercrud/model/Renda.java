@@ -4,12 +4,13 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@DiscriminatorValue(value = "R")
 public class Renda extends Contabil{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
+    @ManyToOne
     private Conta conta;
 
     public Renda(Double valor, String descricao, Boolean fixo, Categoria categoria, Conta conta) {

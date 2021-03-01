@@ -21,9 +21,9 @@ public class DetalhesRendaDto {
         this.conta = renda.getConta();
         this.valor = renda.getValor();
         this.descricao = renda.getDescricao();
-        this.data = renda.getData();
+        this.data = renda.getDataPagamento();
         this.fixo = renda.getFixo();
-        //this.categoria = renda.getCategoria();
+        this.categoria = renda.getCategoria();
     }
 
     public Long getId() {
