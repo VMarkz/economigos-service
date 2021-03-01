@@ -13,7 +13,7 @@ public class UsuarioForm {
     @NotNull @NotEmpty
     private String email;
     @NotNull @NotEmpty @Size(min = 5)
-    private String nome;
+    private String usuario;
     @NotNull @Size(min = 8)
     private String senha;
 
@@ -25,12 +25,12 @@ public class UsuarioForm {
         this.email = email;
     }
 
-    public String getNome() {
-        return nome;
+    public String getUsuario() {
+        return usuario;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
     public String getSenha() {
@@ -42,13 +42,13 @@ public class UsuarioForm {
     }
 
     public Usuario converter(){
-        return new Usuario(this.email, this.nome, this.senha);
+        return new Usuario(this.email, this.usuario, this.senha);
     }
 
     public Usuario atualizar(Long id, UsuarioRepository usuarioRepository){
         Usuario usuario = usuarioRepository.getOne(id);
 
-        usuario.setNome(this.nome);
+        usuario.setUsuario(this.usuario);
         usuario.setEmail(this.email);
         usuario.setSenha(this.senha);
 

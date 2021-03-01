@@ -9,12 +9,12 @@ public class UsuarioDto implements CommonDto{
 
     private Long id;
     private String email;
-    private String nome;
+    private String usuario;
 
     public UsuarioDto(Usuario usuario) {
         this.id = usuario.getId();
         this.email = usuario.getEmail();
-        this.nome = usuario.getNome();
+        this.usuario = usuario.getUsuario();
     }
 
     public Long getId() {
@@ -33,12 +33,12 @@ public class UsuarioDto implements CommonDto{
         this.email = email;
     }
 
-    public String getNome() {
-        return nome;
+    public String getUsuario() {
+        return usuario;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
     public static List<UsuarioDto> converter(List<Usuario> usuarios) {

@@ -12,16 +12,16 @@ public class Usuario {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String email;
-    private String nome;
+    private String usuario;
     private String senha;
     private LocalDateTime dataCriacao = LocalDateTime.now();
 
     public Usuario() {
     }
 
-    public Usuario(String email, String nome, String senha) {
+    public Usuario(String email, String usuario, String senha) {
         this.email = email;
-        this.nome = nome;
+        this.usuario = usuario;
         this.senha = senha;
     }
 
@@ -41,12 +41,12 @@ public class Usuario {
         this.email = email;
     }
 
-    public String getNome() {
-        return nome;
+    public String getUsuario() {
+        return usuario;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
     public String getSenha() {
