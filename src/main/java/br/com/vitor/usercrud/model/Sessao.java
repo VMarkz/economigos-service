@@ -1,10 +1,8 @@
-package br.com.vitor.usercrud.controler;
+package br.com.vitor.usercrud.model;
 
 import br.com.vitor.usercrud.controler.dto.UsuarioDto;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Sessao {
 

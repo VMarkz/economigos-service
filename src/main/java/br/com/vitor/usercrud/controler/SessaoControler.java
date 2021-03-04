@@ -2,6 +2,7 @@ package br.com.vitor.usercrud.controler;
 
 import br.com.vitor.usercrud.controler.dto.UsuarioDto;
 import br.com.vitor.usercrud.controler.form.UsuarioForm;
+import br.com.vitor.usercrud.model.Sessao;
 import br.com.vitor.usercrud.model.Usuario;
 import br.com.vitor.usercrud.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @RestController

@@ -3,9 +3,7 @@ package br.com.vitor.usercrud.controler.form;
 import br.com.vitor.usercrud.model.Categoria;
 import br.com.vitor.usercrud.model.Conta;
 import br.com.vitor.usercrud.model.Gasto;
-import br.com.vitor.usercrud.model.Renda;
 import br.com.vitor.usercrud.repository.GastoRepository;
-import br.com.vitor.usercrud.repository.RendaRepository;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -31,6 +29,54 @@ public class GastoForm implements CommonForm{
     @NotEmpty
     @NotNull
     private LocalDateTime dataPagamento;
+
+    public Conta getConta() {
+        return conta;
+    }
+
+    public void setConta(Conta conta) {
+        this.conta = conta;
+    }
+
+    public Double getValor() {
+        return valor;
+    }
+
+    public void setValor(Double valor) {
+        this.valor = valor;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public Boolean getFixo() {
+        return fixo;
+    }
+
+    public void setFixo(Boolean fixo) {
+        this.fixo = fixo;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public LocalDateTime getDataPagamento() {
+        return dataPagamento;
+    }
+
+    public void setDataPagamento(LocalDateTime dataPagamento) {
+        this.dataPagamento = dataPagamento;
+    }
 
     @Override
     public Gasto converter() {

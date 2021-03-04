@@ -1,9 +1,7 @@
 package br.com.vitor.usercrud.controler.form;
 
 import br.com.vitor.usercrud.model.Meta;
-import br.com.vitor.usercrud.model.Renda;
 import br.com.vitor.usercrud.repository.MetaRepository;
-import br.com.vitor.usercrud.repository.RendaRepository;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -18,14 +16,6 @@ public class MetaForm implements CommonForm{
     private Double valorInicial;
     @NotNull @NotEmpty
     private Double valorFinal;
-
-    public MetaForm(String nome, String descricao, Boolean metaGasto, Double valorInicial, Double valorFinal) {
-        this.nome = nome;
-        this.descricao = descricao;
-        this.metaGasto = metaGasto;
-        this.valorInicial = valorInicial;
-        this.valorFinal = valorFinal;
-    }
 
     public String getNome() {
         return nome;

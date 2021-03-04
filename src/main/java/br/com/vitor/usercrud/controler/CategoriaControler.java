@@ -1,13 +1,8 @@
 package br.com.vitor.usercrud.controler;
 
-import br.com.vitor.usercrud.controler.dto.DetalhesUsuarioDto;
-import br.com.vitor.usercrud.controler.dto.UsuarioDto;
 import br.com.vitor.usercrud.controler.form.CategoriaForm;
-import br.com.vitor.usercrud.controler.form.UsuarioForm;
 import br.com.vitor.usercrud.model.Categoria;
-import br.com.vitor.usercrud.model.Usuario;
 import br.com.vitor.usercrud.repository.CategoriaRepository;
-import br.com.vitor.usercrud.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

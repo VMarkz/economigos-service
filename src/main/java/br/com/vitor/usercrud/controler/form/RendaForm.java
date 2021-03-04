@@ -3,10 +3,7 @@ package br.com.vitor.usercrud.controler.form;
 import br.com.vitor.usercrud.model.Categoria;
 import br.com.vitor.usercrud.model.Conta;
 import br.com.vitor.usercrud.model.Renda;
-import br.com.vitor.usercrud.model.Usuario;
 import br.com.vitor.usercrud.repository.RendaRepository;
-import br.com.vitor.usercrud.repository.UsuarioRepository;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

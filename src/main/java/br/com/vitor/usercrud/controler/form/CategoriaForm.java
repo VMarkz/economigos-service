@@ -1,9 +1,7 @@
 package br.com.vitor.usercrud.controler.form;
 
 import br.com.vitor.usercrud.model.Categoria;
-import br.com.vitor.usercrud.model.Usuario;
 import br.com.vitor.usercrud.repository.CategoriaRepository;
-import br.com.vitor.usercrud.repository.UsuarioRepository;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -12,10 +10,6 @@ public class CategoriaForm implements CommonForm{
 
     @NotNull @NotEmpty
     private String categoria;
-
-    public CategoriaForm(@NotNull @NotEmpty String categoria) {
-        this.categoria = categoria;
-    }
 
     public CategoriaForm() {
     }

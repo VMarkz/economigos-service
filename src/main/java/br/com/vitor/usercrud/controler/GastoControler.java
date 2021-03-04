@@ -1,13 +1,9 @@
 package br.com.vitor.usercrud.controler;
 
 import br.com.vitor.usercrud.controler.dto.DetalhesGastoDto;
-import br.com.vitor.usercrud.controler.dto.DetalhesRendaDto;
 import br.com.vitor.usercrud.controler.dto.GastoDto;
-import br.com.vitor.usercrud.controler.dto.RendaDto;
 import br.com.vitor.usercrud.controler.form.GastoForm;
-import br.com.vitor.usercrud.controler.form.RendaForm;
 import br.com.vitor.usercrud.model.Gasto;
-import br.com.vitor.usercrud.model.Renda;
 import br.com.vitor.usercrud.repository.GastoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

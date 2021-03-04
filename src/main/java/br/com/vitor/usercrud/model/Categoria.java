@@ -1,7 +1,6 @@
 package br.com.vitor.usercrud.model;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class Categoria {

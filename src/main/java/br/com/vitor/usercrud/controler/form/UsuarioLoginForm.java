@@ -1,6 +1,5 @@
 package br.com.vitor.usercrud.controler.form;
 
-import br.com.vitor.usercrud.model.Usuario;
 import com.sun.istack.NotNull;
 
 import javax.validation.constraints.NotEmpty;

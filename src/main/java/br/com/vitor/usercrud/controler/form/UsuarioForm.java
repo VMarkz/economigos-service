@@ -1,6 +1,5 @@
 package br.com.vitor.usercrud.controler.form;
 
-import br.com.vitor.usercrud.controler.dto.UsuarioDto;
 import br.com.vitor.usercrud.model.Usuario;
 import br.com.vitor.usercrud.repository.UsuarioRepository;
 import com.sun.istack.NotNull;

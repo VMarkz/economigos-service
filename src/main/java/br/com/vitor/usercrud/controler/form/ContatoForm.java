@@ -12,11 +12,6 @@ public class ContatoForm implements CommonForm{
     @NotNull @NotEmpty
     private String mensagem;
 
-    public ContatoForm(@NotNull @NotEmpty String email, @NotNull @NotEmpty String mensagem) {
-        this.email = email;
-        this.mensagem = mensagem;
-    }
-
     public String getEmail() {
         return email;
     }
