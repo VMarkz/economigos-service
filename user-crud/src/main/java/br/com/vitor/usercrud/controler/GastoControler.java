@@ -25,7 +25,7 @@ import java.util.Optional;
 public class GastoControler {
 
     @Autowired
-    GastoRepository gastoRepository;
+    private GastoRepository gastoRepository;
 
     @GetMapping
     public List<Gasto> listar(){

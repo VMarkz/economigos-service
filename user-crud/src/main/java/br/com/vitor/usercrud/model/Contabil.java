@@ -20,7 +20,7 @@ public abstract class Contabil {
     private String descricao;
     private LocalDateTime dataPagamento;
     private Boolean fixo;
-    @ManyToOne
+    @OneToOne
     private Categoria categoria;
 
     public Contabil(Double valor, String descricao, Boolean fixo, Categoria categoria) {

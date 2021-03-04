@@ -1,6 +1,7 @@
 package br.com.vitor.usercrud.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,6 +16,8 @@ public class Conta {
     private String apelido;
     @OneToMany
     private List<Renda> rendas;
+    @OneToMany
+    private List<Gasto> gastos;
 
     public Conta(){
     }
@@ -25,6 +28,8 @@ public class Conta {
         this.numeroConta = numeroConta;
         this.descricao = descricao;
         this.apelido = apelido;
+        rendas = new ArrayList<>();
+        gastos = new ArrayList<>();
     }
 
     public Long getId() {
@@ -65,5 +70,13 @@ public class Conta {
 
     public void setApelido(String apelido) {
         this.apelido = apelido;
+    }
+
+    public void adcionarGasto(Gasto gasto){
+        gastos.add(gasto);
+    }
+
+    public void adcionarRenda(Renda renda){
+        rendas.add(renda);
     }
 }
