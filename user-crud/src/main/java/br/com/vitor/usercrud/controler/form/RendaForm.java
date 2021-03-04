@@ -31,7 +31,7 @@ public class RendaForm implements CommonForm{
     private Categoria categoria;
     @NotEmpty
     @NotNull
-    private LocalDateTime dataRecebimento;
+    private LocalDateTime dataPagamento;
 
     public Conta getConta() {
         return conta;
@@ -85,6 +85,7 @@ public class RendaForm implements CommonForm{
         renda.setDescricao(this.descricao);
         renda.setFixo(this.fixo);
         renda.setValor(this.valor);
+        renda.setDataPagamento(this.dataPagamento);
 
         return renda;
     }

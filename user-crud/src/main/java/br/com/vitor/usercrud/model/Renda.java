@@ -10,12 +10,9 @@ public class Renda extends Contabil{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
-    private Conta conta;
 
     public Renda(Double valor, String descricao, Boolean fixo, Categoria categoria, Conta conta) {
         super(valor, descricao, fixo, categoria);
-        this.conta = conta;
     }
 
     public Renda() {
@@ -27,13 +24,5 @@ public class Renda extends Contabil{
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Conta getConta() {
-        return conta;
-    }
-
-    public void setConta(Conta conta) {
-        this.conta = conta;
     }
 }
