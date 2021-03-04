@@ -64,8 +64,8 @@ public class RendaControler {
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<?> deletar(@PathVariable Long id){
-        Optional<Renda> usuario = rendaRepository.findById(id);
-        if(usuario.isPresent()){
+        Optional<Renda> renda = rendaRepository.findById(id);
+        if(renda.isPresent()){
             rendaRepository.deleteById(id);
             return ResponseEntity.ok().build();
         }else{
