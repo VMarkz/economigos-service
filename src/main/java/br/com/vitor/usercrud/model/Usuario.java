@@ -1,10 +1,9 @@
 package br.com.vitor.usercrud.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Usuario {
@@ -14,6 +13,10 @@ public class Usuario {
     private String email;
     private String usuario;
     private String senha;
+    @OneToMany
+    private List<Conta> contas;
+    @OneToMany
+    private List<Meta> metas;
     private LocalDateTime dataCriacao = LocalDateTime.now();
 
     public Usuario() {
@@ -23,6 +26,8 @@ public class Usuario {
         this.email = email;
         this.usuario = usuario;
         this.senha = senha;
+        contas = new ArrayList<>();
+        metas = new ArrayList<>();
     }
 
     public Long getId() {
@@ -55,6 +60,22 @@ public class Usuario {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public List<Conta> getContas() {
+        return contas;
+    }
+
+    public void setContas(List<Conta> contas) {
+        this.contas = contas;
+    }
+
+    public List<Meta> getMetas() {
+        return metas;
+    }
+
+    public void setMetas(List<Meta> metas) {
+        this.metas = metas;
     }
 
     public LocalDateTime getDataCriacao() {

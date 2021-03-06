@@ -2,6 +2,7 @@ package br.com.vitor.usercrud.controler.form;
 
 import br.com.vitor.usercrud.model.Categoria;
 import br.com.vitor.usercrud.repository.CategoriaRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

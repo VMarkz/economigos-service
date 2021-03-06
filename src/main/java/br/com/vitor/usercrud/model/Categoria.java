@@ -9,15 +9,9 @@ public class Categoria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String categoria;
-//    @OneToMany
-//    private List<Gasto> gastos;
-//    @OneToMany
-//    private List<Renda> rendas;
 
     public Categoria(String categoria) {
         this.categoria = categoria;
-//        this.gastos = gastos;
-//        this.rendas = rendas;
     }
 
     public Categoria() {

@@ -57,16 +57,6 @@ public class Sessao {
         this.status = status;
     }
 
-    @Override
-    public String toString() {
-        return "{" +
-                "usuario=" + usuario +
-                ", inicioSessao=" + inicioSessao +
-                ", encerramentoSessao=" + encerramentoSessao +
-                ", status=" + status +
-                '}';
-    }
-
     public void logout() {
         this.status = false;
         this.encerramentoSessao = LocalDateTime.now();
