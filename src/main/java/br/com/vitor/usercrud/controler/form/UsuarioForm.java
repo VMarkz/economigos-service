@@ -7,7 +7,7 @@ import com.sun.istack.NotNull;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-public class UsuarioForm {
+public class UsuarioForm implements CommonForm{
 
     @NotNull @NotEmpty
     private String email;
@@ -40,6 +40,7 @@ public class UsuarioForm {
         this.senha = senha;
     }
 
+    @Override
     public Usuario converter(){
         return new Usuario(this.email, this.usuario, this.senha);
     }
