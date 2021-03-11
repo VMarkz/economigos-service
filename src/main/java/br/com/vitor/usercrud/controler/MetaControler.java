@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/metas")
+@RequestMapping("/economigos/metas")
 public class MetaControler {
 
     @Autowired
