@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/rendas")
+@RequestMapping("/economigos/rendas")
 public class RendaControler {
 
     @Autowired

@@ -16,7 +16,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/sessao")
+@RequestMapping("/economigos/sessao")
 public class SessaoControler {
 
     private Sessao sessao;

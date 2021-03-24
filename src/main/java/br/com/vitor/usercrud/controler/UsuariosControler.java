@@ -5,7 +5,12 @@ import br.com.vitor.usercrud.controler.dto.UsuarioDto;
 import br.com.vitor.usercrud.controler.form.UsuarioForm;
 import br.com.vitor.usercrud.model.Usuario;
 import br.com.vitor.usercrud.repository.UsuarioRepository;
+import br.com.vitor.usercrud.utils.FileIo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import javax.transaction.Transactional;
@@ -13,12 +18,17 @@ import javax.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
+import org.apache.commons.io.IOUtils;
 
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping("/economigos/usuarios")
 public class UsuariosControler {
 
     @Autowired
