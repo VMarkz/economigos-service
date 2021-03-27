@@ -11,17 +11,17 @@ public abstract class Contabil {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    protected Long id;
     @Column(insertable = false, updatable = false)
-    private String tipo;
+    protected String tipo;
     @ManyToOne
-    private Conta conta;
-    private Double valor;
-    private String descricao;
-    private LocalDateTime dataPagamento;
-    private Boolean fixo;
+    protected Conta conta;
+    protected Double valor;
+    protected String descricao;
+    protected LocalDateTime dataPagamento;
+    protected Boolean fixo;
     @OneToOne
-    private Categoria categoria;
+    protected Categoria categoria;
 
     public Contabil(Double valor, String descricao, Boolean fixo, Categoria categoria) {
         this.valor = valor;
