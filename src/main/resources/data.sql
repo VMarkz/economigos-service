@@ -1,8 +1,10 @@
 INSERT INTO USUARIO(usuario, data_criacao, email, senha) VALUES('vitor_marques', '2021-03-01', 'vitormarques@email.com', 'senha@123');
-INSERT INTO CATEGORIA(categoria) VALUES ('Alimento'),('Eletrônicos'),('Casa'),('Locomoção'),('Salário'), ('Entretenimento');
+INSERT INTO CATEGORIA(categoria) VALUES ('Alimento'),('Eletrônicos'),('Casa'),('Locomoção'),('Salário'), ('Entretenimento'), ('Investimento');
 INSERT INTO CONTA(apelido, banco, descricao, numero_conta) VALUES ('C6BANK', 'C6BANK', 'Contra Corrente', '1587389-032');
 INSERT INTO CONTABIL(tipo, data_pagamento, descricao, fixo, valor, categoria_id, conta_id) VALUES ('R', '2021-03-01', 'Meu salário', true, 2000.00, 5, 1);
 INSERT INTO CONTABIL(tipo, data_pagamento, descricao, fixo, valor, categoria_id, conta_id) VALUES ('G', '2021-05-01', 'Netflix', true, 32.90, 6, 1);
+INSERT INTO CONTABIL(tipo, data_pagamento, descricao, fixo, valor, categoria_id, conta_id) VALUES ('R', '2021-03-01', 'Meu investimento', false, 2000.00, 7, 1);
+INSERT INTO CONTABIL(tipo, data_pagamento, descricao, fixo, valor, categoria_id, conta_id) VALUES ('G', '2021-05-01', 'Spotify', true, 17.90, 6, 1);
 INSERT INTO CONTATO(email, mensagem) VALUES ('usuario@email.com', 'Gostei muito do app de vocês!');
 INSERT INTO META(descricao, meta_gasto, nome, valor_inicial, valor_final) VALUES ('Viagem final de ano', true, 'Viagem', 0.00, 4000.00);
 INSERT INTO USUARIO_CONTAS(usuario_id, contas_id) VALUES (1,1);
