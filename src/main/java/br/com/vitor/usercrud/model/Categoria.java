@@ -29,7 +29,7 @@ public class Categoria {
         return categoria;
     }
 
-    public void setCategoria(String categoria) {
+    public void setCategoria(String categoria)  {
         this.categoria = categoria;
     }
 

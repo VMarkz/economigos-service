@@ -61,6 +61,29 @@ public class GastoControler {
         }
     }
 
+    @PutMapping("/pagar/{id}")
+    @Transactional
+    public Optional<ResponseEntity<Object>> pagar(@PathVariable Long id){
+        Optional<Gasto> optional = gastoRepository.findById(id);
+        return optional.map(record ->{
+                record.setPago(true);
+                return ResponseEntity.ok().build();
+            });
+
+    }
+
+    @PutMapping("/cancelar-pagamento/{id}")
+    @Transactional
+    public Optional<ResponseEntity<Object>> cancelarPagamento(@PathVariable Long id){
+        Optional<Gasto> optional = gastoRepository.findById(id);
+        return optional.map(record ->{
+            record.setPago(false);
+            return ResponseEntity.ok().build();
+        });
+
+    }
+
+
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<?> deletar(@PathVariable Long id){
