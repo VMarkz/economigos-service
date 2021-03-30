@@ -1,4 +1,4 @@
-INSERT INTO USUARIO(usuario, data_criacao, email, senha) VALUES('vitor_marques', '2021-03-01', 'vitormarques@email.com', 'senha@123');
+INSERT INTO USUARIO(data_criacao, email, senha) VALUES('2021-03-01', 'vitormarques@email.com', 'senha@123');
 INSERT INTO CATEGORIA(categoria) VALUES ('Alimento'),('Eletrônicos'),('Casa'),('Locomoção'),('Salário'), ('Entretenimento'), ('Investimento');
 INSERT INTO CONTA(apelido, banco, descricao, numero_conta) VALUES ('C6BANK', 'C6BANK', 'Contra Corrente', '1587389-032');
 INSERT INTO CONTABIL(tipo, data_pagamento, descricao, fixo, valor, categoria_id, conta_id) VALUES ('R', '2021-03-01', 'Meu salário', true, 2000.00, 5, 1);

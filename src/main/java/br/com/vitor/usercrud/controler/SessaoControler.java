@@ -2,19 +2,18 @@ package br.com.vitor.usercrud.controler;
 
 import br.com.vitor.usercrud.controler.dto.UsuarioDto;
 import br.com.vitor.usercrud.controler.form.UsuarioForm;
+import br.com.vitor.usercrud.controler.form.UsuarioLoginForm;
 import br.com.vitor.usercrud.model.Sessao;
 import br.com.vitor.usercrud.model.Usuario;
 import br.com.vitor.usercrud.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/economigos/sessao")
 public class SessaoControler {
@@ -27,7 +26,7 @@ public class SessaoControler {
 /////CRIAR ENDPOINT PARA RETORNAR TODOS OS LOGADOS ATRUALMENTE
 
     @GetMapping("/login")
-    public ResponseEntity<?> logar(@RequestBody @Valid UsuarioForm form){
+    public ResponseEntity<?> logar(@RequestBody @Valid UsuarioLoginForm form){
         usuarios = usuarioRepository.findByLogin(form.getEmail(), form.getSenha());
 
         if(!usuarios.isEmpty()){

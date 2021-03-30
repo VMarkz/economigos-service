@@ -11,7 +11,6 @@ public class Usuario {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String email;
-    private String usuario;
     private String senha;
     @OneToMany
     private List<Conta> contas;
@@ -22,9 +21,8 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(String email, String usuario, String senha) {
+    public Usuario(String email, String senha) {
         this.email = email;
-        this.usuario = usuario;
         this.senha = senha;
         contas = new ArrayList<>();
         metas = new ArrayList<>();
@@ -44,14 +42,6 @@ public class Usuario {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
     }
 
     public String getSenha() {

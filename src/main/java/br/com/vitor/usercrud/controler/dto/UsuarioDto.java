@@ -9,12 +9,10 @@ public class UsuarioDto implements CommonDto{
 
     private Long id;
     private String email;
-    private String usuario;
 
     public UsuarioDto(Usuario usuario) {
         this.id = usuario.getId();
         this.email = usuario.getEmail();
-        this.usuario = usuario.getUsuario();
     }
 
     public Long getId() {
@@ -31,14 +29,6 @@ public class UsuarioDto implements CommonDto{
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
     }
 
     public static List<UsuarioDto> converter(List<Usuario> usuarios) {

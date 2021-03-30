@@ -11,8 +11,6 @@ public class UsuarioForm implements CommonForm{
 
     @NotNull @NotEmpty
     private String email;
-    @NotNull @NotEmpty @Size(min = 5)
-    private String usuario;
     @NotNull @Size(min = 8)
     private String senha;
 
@@ -22,14 +20,6 @@ public class UsuarioForm implements CommonForm{
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
     }
 
     public String getSenha() {
@@ -42,13 +32,12 @@ public class UsuarioForm implements CommonForm{
 
     @Override
     public Usuario converter(){
-        return new Usuario(this.email, this.usuario, this.senha);
+        return new Usuario(this.email, this.senha);
     }
 
     public Usuario atualizar(Long id, UsuarioRepository usuarioRepository){
         Usuario usuario = usuarioRepository.getOne(id);
 
-        usuario.setUsuario(this.usuario);
         usuario.setEmail(this.email);
         usuario.setSenha(this.senha);
 

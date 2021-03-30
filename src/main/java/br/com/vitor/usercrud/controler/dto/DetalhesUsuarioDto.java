@@ -8,13 +8,11 @@ public class DetalhesUsuarioDto {
 
     private Long id;
     private String email;
-    private String usuario;
     private LocalDateTime dataCriacao;
 
     public DetalhesUsuarioDto(Usuario usuario) {
         this.id = usuario.getId();
         this.email = usuario.getEmail();
-        this.usuario = usuario.getUsuario();
         this.dataCriacao = usuario.getDataCriacao();
     }
 
@@ -32,12 +30,6 @@ public class DetalhesUsuarioDto {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getUsuario() { return usuario; }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
     }
 
     public LocalDateTime getDataCriacao() {
