@@ -9,8 +9,8 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.vitor</groupId>
-	<artifactId>user-crud</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>economigos-service</artifactId>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>user-crud</name>
 	<description>Economigos</description>
 	<properties>

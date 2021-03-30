@@ -54,19 +54,16 @@ public class FileIo {
 
     public static void tratarGastosRendas(List<List> rendasConteudo, List<List> gastosConteudo){
 
-        String cvsCorpo = "";
+        String csvCorpo = "";
 
         for (int i = 0; i < rendasConteudo.size() | i < gastosConteudo.size(); i++) {
 
-            System.out.println(rendasConteudo.get(i));
-            System.out.println(gastosConteudo.get(i));
-
-            cvsCorpo = cvsCorpo + rendasConteudo.get(i).toString().replace('[',' ').replace(']',';') + ";";
-            cvsCorpo = cvsCorpo + gastosConteudo.get(i).toString().replace('[',' ').replace(']',';') + "\n";
+            csvCorpo = csvCorpo + rendasConteudo.get(i).toString().replace('[',' ').replace(']',';') + ";";
+            csvCorpo = csvCorpo + gastosConteudo.get(i).toString().replace('[',' ').replace(']',';') + "\n";
 
         }
 
-        writeFile(cvsCorpo);
+        writeFile(csvCorpo);
     }
 
 
