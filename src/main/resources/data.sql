@@ -13,3 +13,7 @@ INSERT INTO CONTA_GASTOS(conta_id, gastos_id) VALUES (1,2);
 INSERT INTO CONTA_RENDAS(conta_id, rendas_id) VALUES (1,1);
 INSERT INTO CONTA_GASTOS(conta_id, gastos_id) VALUES (1,4);
 INSERT INTO CONTA_RENDAS(conta_id, rendas_id) VALUES (1,3);
+INSERT INTO CATEGORIA_RENDAS(categoria_id, rendas_id) VALUES (5,1);
+INSERT INTO CATEGORIA_GASTOS(categoria_id, gastos_id) VALUES (6,2);
+INSERT INTO CATEGORIA_RENDAS(categoria_id, rendas_id) VALUES (7,3);
+INSERT INTO CATEGORIA_GASTOS(categoria_id, gastos_id) VALUES (6,4);

@@ -1,5 +1,7 @@
 package br.com.vitor.usercrud.controler;
 
+import br.com.vitor.usercrud.controler.dto.CategoriaDto;
+import br.com.vitor.usercrud.controler.dto.DetalhesCategoriaDto;
 import br.com.vitor.usercrud.controler.form.CategoriaForm;
 import br.com.vitor.usercrud.model.Categoria;
 import br.com.vitor.usercrud.repository.CategoriaRepository;
@@ -22,9 +24,9 @@ public class CategoriaControler {
     private CategoriaRepository categoriaRepository;
 
     @GetMapping
-    public List<Categoria> listar(){
+    public List<CategoriaDto> listar(){
         List<Categoria> categorias = categoriaRepository.findAll();
-        return categorias;
+        return CategoriaDto.converter(categorias);
     }
 
     @PostMapping
@@ -38,10 +40,10 @@ public class CategoriaControler {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Categoria> detalhar(@PathVariable Long id){
-        Optional<Categoria> optional = categoriaRepository.findById(id);
-        if(optional.isPresent()){
-            return ResponseEntity.ok().body(optional.get());
+    public ResponseEntity<DetalhesCategoriaDto> detalhar(@PathVariable Long id){
+        Optional<Categoria> categoria = categoriaRepository.findById(id);
+        if(categoria.isPresent()){
+            return ResponseEntity.ok().body(new DetalhesCategoriaDto(categoria.get()));
         }else{
             return ResponseEntity.notFound().build();
         }
