@@ -41,4 +41,5 @@ jobs:
       run: docker build . --file Dockerfile --tag vitormarkz/economigos:$(date +%s)
 
     - name: Set selected color
-        run: ls
+        run: | 
+          ls
