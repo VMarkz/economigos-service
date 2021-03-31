@@ -14,7 +14,7 @@ public class Gasto extends Contabil{
 
     public Gasto(Double valor, String descricao, LocalDateTime data, Boolean fixo, Categoria categoria) {
         super(valor, descricao, fixo, categoria);
-        this.pago = Boolean.FALSE;
+        this.pago = false;
     }
 
     public Gasto(){

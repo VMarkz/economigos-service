@@ -1,6 +1,7 @@
 package br.com.vitor.usercrud.controler;
 
 import br.com.vitor.usercrud.controler.dto.ContaDto;
+import br.com.vitor.usercrud.controler.dto.DetalhesContaDto;
 import br.com.vitor.usercrud.controler.dto.DetalhesUsuarioDto;
 import br.com.vitor.usercrud.controler.dto.UsuarioDto;
 import br.com.vitor.usercrud.controler.form.ContaForm;
@@ -43,10 +44,10 @@ public class ContaControler {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ContaDto> detalhar(@PathVariable Long id){
+    public ResponseEntity<DetalhesContaDto> detalhar(@PathVariable Long id){
         Optional<Conta> conta = contaRepository.findById(id);
         if(conta.isPresent()){
-            return ResponseEntity.ok().body(new ContaDto(conta.get()));
+            return ResponseEntity.ok().body(new DetalhesContaDto(conta.get()));
         }else{
             return ResponseEntity.notFound().build();
         }

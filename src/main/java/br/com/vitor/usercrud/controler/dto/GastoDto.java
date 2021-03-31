@@ -14,6 +14,7 @@ public class GastoDto implements CommonDto{
     private String descricao;
 
     public GastoDto(Gasto gasto) {
+        this.id = gasto.getId();
         this.valor = gasto.getValor();
         this.pago = gasto.getPago();
         this.descricao = gasto.getDescricao();
