@@ -42,24 +42,29 @@ jobs:
           username: economigos
           password: grupo1adsa
 
-  docker:
+  docker-push:
     needs: jar-build
 
     runs-on: ubuntu-latest
+
     steps:
-      -
-        name: Login to DockerHub
-        uses: docker/login-action@v1 
-        with:
-          username: economigos
-          password: grupo1adsa
-      -
-        name: Build and push
-        id: docker_build
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          tags: economigos/economigos-app:latest
-      -
-        name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
+    - uses: actions/checkout@v2
+
+    - name: Download target
+      uses: actions/download-artifact@v2
+      with:
+        name: target-files
+        path: target
+
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag economigos/economigos-app:latest
+
+    - name: Login to GitHub Packages Docker Registry
+      uses: docker/login-action@v1
+      with:
+        registry: docker.pkg.github.com
+        username: economigos
+        password: grupo1adsa
+
+    - name: Build and push Docker image
+      run: docker push economigos/economigos-app:latest
