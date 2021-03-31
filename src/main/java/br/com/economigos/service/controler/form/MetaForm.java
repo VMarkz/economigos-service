@@ -1,7 +1,7 @@
-package br.com.vitor.usercrud.controler.form;
+package br.com.economigos.service.controler.form;
 
-import br.com.vitor.usercrud.model.Meta;
-import br.com.vitor.usercrud.repository.MetaRepository;
+import br.com.economigos.service.model.Meta;
+import br.com.economigos.service.repository.MetaRepository;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

@@ -1,16 +1,11 @@
-package br.com.vitor.usercrud.controler;
+package br.com.economigos.service.controler;
 
-import br.com.vitor.usercrud.controler.dto.DetalhesUsuarioDto;
-import br.com.vitor.usercrud.controler.dto.UsuarioDto;
-import br.com.vitor.usercrud.controler.form.UsuarioForm;
-import br.com.vitor.usercrud.model.Usuario;
-import br.com.vitor.usercrud.repository.UsuarioRepository;
-import br.com.vitor.usercrud.utils.FileIo;
+import br.com.economigos.service.controler.dto.DetalhesUsuarioDto;
+import br.com.economigos.service.controler.dto.UsuarioDto;
+import br.com.economigos.service.controler.form.UsuarioForm;
+import br.com.economigos.service.model.Usuario;
+import br.com.economigos.service.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import javax.transaction.Transactional;
@@ -18,14 +13,9 @@ import javax.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
-import org.apache.commons.io.IOUtils;
 
 @RestController
 @RequestMapping("/economigos/usuarios")

@@ -1,7 +1,7 @@
-package br.com.vitor.usercrud.controler.form;
+package br.com.economigos.service.controler.form;
 
-import br.com.vitor.usercrud.model.Usuario;
-import br.com.vitor.usercrud.repository.UsuarioRepository;
+import br.com.economigos.service.model.Usuario;
+import br.com.economigos.service.repository.UsuarioRepository;
 import com.sun.istack.NotNull;
 
 import javax.validation.constraints.NotEmpty;

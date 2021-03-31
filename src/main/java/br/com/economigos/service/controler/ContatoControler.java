@@ -1,8 +1,8 @@
-package br.com.vitor.usercrud.controler;
+package br.com.economigos.service.controler;
 
-import br.com.vitor.usercrud.controler.form.ContatoForm;
-import br.com.vitor.usercrud.model.Contato;
-import br.com.vitor.usercrud.repository.ContatoRepository;
+import br.com.economigos.service.controler.form.ContatoForm;
+import br.com.economigos.service.model.Contato;
+import br.com.economigos.service.repository.ContatoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

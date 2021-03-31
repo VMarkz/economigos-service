@@ -1,6 +1,6 @@
-package br.com.vitor.usercrud.repository;
+package br.com.economigos.service.repository;
 
-import br.com.vitor.usercrud.model.Usuario;
+import br.com.economigos.service.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

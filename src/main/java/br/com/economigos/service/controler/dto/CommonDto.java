@@ -1,4 +1,4 @@
-package br.com.vitor.usercrud.controler.dto;
+package br.com.economigos.service.controler.dto;
 
 import java.util.List;
 

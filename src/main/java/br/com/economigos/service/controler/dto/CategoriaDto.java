@@ -1,6 +1,6 @@
-package br.com.vitor.usercrud.controler.dto;
+package br.com.economigos.service.controler.dto;
 
-import br.com.vitor.usercrud.model.Categoria;
+import br.com.economigos.service.model.Categoria;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -1,8 +1,8 @@
-package br.com.vitor.usercrud.controler;
+package br.com.economigos.service.controler;
 
-import br.com.vitor.usercrud.controler.form.MetaForm;
-import br.com.vitor.usercrud.model.Meta;
-import br.com.vitor.usercrud.repository.MetaRepository;
+import br.com.economigos.service.controler.form.MetaForm;
+import br.com.economigos.service.model.Meta;
+import br.com.economigos.service.repository.MetaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,6 +1,6 @@
-package br.com.vitor.usercrud.controler.form;
+package br.com.economigos.service.controler.form;
 
-import br.com.vitor.usercrud.model.Contato;
+import br.com.economigos.service.model.Contato;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

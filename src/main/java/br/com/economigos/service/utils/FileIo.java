@@ -1,7 +1,7 @@
-package br.com.vitor.usercrud.utils;
+package br.com.economigos.service.utils;
 
-import br.com.vitor.usercrud.model.Gasto;
-import br.com.vitor.usercrud.model.Renda;
+import br.com.economigos.service.model.Gasto;
+import br.com.economigos.service.model.Renda;
 
 import java.io.File;
 import java.io.FileWriter;

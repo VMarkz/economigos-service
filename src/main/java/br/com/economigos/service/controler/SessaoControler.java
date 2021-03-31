@@ -1,11 +1,10 @@
-package br.com.vitor.usercrud.controler;
+package br.com.economigos.service.controler;
 
-import br.com.vitor.usercrud.controler.dto.UsuarioDto;
-import br.com.vitor.usercrud.controler.form.UsuarioForm;
-import br.com.vitor.usercrud.controler.form.UsuarioLoginForm;
-import br.com.vitor.usercrud.model.Sessao;
-import br.com.vitor.usercrud.model.Usuario;
-import br.com.vitor.usercrud.repository.UsuarioRepository;
+import br.com.economigos.service.controler.form.UsuarioLoginForm;
+import br.com.economigos.service.model.Sessao;
+import br.com.economigos.service.model.Usuario;
+import br.com.economigos.service.controler.dto.UsuarioDto;
+import br.com.economigos.service.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

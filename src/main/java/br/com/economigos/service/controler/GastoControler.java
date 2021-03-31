@@ -1,10 +1,10 @@
-package br.com.vitor.usercrud.controler;
+package br.com.economigos.service.controler;
 
-import br.com.vitor.usercrud.controler.dto.DetalhesGastoDto;
-import br.com.vitor.usercrud.controler.dto.GastoDto;
-import br.com.vitor.usercrud.controler.form.GastoForm;
-import br.com.vitor.usercrud.model.Gasto;
-import br.com.vitor.usercrud.repository.GastoRepository;
+import br.com.economigos.service.controler.dto.DetalhesGastoDto;
+import br.com.economigos.service.controler.dto.GastoDto;
+import br.com.economigos.service.controler.form.GastoForm;
+import br.com.economigos.service.model.Gasto;
+import br.com.economigos.service.repository.GastoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,11 +1,11 @@
-package br.com.vitor.usercrud.utils;
+package br.com.economigos.service.utils;
 
 import java.io.*;
 import java.util.Arrays;
 import java.util.List;
 
-import br.com.vitor.usercrud.model.Gasto;
-import br.com.vitor.usercrud.model.Renda;
+import br.com.economigos.service.model.Gasto;
+import br.com.economigos.service.model.Renda;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.QuoteMode;

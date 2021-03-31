@@ -1,4 +1,4 @@
-package br.com.vitor.usercrud.model;
+package br.com.economigos.service.model;
 
 import javax.persistence.*;
 

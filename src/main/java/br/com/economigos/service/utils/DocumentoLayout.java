@@ -1,4 +1,4 @@
-package br.com.vitor.usercrud.utils;
+package br.com.economigos.service.utils;
 
 import java.util.ArrayList;
 import java.util.List;

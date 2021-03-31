@@ -1,4 +1,4 @@
-package br.com.vitor.usercrud.controler.form;
+package br.com.economigos.service.controler.form;
 
 import com.sun.istack.NotNull;
 

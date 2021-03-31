@@ -1,9 +1,9 @@
-package br.com.vitor.usercrud.controler.form;
+package br.com.economigos.service.controler.form;
 
-import br.com.vitor.usercrud.model.Categoria;
-import br.com.vitor.usercrud.model.Conta;
-import br.com.vitor.usercrud.model.Renda;
-import br.com.vitor.usercrud.repository.RendaRepository;
+import br.com.economigos.service.model.Categoria;
+import br.com.economigos.service.model.Conta;
+import br.com.economigos.service.model.Renda;
+import br.com.economigos.service.repository.RendaRepository;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

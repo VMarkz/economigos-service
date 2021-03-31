@@ -1,10 +1,10 @@
-package br.com.vitor.usercrud.controler;
+package br.com.economigos.service.controler;
 
-import br.com.vitor.usercrud.controler.dto.DetalhesRendaDto;
-import br.com.vitor.usercrud.controler.dto.RendaDto;
-import br.com.vitor.usercrud.controler.form.RendaForm;
-import br.com.vitor.usercrud.model.Renda;
-import br.com.vitor.usercrud.repository.RendaRepository;
+import br.com.economigos.service.controler.dto.DetalhesRendaDto;
+import br.com.economigos.service.controler.dto.RendaDto;
+import br.com.economigos.service.controler.form.RendaForm;
+import br.com.economigos.service.model.Renda;
+import br.com.economigos.service.repository.RendaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

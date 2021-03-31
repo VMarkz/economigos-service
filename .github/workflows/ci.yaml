@@ -54,7 +54,4 @@ jobs:
 
     -
       name: Build
-      uses: docker/build-push-action@master
-      with:
-        context: .
-        file: ./Dockerfile
+      run: docker push economigos/economigos-app:latest

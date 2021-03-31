@@ -1,6 +1,6 @@
-package br.com.vitor.usercrud.model;
+package br.com.economigos.service.model;
 
-import br.com.vitor.usercrud.controler.dto.UsuarioDto;
+import br.com.economigos.service.controler.dto.UsuarioDto;
 
 import java.time.LocalDateTime;
 

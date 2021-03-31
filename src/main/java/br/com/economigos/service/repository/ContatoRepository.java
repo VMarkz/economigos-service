@@ -1,6 +1,6 @@
-package br.com.vitor.usercrud.repository;
+package br.com.economigos.service.repository;
 
-import br.com.vitor.usercrud.model.Contato;
+import br.com.economigos.service.model.Contato;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ContatoRepository extends JpaRepository<Contato, Long> {

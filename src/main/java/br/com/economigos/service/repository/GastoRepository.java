@@ -1,6 +1,6 @@
-package br.com.vitor.usercrud.repository;
+package br.com.economigos.service.repository;
 
-import br.com.vitor.usercrud.model.Gasto;
+import br.com.economigos.service.model.Gasto;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface GastoRepository extends JpaRepository<Gasto, Long> {
