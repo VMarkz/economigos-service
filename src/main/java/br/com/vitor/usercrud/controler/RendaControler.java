@@ -24,9 +24,9 @@ public class RendaControler {
     private RendaRepository rendaRepository;
 
     @GetMapping
-    public List<Renda> listar(){
+    public List<RendaDto> listar(){
         List<Renda> rendas = rendaRepository.findAll();
-        return rendas;
+        return RendaDto.converter(rendas);
     }
 
     @PostMapping
