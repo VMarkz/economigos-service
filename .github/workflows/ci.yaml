@@ -55,7 +55,7 @@ jobs:
     -
       name: Build
       uses: docker/build-push-action@master
-       with:
+      with:
         context: .
         file: ./Dockerfile
         tags: economigos/economigos-app:latest economigos/economigos-app:latest
