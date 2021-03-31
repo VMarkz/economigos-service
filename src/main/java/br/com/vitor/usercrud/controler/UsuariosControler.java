@@ -44,19 +44,22 @@ public class UsuariosControler {
     @Transactional
     public ResponseEntity<UsuarioDto> cadastrar(@RequestBody @Valid UsuarioForm form, UriComponentsBuilder uriBuilder) {
         Usuario usuario = form.converter();
-        usuarioRepository.save(usuario);
+        if (!form.verificarCadastro(form.getEmail(), usuarioRepository)){
+            usuarioRepository.save(usuario);
 
-        URI uri = uriBuilder.path("/usuarios/{id}").buildAndExpand(usuario.getId()).toUri();
-        return ResponseEntity.created(uri).body(new UsuarioDto(usuario));
+            URI uri = uriBuilder.path("/usuarios/{id}").buildAndExpand(usuario.getId()).toUri();
+            return ResponseEntity.created(uri).body(new UsuarioDto(usuario));
+        };
+        return ResponseEntity.badRequest().build();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DetalhesUsuarioDto> detalhar(@PathVariable Long id){
+    public ResponseEntity<?> detalhar(@PathVariable Long id){
         Optional<Usuario> usuario = usuarioRepository.findById(id);
         if(usuario.isPresent()){
             return ResponseEntity.ok().body(new DetalhesUsuarioDto(usuario.get()));
         }else{
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().body("Usuário já cadastrado.");
         }
     }
 

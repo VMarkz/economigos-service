@@ -44,4 +44,10 @@ public class UsuarioForm implements CommonForm{
         return usuario;
     }
 
+    public Boolean verificarCadastro(String email, UsuarioRepository usuarioRepository) {
+        if (usuarioRepository.findByEmail(email).size() > 0){
+            return true;
+        }
+        return false;
+    }
 }
