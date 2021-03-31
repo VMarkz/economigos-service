@@ -43,6 +43,8 @@ jobs:
           password: grupo1adsa
 
   docker:
+    needs: jar-build
+
     runs-on: ubuntu-latest
     steps:
       -
