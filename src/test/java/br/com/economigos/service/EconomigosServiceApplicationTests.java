@@ -1,4 +1,4 @@
-package br.com.vitor.usercrud;
+package br.com.economigos.service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

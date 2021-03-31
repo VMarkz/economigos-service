@@ -1,4 +1,4 @@
-package br.com.vitor.usercrud;
+package br.com.economigos.service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
