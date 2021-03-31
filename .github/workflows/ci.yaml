@@ -22,11 +22,11 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: Save target
-        uses: actions/upload-artifact@v2
-        with:
-          name: target-files
-          path: target/*
-          retention-days: 1
+      uses: actions/upload-artifact@v2
+      with:
+        name: target-files
+        path: target/*
+        retention-days: 1
   docker-login:
 
     runs-on: ubuntu-latest
