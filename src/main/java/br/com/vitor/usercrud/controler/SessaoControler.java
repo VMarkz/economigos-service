@@ -25,7 +25,7 @@ public class SessaoControler {
 
 /////CRIAR ENDPOINT PARA RETORNAR TODOS OS LOGADOS ATRUALMENTE
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<?> logar(@RequestBody @Valid UsuarioLoginForm form){
         usuarios = usuarioRepository.findByLogin(form.getEmail(), form.getSenha());
 

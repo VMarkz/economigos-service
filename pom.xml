@@ -8,10 +8,10 @@
 		<version>2.4.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>br.com.vitor</groupId>
+	<groupId>br.com.economigos</groupId>
 	<artifactId>economigos-service</artifactId>
 	<version>0.0.2-SNAPSHOT</version>
-	<name>user-crud</name>
+	<name>economigos-service</name>
 	<description>Economigos</description>
 	<properties>
 		<java.version>1.8</java.version>
