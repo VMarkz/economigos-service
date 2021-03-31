@@ -56,7 +56,7 @@ jobs:
     - name: Download target
       uses: actions/download-artifact@v2
       with:
-        name: combined-swagger-aws
+        name: target-files
         path: target
 
     - name: Listing directories
