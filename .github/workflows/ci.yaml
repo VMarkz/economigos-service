@@ -31,16 +31,6 @@ jobs:
         name: target-files
         path: target/*
         retention-days: 1
-  docker-login:
-
-    runs-on: ubuntu-latest
-    steps:
-      - name: Login to GitHub Packages Docker Registry
-        uses: docker/login-action@v1
-        with:
-          registry: docker.pkg.github.com
-          username: economigos
-          password: grupo1adsa
 
   docker-push:
     needs: jar-build
