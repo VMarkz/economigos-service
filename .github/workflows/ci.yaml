@@ -21,7 +21,7 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
-    - name: Listando diretórios
+    - name: Listing directories
       run: | 
         ls
 
@@ -49,8 +49,19 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Listando diretórios
+    - name: Listing directories
       run: | 
         ls
+
+    - name: Download target
+      uses: actions/download-artifact@v2
+      with:
+        name: combined-swagger-aws
+        path: target
+
+    - name: Listing directories
+      run: | 
+        ls
+
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag vitormarkz/economigos:$(date +%s)
