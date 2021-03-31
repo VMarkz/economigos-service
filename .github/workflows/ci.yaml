@@ -72,5 +72,9 @@ jobs:
         username: economigos
         password: grupo1adsa
 
-    - name: Push the Docker image
-      run: docker push economigos/economigos-app:latest
+    - name: Build and push
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        push: true
+        tags: economigos/economigos-app:latest
