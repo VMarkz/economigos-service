@@ -17,8 +17,16 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
+
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+
+    - name: Save target
+        uses: actions/upload-artifact@v2
+        with:
+          name: target-files
+          path: target/*
+          retention-days: 1
   docker-login:
 
     runs-on: ubuntu-latest
