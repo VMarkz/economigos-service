@@ -1,6 +1,7 @@
 package br.com.vitor.usercrud.controler;
 
 import br.com.vitor.usercrud.controler.dto.ContaDto;
+import br.com.vitor.usercrud.controler.dto.DetalhesUsuarioDto;
 import br.com.vitor.usercrud.controler.dto.UsuarioDto;
 import br.com.vitor.usercrud.controler.form.ContaForm;
 import br.com.vitor.usercrud.controler.form.UsuarioForm;
@@ -16,6 +17,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/economigos/contas")
@@ -38,6 +40,40 @@ public class ContaControler {
 
         URI uri = uriBuilder.path("economigos/contas/{id}").buildAndExpand(conta.getId()).toUri();
         return ResponseEntity.created(uri).body(new ContaDto(conta));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ContaDto> detalhar(@PathVariable Long id){
+        Optional<Conta> conta = contaRepository.findById(id);
+        if(conta.isPresent()){
+            return ResponseEntity.ok().body(new ContaDto(conta.get()));
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity<ContaDto> alterar(@PathVariable Long id, @RequestBody @Valid ContaForm form){
+        Optional<Conta> optional = contaRepository.findById(id);
+        if (optional.isPresent()) {
+            Conta usuario = form.atualizar(id, contaRepository);
+            return ResponseEntity.ok(new ContaDto(usuario));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity<?> deletar(@PathVariable Long id){
+        Optional<Conta> conta = contaRepository.findById(id);
+        if(conta.isPresent()){
+            contaRepository.deleteById(id);
+            return ResponseEntity.ok().build();
+        }else{
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }
