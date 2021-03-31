@@ -65,3 +65,6 @@ jobs:
 
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag economigos/economigos-app:$(date +%s)
+
+    - name: Push the Docker image
+      run: docker push economigos/economigos-app:$(date +%s)
