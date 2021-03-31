@@ -38,6 +38,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: 
-        - ls -l
-        - docker build . --file Dockerfile --tag vitormarkz/economigos:$(date +%s)
+      run: docker build . --file Dockerfile --tag vitormarkz/economigos:$(date +%s)
+    - name: Set selected color
+        run: ls -l
