@@ -40,8 +40,8 @@ jobs:
         uses: docker/login-action@v1
         with:
           registry: docker.pkg.github.com
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          username: economigos
+          password: grupo1adsa
   docker-push:
     needs: jar-build
 
@@ -64,4 +64,4 @@ jobs:
         ls
 
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag vitormarkz/economigos:$(date +%s)
+      run: docker build . --file Dockerfile --tag economigos/economigos-app:$(date +%s)
