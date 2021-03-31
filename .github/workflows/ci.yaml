@@ -21,10 +21,6 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
-    - name: Listing directories
-      run: | 
-        ls
-
     - name: Save target
       uses: actions/upload-artifact@v2
       with:
@@ -56,5 +52,10 @@ jobs:
         username: economigos
         password: grupo1adsa
 
-    - name: Build and push Docker image
-      run: docker push economigos/economigos-app:latest
+    -
+      name: Build
+      uses: docker/build-push-action@master
+       with:
+        context: .
+        file: ./Dockerfile
+        tags: economigos/economigos-app:latest economigos/economigos-app:latest
