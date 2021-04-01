@@ -5,6 +5,7 @@ INSERT INTO CONTABIL(tipo, data_pagamento, descricao, fixo, valor, categoria_id,
 INSERT INTO CONTABIL(tipo, data_pagamento, descricao, fixo, valor, pago, categoria_id, conta_id) VALUES ('G', '2021-05-01', 'Netflix', true, 32.90, false, 6, 1);
 INSERT INTO CONTABIL(tipo, data_pagamento, descricao, fixo, valor, categoria_id, conta_id) VALUES ('R', '2021-03-01', 'Meu investimento', false, 2000.00, 7, 1);
 INSERT INTO CONTABIL(tipo, data_pagamento, descricao, fixo, valor, pago, categoria_id, conta_id) VALUES ('G', '2021-05-01', 'Spotify', true, 17.90, false, 6, 1);
+INSERT INTO CONTABIL(tipo, data_pagamento, descricao, fixo, valor, pago, categoria_id, conta_id) VALUES ('G', '2021-05-01', 'Coxinha', true, 17.90, false, 1, 1);
 INSERT INTO CONTATO(email, mensagem) VALUES ('usuario@email.com', 'Gostei muito do app de vocês!');
 INSERT INTO META(descricao, meta_gasto, nome, valor_inicial, valor_final) VALUES ('Viagem final de ano', true, 'Viagem', 0.00, 4000.00);
 INSERT INTO USUARIO_CONTAS(usuario_id, contas_id) VALUES (1,1);
@@ -17,3 +18,4 @@ INSERT INTO CATEGORIA_RENDAS(categoria_id, rendas_id) VALUES (5,1);
 INSERT INTO CATEGORIA_GASTOS(categoria_id, gastos_id) VALUES (6,2);
 INSERT INTO CATEGORIA_RENDAS(categoria_id, rendas_id) VALUES (7,3);
 INSERT INTO CATEGORIA_GASTOS(categoria_id, gastos_id) VALUES (6,4);
+INSERT INTO CATEGORIA_GASTOS(categoria_id, gastos_id) VALUES (1,5);
