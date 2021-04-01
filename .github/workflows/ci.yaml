@@ -46,8 +46,8 @@ jobs:
     - name: Push to Docker Hub
       uses: docker/build-push-action@v1
       with:
-        username: economigos
-        password: grupo1adsa
+        username: alterarParaSecret
+        password: alterarParaSecret
         repository: economigos/economigos-app
         tag_with_ref: true
 
