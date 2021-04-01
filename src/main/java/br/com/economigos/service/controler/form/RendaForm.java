@@ -17,6 +17,8 @@ public class RendaForm implements CommonForm{
     @NotEmpty
     @NotNull
     private Double valor;
+    @NotEmpty @NotNull
+    private Boolean recebido;
     @NotEmpty
     @NotNull
     private String descricao;
@@ -71,7 +73,7 @@ public class RendaForm implements CommonForm{
     }
 
     public Renda converter() {
-        return new Renda(this.valor, this.descricao, this.fixo, this.categoria, this.conta);
+        return new Renda(this.valor, this.descricao, this.fixo, this.categoria, this.conta, this.recebido);
     }
 
     public Renda atualizar(Long id, RendaRepository rendaRepository) {
