@@ -59,7 +59,7 @@ public class CategoriaControler {
             }
         }
 
-        System.out.println(categoriaSomas);
+        System.out.println(categoriaSomas.get(0));
         return categoriaSomas.get(0);
     }
 
