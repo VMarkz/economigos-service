@@ -17,7 +17,6 @@ public class GastoForm implements CommonForm{
     @NotEmpty
     @NotNull
     private Double valor;
-    @NotEmpty
     @NotNull
     private Boolean pago;
     @NotEmpty
