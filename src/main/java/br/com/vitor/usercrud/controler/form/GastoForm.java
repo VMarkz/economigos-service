@@ -1,5 +1,6 @@
 package br.com.vitor.usercrud.controler.form;
 
+import br.com.vitor.usercrud.controler.dto.GastoDto;
 import br.com.vitor.usercrud.model.Categoria;
 import br.com.vitor.usercrud.model.Conta;
 import br.com.vitor.usercrud.model.Gasto;
@@ -8,6 +9,8 @@ import br.com.vitor.usercrud.repository.GastoRepository;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GastoForm implements CommonForm{
 
@@ -95,4 +98,5 @@ public class GastoForm implements CommonForm{
 
         return gasto;
     }
+
 }
