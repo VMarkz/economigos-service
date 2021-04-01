@@ -8,12 +8,14 @@ import java.util.stream.Collectors;
 public class GastoDto implements CommonDto{
 
     private Long id;
+    private String categoria;
     private Double valor;
     private Boolean pago;
     private String descricao;
 
     public GastoDto(Gasto gasto) {
         this.id = gasto.getId();
+        this.categoria = gasto.getCategoria().getCategoria();
         this.valor = gasto.getValor();
         this.pago = gasto.getPago();
         this.descricao = gasto.getDescricao();
@@ -29,6 +31,14 @@ public class GastoDto implements CommonDto{
 
     public Double getValor() {
         return valor;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 
     public void setValor(Double valor) {
