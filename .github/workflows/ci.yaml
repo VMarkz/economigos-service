@@ -53,5 +53,7 @@ jobs:
         password: grupo1adsa
 
     -
-      name: Build
+      name: Push the Docker image
+      with:
+        registry: docker.pkg.github.com
       run: docker push economigos/economigos-app:latest
