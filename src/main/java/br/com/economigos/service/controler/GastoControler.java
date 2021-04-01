@@ -24,9 +24,9 @@ public class GastoControler {
     private GastoRepository gastoRepository;
 
     @GetMapping
-    public List<Gasto> listar(){
+    public List<GastoDto> listar(){
         List<Gasto> gastos = gastoRepository.findAll();
-        return gastos;
+        return GastoDto.converter(gastos);
     }
 
     @PostMapping

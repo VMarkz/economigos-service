@@ -9,11 +9,13 @@ public class RendaDto implements CommonDto{
 
     private Long id;
     private Double valor;
+    private Boolean recebido;
     private String descricao;
 
     public RendaDto(Renda renda) {
         this.id = renda.getId();
         this.valor = renda.getValor();
+        this.recebido = renda.getRecebido();
         this.descricao = renda.getDescricao();
     }
 
@@ -31,6 +33,14 @@ public class RendaDto implements CommonDto{
 
     public void setValor(Double valor) {
         this.valor = valor;
+    }
+
+    public Boolean getRecebido() {
+        return recebido;
+    }
+
+    public void setRecebido(Boolean recebido) {
+        this.recebido = recebido;
     }
 
     public String getDescricao() {
