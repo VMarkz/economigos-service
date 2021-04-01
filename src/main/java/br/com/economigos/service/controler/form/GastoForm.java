@@ -19,6 +19,9 @@ public class GastoForm implements CommonForm{
     private Double valor;
     @NotEmpty
     @NotNull
+    private Boolean pago;
+    @NotEmpty
+    @NotNull
     private String descricao;
     @NotEmpty
     @NotNull
@@ -80,7 +83,7 @@ public class GastoForm implements CommonForm{
 
     @Override
     public Gasto converter() {
-        return new Gasto(this.valor,this.descricao,this.dataPagamento,this.fixo,this.categoria);
+        return new Gasto(this.valor,this.descricao,this.dataPagamento,this.fixo,this.categoria, this.pago);
     }
 
     public Gasto atualizar(Long id, GastoRepository gastoRepository) {
