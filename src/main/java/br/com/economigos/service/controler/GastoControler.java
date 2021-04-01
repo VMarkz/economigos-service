@@ -13,6 +13,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +24,8 @@ public class GastoControler {
 
     @Autowired
     private GastoRepository gastoRepository;
+
+    GastoDto dto;
 
     @GetMapping
     public List<GastoDto> listar(){
@@ -41,18 +44,18 @@ public class GastoControler {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DetalhesGastoDto> detalhar(@PathVariable Long id){
+    public ResponseEntity<DetalhesGastoDto> detalhar(@PathVariable Long id) {
         Optional<Gasto> gasto = gastoRepository.findById(id);
-        if(gasto.isPresent()){
+        if (gasto.isPresent()) {
             return ResponseEntity.ok().body(new DetalhesGastoDto(gasto.get()));
-        }else{
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<GastoDto> alterar(@PathVariable Long id, @RequestBody @Valid GastoForm form){
+    public ResponseEntity<GastoDto> alterar(@PathVariable Long id, @RequestBody @Valid GastoForm form) {
         Optional<Gasto> optional = gastoRepository.findById(id);
         if (optional.isPresent()) {
             Gasto gasto = form.atualizar(id, gastoRepository);
@@ -62,14 +65,43 @@ public class GastoControler {
         }
     }
 
+    @PutMapping("/pagar/{id}")
+    @Transactional
+    public ResponseEntity<List<GastoDto>> pagar(@PathVariable Long id) {
+        Optional<Gasto> optional = gastoRepository.findById(id);
+        if (optional.isPresent()) {
+            Gasto gasto = gastoRepository.getOne(id);
+            gasto.setPago(true);
+            List<Gasto> gastos = new ArrayList<>();
+            gastos.add(gasto);
+            return ResponseEntity.ok().body(dto.converter(gastos));
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/cancelar-pagamento/{id}")
+    @Transactional
+    public ResponseEntity<List<GastoDto>> cancelarPagamento(@PathVariable Long id) {
+        Optional<Gasto> optional = gastoRepository.findById(id);
+        if (optional.isPresent()) {
+            Gasto gasto = gastoRepository.getOne(id);
+            gasto.setPago(false);
+            List<Gasto> gastos = new ArrayList<>();
+            gastos.add(gasto);
+            return ResponseEntity.ok().body(dto.converter(gastos));
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity<?> deletar(@PathVariable Long id){
+    public ResponseEntity<?> deletar(@PathVariable Long id) {
         Optional<Gasto> gasto = gastoRepository.findById(id);
-        if(gasto.isPresent()){
+        if (gasto.isPresent()) {
             gastoRepository.deleteById(id);
             return ResponseEntity.ok().build();
-        }else{
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
