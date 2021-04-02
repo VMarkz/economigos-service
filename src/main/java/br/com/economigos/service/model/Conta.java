@@ -16,9 +16,11 @@ public class Conta extends Observable implements Observer {
     private String numeroConta;
     private String descricao;
     private String apelido;
-    @OneToMany
+    @ManyToOne
+    private Usuario usuario;
+    @OneToMany(mappedBy = "conta")
     private List<Renda> rendas;
-    @OneToMany
+    @OneToMany(mappedBy = "conta")
     private List<Gasto> gastos;
 
     public Conta() {

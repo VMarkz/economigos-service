@@ -15,9 +15,9 @@ public class Usuario implements Observer {
     private Long id;
     private String email;
     private String senha;
-    @OneToMany
+    @OneToMany(mappedBy = "usuario")
     private List<Conta> contas;
-    @OneToMany
+    @OneToMany(mappedBy = "usuario")
     private List<Meta> metas;
     private LocalDateTime dataCriacao = LocalDateTime.now();
 

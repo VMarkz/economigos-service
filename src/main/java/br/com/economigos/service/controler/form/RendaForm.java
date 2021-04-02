@@ -73,7 +73,7 @@ public class RendaForm implements CommonForm{
     }
 
     public Renda converter() {
-        return new Renda(this.valor, this.descricao, this.fixo, this.categoria, this.conta, this.recebido);
+        return new Renda(this.conta, this.categoria, this.valor, this.descricao, this.fixo, this.recebido);
     }
 
     public Renda atualizar(Long id, RendaRepository rendaRepository) {

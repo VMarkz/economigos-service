@@ -17,7 +17,6 @@ public class ContaForm implements CommonForm{
     @NotNull @NotEmpty
     private String apelido;
 
-    @Override
     public Conta converter() {
         return (new Conta(this.banco, this.numeroConta, this.descricao, this.apelido));
     }

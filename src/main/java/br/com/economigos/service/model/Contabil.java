@@ -21,15 +21,16 @@ public abstract class Contabil extends Observable {
     protected String descricao;
     protected LocalDateTime dataPagamento;
     protected Boolean fixo;
-    @OneToOne
+    @ManyToOne
     protected Categoria categoria;
 
-    public Contabil(Double valor, String descricao, Boolean fixo, Categoria categoria) {
+    public Contabil(Conta conta, Categoria categoria, Double valor, String descricao, Boolean fixo) {
+        this.conta = conta;
+        this.categoria = categoria;
         this.valor = valor;
         this.descricao = descricao;
         this.dataPagamento = LocalDateTime.now();
         this.fixo = fixo;
-        this.categoria = categoria;
     }
 
     public Contabil() {

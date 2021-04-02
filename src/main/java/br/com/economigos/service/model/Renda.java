@@ -11,8 +11,8 @@ public class Renda extends Contabil{
     private Long id;
     private Boolean recebido;
 
-    public Renda(Double valor, String descricao, Boolean fixo, Categoria categoria, Conta conta, Boolean recebido) {
-        super(valor, descricao, fixo, categoria);
+    public Renda(Conta conta, Categoria categoria, Double valor, String descricao, Boolean fixo, Boolean recebido) {
+        super(conta, categoria, valor, descricao, fixo);
         this.recebido = recebido;
     }
 
