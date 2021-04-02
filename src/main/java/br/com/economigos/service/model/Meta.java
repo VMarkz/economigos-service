@@ -76,4 +76,9 @@ public class Meta extends Observable {
     public void setValorFinal(Double valorFinal) {
         this.valorFinal = valorFinal;
     }
+
+    public void mudaEstado(String acao){
+        setChanged();
+        notifyObservers(acao);
+    }
 }

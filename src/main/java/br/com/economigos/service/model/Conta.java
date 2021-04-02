@@ -120,6 +120,10 @@ public class Conta extends Observable implements Observer {
                     break;
             }
         }
+    }
 
+    public void mudaEstado(String acao){
+        setChanged();
+        notifyObservers(acao);
     }
 }

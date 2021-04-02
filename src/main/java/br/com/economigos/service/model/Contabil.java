@@ -91,4 +91,9 @@ public abstract class Contabil extends Observable {
         this.categoria = categoria;
     }
 
+    public void mudaEstado(String acao){
+        setChanged();
+        notifyObservers(acao);
+    }
+
 }
