@@ -4,9 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Observable;
 
 @Entity
-public class Meta {
+public class Meta extends Observable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

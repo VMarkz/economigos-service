@@ -2,12 +2,13 @@ package br.com.economigos.service.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Observable;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "tipo", length = 1, discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorValue("P")
-public abstract class Contabil {
+public abstract class Contabil extends Observable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
