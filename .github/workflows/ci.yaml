@@ -2,7 +2,7 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ alterando-ci.yaml ]
+    branches: [ main ]
 
 jobs:
   jar-build:
