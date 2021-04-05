@@ -3,40 +3,52 @@ package br.com.economigos.service.controler.form;
 import br.com.economigos.service.model.Categoria;
 import br.com.economigos.service.model.Conta;
 import br.com.economigos.service.model.Renda;
+import br.com.economigos.service.repository.CategoriaRepository;
+import br.com.economigos.service.repository.ContaRepository;
 import br.com.economigos.service.repository.RendaRepository;
 
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 public class RendaForm implements CommonForm{
 
-    @NotEmpty
+
     @NotNull
-    private Conta conta;
-    @NotEmpty
+    private String conta;
     @NotNull
     private Double valor;
-    @NotEmpty @NotNull
+    @NotNull
     private Boolean recebido;
-    @NotEmpty
     @NotNull
     private String descricao;
-    @NotEmpty
     @NotNull
     private Boolean fixo;
-    @NotEmpty
     @NotNull
-    private Categoria categoria;
-    @NotEmpty
+    private String categoria;
     @NotNull
     private LocalDateTime dataPagamento;
 
-    public Conta getConta() {
+    public Boolean getRecebido() {
+        return recebido;
+    }
+
+    public void setRecebido(Boolean recebido) {
+        this.recebido = recebido;
+    }
+
+    public LocalDateTime getDataPagamento() {
+        return dataPagamento;
+    }
+
+    public void setDataPagamento(LocalDateTime dataPagamento) {
+        this.dataPagamento = dataPagamento;
+    }
+
+    public String getConta() {
         return conta;
     }
 
-    public void setConta(Conta conta) {
+    public void setConta(String conta) {
         this.conta = conta;
     }
 
@@ -64,23 +76,25 @@ public class RendaForm implements CommonForm{
         this.fixo = fixo;
     }
 
-    public Categoria getCategoria() {
+    public String getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(Categoria categoria) {
+    public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
 
-    public Renda converter() {
-        return new Renda(this.valor, this.descricao, this.fixo, this.categoria, this.conta, this.recebido);
+    public Renda converter(ContaRepository contaRepository, CategoriaRepository categoriaRepository) {
+        Conta conta = contaRepository.findByApelido(this.conta);
+        Categoria categoria = categoriaRepository.findByCategoria(this.categoria);
+        return new Renda(conta, categoria, this.valor, this.descricao, this.fixo, this.recebido);
     }
 
     public Renda atualizar(Long id, RendaRepository rendaRepository) {
         Renda renda = rendaRepository.getOne(id);
 
-        renda.setConta(this.conta);
-        renda.setCategoria(this.categoria);
+//        renda.setConta(this.conta);
+//        renda.setCategoria(this.categoria);
         renda.setDescricao(this.descricao);
         renda.setFixo(this.fixo);
         renda.setValor(this.valor);

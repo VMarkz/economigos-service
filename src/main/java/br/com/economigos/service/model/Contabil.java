@@ -2,12 +2,13 @@ package br.com.economigos.service.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Observable;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "tipo", length = 1, discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorValue("P")
-public abstract class Contabil {
+public abstract class Contabil extends Observable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,15 +21,16 @@ public abstract class Contabil {
     protected String descricao;
     protected LocalDateTime dataPagamento;
     protected Boolean fixo;
-    @OneToOne
+    @ManyToOne
     protected Categoria categoria;
 
-    public Contabil(Double valor, String descricao, Boolean fixo, Categoria categoria) {
+    public Contabil(Conta conta, Categoria categoria, Double valor, String descricao, Boolean fixo) {
+        this.conta = conta;
+        this.categoria = categoria;
         this.valor = valor;
         this.descricao = descricao;
         this.dataPagamento = LocalDateTime.now();
         this.fixo = fixo;
-        this.categoria = categoria;
     }
 
     public Contabil() {
@@ -88,6 +90,11 @@ public abstract class Contabil {
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public void mudaEstado(String acao){
+        setChanged();
+        notifyObservers(acao);
     }
 
 }
