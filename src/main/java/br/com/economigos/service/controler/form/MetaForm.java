@@ -57,6 +57,7 @@ public class MetaForm implements CommonForm{
         this.valorFinal = valorFinal;
     }
 
+    @Override
     public Meta converter() {
         return new Meta(this.nome,this.descricao,this.metaGasto,this.valorInicial,this.valorFinal);
     }

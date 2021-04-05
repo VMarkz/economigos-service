@@ -12,8 +12,8 @@ public class Gasto extends Contabil{
     private Long id;
     private Boolean pago;
 
-    public Gasto(Conta conta, Categoria categoria,Double valor, String descricao, LocalDateTime data, Boolean fixo, Boolean pago) {
-        super(conta, categoria, valor, descricao, fixo);
+    public Gasto(Double valor, String descricao, LocalDateTime data, Boolean fixo, Categoria categoria, Boolean pago) {
+        super(valor, descricao, fixo, categoria);
         this.pago = pago;
     }
 

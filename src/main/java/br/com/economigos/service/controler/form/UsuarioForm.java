@@ -30,6 +30,7 @@ public class UsuarioForm implements CommonForm{
         this.senha = senha;
     }
 
+    @Override
     public Usuario converter(){
         return new Usuario(this.email, this.senha);
     }
