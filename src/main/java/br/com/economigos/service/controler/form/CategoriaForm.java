@@ -22,7 +22,7 @@ public class CategoriaForm implements CommonForm{
         this.categoria = categoria;
     }
 
-
+    @Override
     public Categoria converter() {
         return new Categoria(this.categoria);
     }

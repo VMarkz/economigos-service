@@ -4,20 +4,17 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 @Entity
-public class Usuario implements Observer {
+public class Usuario {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String email;
     private String senha;
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany
     private List<Conta> contas;
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany
     private List<Meta> metas;
     private LocalDateTime dataCriacao = LocalDateTime.now();
 
@@ -77,30 +74,5 @@ public class Usuario implements Observer {
 
     public void setDataCriacao(LocalDateTime dataCriacao) {
         this.dataCriacao = dataCriacao;
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        String acao = String.valueOf(arg);
-
-        if (o.getClass().equals(Meta.class)) {
-            switch (acao) {
-                case "create":
-                    break;
-                case "update":
-                    break;
-                case "delete":
-                    break;
-            }
-        } else if (o.getClass().equals(Conta.class)) {
-            switch (acao) {
-                case "create":
-                    break;
-                case "update":
-                    break;
-                case "delete":
-                    break;
-            }
-        }
     }
 }

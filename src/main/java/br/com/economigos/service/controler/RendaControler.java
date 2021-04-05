@@ -4,8 +4,6 @@ import br.com.economigos.service.controler.dto.DetalhesRendaDto;
 import br.com.economigos.service.controler.dto.RendaDto;
 import br.com.economigos.service.controler.form.RendaForm;
 import br.com.economigos.service.model.Renda;
-import br.com.economigos.service.repository.CategoriaRepository;
-import br.com.economigos.service.repository.ContaRepository;
 import br.com.economigos.service.repository.RendaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,10 +23,6 @@ public class RendaControler {
 
     @Autowired
     private RendaRepository rendaRepository;
-    @Autowired
-    private ContaRepository contaRepository;
-    @Autowired
-    private CategoriaRepository categoriaRepository;
 
     @GetMapping
     public List<RendaDto> listar(){
@@ -38,12 +32,12 @@ public class RendaControler {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<RendaDto> cadastrar(@RequestBody @Valid RendaForm form, UriComponentsBuilder uriBuilder) {
-        Renda renda = form.converter(contaRepository, categoriaRepository);
+    public ResponseEntity<Renda> cadastrar(@RequestBody @Valid RendaForm form, UriComponentsBuilder uriBuilder) {
+        Renda renda = form.converter();
         rendaRepository.save(renda);
 
         URI uri = uriBuilder.path("/receitas/{id}").buildAndExpand(renda.getId()).toUri();
-        return ResponseEntity.created(uri).body(new RendaDto(renda));
+        return ResponseEntity.created(uri).body(renda);
     }
 
     @GetMapping("/{id}")

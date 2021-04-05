@@ -3,45 +3,43 @@ package br.com.economigos.service.controler.form;
 import br.com.economigos.service.model.Categoria;
 import br.com.economigos.service.model.Conta;
 import br.com.economigos.service.model.Gasto;
-import br.com.economigos.service.repository.CategoriaRepository;
-import br.com.economigos.service.repository.ContaRepository;
 import br.com.economigos.service.repository.GastoRepository;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GastoForm implements CommonForm{
 
-
-    private String conta;
-
+    @NotEmpty
+    @NotNull
+    private Conta conta;
+    @NotEmpty
+    @NotNull
     private Double valor;
     @NotNull
     private Boolean pago;
-
+    @NotEmpty
+    @NotNull
     private String descricao;
-
+    @NotEmpty
+    @NotNull
     private Boolean fixo;
-
-    private String categoria;
-
+    @NotEmpty
+    @NotNull
+    private Categoria categoria;
+    @NotEmpty
+    @NotNull
     private LocalDateTime dataPagamento;
 
-    public String getConta() {
+    public Conta getConta() {
         return conta;
     }
 
-    public void setConta(String conta) {
+    public void setConta(Conta conta) {
         this.conta = conta;
-    }
-
-    public Boolean getPago() {
-        return pago;
-    }
-
-    public void setPago(Boolean pago) {
-        this.pago = pago;
     }
 
     public Double getValor() {
@@ -68,11 +66,11 @@ public class GastoForm implements CommonForm{
         this.fixo = fixo;
     }
 
-    public String getCategoria() {
+    public Categoria getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(String categoria) {
+    public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
 
@@ -84,15 +82,16 @@ public class GastoForm implements CommonForm{
         this.dataPagamento = dataPagamento;
     }
 
-    public Gasto converter(ContaRepository contaRepository, CategoriaRepository categoriaRepository) {
-        Conta conta = contaRepository.findByApelido(this.conta);
-        Categoria categoria = categoriaRepository.findByCategoria(this.categoria);
-        return new Gasto(conta, categoria, this.valor,this.descricao,this.dataPagamento,this.fixo, this.pago);
+    @Override
+    public Gasto converter() {
+        return new Gasto(this.valor,this.descricao,this.dataPagamento,this.fixo,this.categoria, this.pago);
     }
 
     public Gasto atualizar(Long id, GastoRepository gastoRepository) {
         Gasto gasto = gastoRepository.getOne(id);
 
+        gasto.setConta(this.conta);
+        gasto.setCategoria(this.categoria);
         gasto.setDescricao(this.descricao);
         gasto.setFixo(this.fixo);
         gasto.setValor(this.valor);
