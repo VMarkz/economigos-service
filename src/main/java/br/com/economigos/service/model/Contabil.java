@@ -92,7 +92,7 @@ public abstract class Contabil extends Observable {
         this.categoria = categoria;
     }
 
-    public void mudaEstado(String acao){
+    public void notificaObservador(String acao){
         setChanged();
         notifyObservers(acao);
     }

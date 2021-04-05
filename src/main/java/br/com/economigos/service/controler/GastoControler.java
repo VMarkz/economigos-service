@@ -3,6 +3,7 @@ package br.com.economigos.service.controler;
 import br.com.economigos.service.controler.dto.DetalhesGastoDto;
 import br.com.economigos.service.controler.dto.GastoDto;
 import br.com.economigos.service.controler.form.GastoForm;
+import br.com.economigos.service.model.Conta;
 import br.com.economigos.service.model.Gasto;
 import br.com.economigos.service.repository.CategoriaRepository;
 import br.com.economigos.service.repository.ContaRepository;
@@ -42,6 +43,8 @@ public class GastoControler {
         Gasto gasto = form.converter(contaRepository, categoriaRepository);
 
         gastoRepository.save(gasto);
+        gasto.addObserver(new Conta());
+        gasto.notificaObservador("create");
 
         URI uri = uriBuilder.path("/receitas/{id}").buildAndExpand(gasto.getId()).toUri();
         return ResponseEntity.created(uri).body(new GastoDto(gasto));
@@ -63,6 +66,8 @@ public class GastoControler {
         Optional<Gasto> optional = gastoRepository.findById(id);
         if (optional.isPresent()) {
             Gasto gasto = form.atualizar(id, gastoRepository);
+            gasto.addObserver(new Conta());
+            gasto.notificaObservador("update");
             return ResponseEntity.ok(new GastoDto(gasto));
         } else {
             return ResponseEntity.notFound().build();
@@ -76,7 +81,8 @@ public class GastoControler {
         if (optional.isPresent()) {
             Gasto gasto = gastoRepository.getOne(id);
             gasto.setPago(true);
-
+            gasto.addObserver(new Conta());
+            gasto.notificaObservador("update");
             return ResponseEntity.ok().body(new GastoDto(gasto));
         }
         return ResponseEntity.notFound().build();
@@ -89,7 +95,8 @@ public class GastoControler {
         if (optional.isPresent()) {
             Gasto gasto = gastoRepository.getOne(id);
             gasto.setPago(false);
-
+            gasto.addObserver(new Conta());
+            gasto.notificaObservador("update");
             return ResponseEntity.ok().body(new GastoDto(gasto));
         }
         return ResponseEntity.notFound().build();
@@ -99,9 +106,12 @@ public class GastoControler {
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<?> deletar(@PathVariable Long id) {
-        Optional<Gasto> gasto = gastoRepository.findById(id);
-        if (gasto.isPresent()) {
+        Optional<Gasto> optional = gastoRepository.findById(id);
+        if (optional.isPresent()) {
+            Gasto gasto = gastoRepository.getOne(id);
+            gasto.addObserver(new Conta());
             gastoRepository.deleteById(id);
+            gasto.notificaObservador("delete");
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.notFound().build();

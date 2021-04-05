@@ -3,6 +3,7 @@ package br.com.economigos.service.controler;
 import br.com.economigos.service.controler.dto.DetalhesRendaDto;
 import br.com.economigos.service.controler.dto.RendaDto;
 import br.com.economigos.service.controler.form.RendaForm;
+import br.com.economigos.service.model.Conta;
 import br.com.economigos.service.model.Renda;
 import br.com.economigos.service.repository.CategoriaRepository;
 import br.com.economigos.service.repository.ContaRepository;
@@ -40,7 +41,10 @@ public class RendaControler {
     @Transactional
     public ResponseEntity<RendaDto> cadastrar(@RequestBody @Valid RendaForm form, UriComponentsBuilder uriBuilder) {
         Renda renda = form.converter(contaRepository, categoriaRepository);
+
         rendaRepository.save(renda);
+        renda.addObserver(new Conta());
+        renda.notificaObservador("create");
 
         URI uri = uriBuilder.path("/receitas/{id}").buildAndExpand(renda.getId()).toUri();
         return ResponseEntity.created(uri).body(new RendaDto(renda));
@@ -62,6 +66,8 @@ public class RendaControler {
         Optional<Renda> optional = rendaRepository.findById(id);
         if (optional.isPresent()) {
             Renda renda = form.atualizar(id, rendaRepository);
+            renda.addObserver(new Conta());
+            renda.notificaObservador("update");
             return ResponseEntity.ok(new RendaDto(renda));
         } else {
             return ResponseEntity.notFound().build();
@@ -71,9 +77,12 @@ public class RendaControler {
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<?> deletar(@PathVariable Long id){
-        Optional<Renda> renda = rendaRepository.findById(id);
-        if(renda.isPresent()){
+        Optional<Renda> optional = rendaRepository.findById(id);
+        if(optional.isPresent()){
+            Renda renda = rendaRepository.getOne(id);
+            renda.addObserver(new Conta());
             rendaRepository.deleteById(id);
+            renda.notificaObservador("update");
             return ResponseEntity.ok().build();
         }else{
             return ResponseEntity.notFound().build();

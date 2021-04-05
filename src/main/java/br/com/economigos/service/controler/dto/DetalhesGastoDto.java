@@ -9,21 +9,21 @@ import java.time.LocalDateTime;
 public class DetalhesGastoDto {
 
     private Long id;
-    private Conta conta;
+    private ContaDto conta;
     private Double valor;
     private String descricao;
     private LocalDateTime dataPagamento;
     private Boolean fixo;
-    private Categoria categoria;
+    private CategoriaDto categoria;
 
     public DetalhesGastoDto(Gasto gasto) {
         this.id = gasto.getId();
-        this.conta = gasto.getConta();
+        this.conta = new ContaDto(gasto.getConta());
         this.valor = gasto.getValor();
         this.descricao = gasto.getDescricao();
         this.dataPagamento = gasto.getDataPagamento();
         this.fixo = gasto.getFixo();
-        this.categoria = gasto.getCategoria();
+        this.categoria = new CategoriaDto(gasto.getCategoria());
     }
 
     public Long getId() {
@@ -34,11 +34,11 @@ public class DetalhesGastoDto {
         this.id = id;
     }
 
-    public Conta getConta() {
+    public ContaDto getConta() {
         return conta;
     }
 
-    public void setConta(Conta conta) {
+    public void setConta(ContaDto conta) {
         this.conta = conta;
     }
 
@@ -74,11 +74,11 @@ public class DetalhesGastoDto {
         this.fixo = fixo;
     }
 
-    public Categoria getCategoria() {
+    public CategoriaDto getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(Categoria categoria) {
+    public void setCategoria(CategoriaDto categoria) {
         this.categoria = categoria;
     }
 }
