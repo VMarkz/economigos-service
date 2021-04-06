@@ -111,32 +111,35 @@ public class Conta extends Observable implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         String acao = String.valueOf(arg);
-        System.out.println(acao);
 
         if (o.getClass().equals(Gasto.class)) {
             switch (acao) {
                 case "create":
-                    System.out.println("GASTO CRIADO!");
+                    System.out.println("GASTO CRIADO");
                     break;
                 case "update":
+                    System.out.println("GASTO EDITADO");
                     break;
                 case "delete":
+                    System.out.println("GASTO DELETADO");
                     break;
             }
         } else if (o.getClass().equals(Renda.class)) {
             switch (acao) {
                 case "create":
-                    System.out.println("RENDA CRIADO!");
+                    System.out.println("RENDA CRIADO");
                     break;
                 case "update":
+                    System.out.println("RENDA EDITADO");
                     break;
                 case "delete":
+                    System.out.println("RENDA DELETADO");
                     break;
             }
         }
     }
 
-    public void mudaEstado(String acao) {
+    public void notificaObservador(String acao){
         setChanged();
         notifyObservers(acao);
     }

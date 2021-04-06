@@ -4,6 +4,7 @@ import br.com.economigos.service.controler.dto.ContaDto;
 import br.com.economigos.service.controler.dto.DetalhesContaDto;
 import br.com.economigos.service.controler.form.ContaForm;
 import br.com.economigos.service.model.Conta;
+import br.com.economigos.service.model.Usuario;
 import br.com.economigos.service.repository.ContaRepository;
 import br.com.economigos.service.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,10 @@ public class ContaControler {
     @Transactional
     public ResponseEntity<ContaDto> cadastrar(@RequestBody @Valid ContaForm form, UriComponentsBuilder uriBuilder) {
         Conta conta = form.converter(usuarioRepository);
+
         contaRepository.save(conta);
+        conta.addObserver(new Usuario());
+        conta.notificaObservador("create");
 
         URI uri = uriBuilder.path("economigos/contas/{id}").buildAndExpand(conta.getId()).toUri();
         return ResponseEntity.created(uri).body(new ContaDto(conta));
@@ -58,8 +62,10 @@ public class ContaControler {
     public ResponseEntity<ContaDto> alterar(@PathVariable Long id, @RequestBody @Valid ContaForm form){
         Optional<Conta> optional = contaRepository.findById(id);
         if (optional.isPresent()) {
-            Conta usuario = form.atualizar(id, contaRepository);
-            return ResponseEntity.ok(new ContaDto(usuario));
+            Conta conta = form.atualizar(id, contaRepository);
+            conta.addObserver(new Usuario());
+            conta.notificaObservador("update");
+            return ResponseEntity.ok(new ContaDto(conta));
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -68,9 +74,12 @@ public class ContaControler {
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<?> deletar(@PathVariable Long id){
-        Optional<Conta> conta = contaRepository.findById(id);
-        if(conta.isPresent()){
+        Optional<Conta> optional = contaRepository.findById(id);
+        if(optional.isPresent()){
+            Conta conta = contaRepository.getOne(id);
+            conta.addObserver(new Usuario());
             contaRepository.deleteById(id);
+            conta.notificaObservador("create");
             return ResponseEntity.ok().build();
         }else{
             return ResponseEntity.notFound().build();

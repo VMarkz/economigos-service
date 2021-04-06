@@ -86,19 +86,25 @@ public class Usuario implements Observer {
         if (o.getClass().equals(Meta.class)) {
             switch (acao) {
                 case "create":
+                    System.out.println("META CRIADA");
                     break;
                 case "update":
+                    System.out.println("META EDITADA");
                     break;
                 case "delete":
+                    System.out.println("META DELETEDA");
                     break;
             }
         } else if (o.getClass().equals(Conta.class)) {
             switch (acao) {
                 case "create":
+                    System.out.println("CONTA CRIADA");
                     break;
                 case "update":
+                    System.out.println("CONTA EDITADA");
                     break;
                 case "delete":
+                    System.out.println("CONTA DELETADA");
                     break;
             }
         }
