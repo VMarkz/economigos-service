@@ -59,6 +59,7 @@ public class Categoria implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         String acao = String.valueOf(arg);
+        System.out.println(acao);
 
         if (o.getClass().equals(Gasto.class)) {
             switch (acao) {

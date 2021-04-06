@@ -3,6 +3,7 @@ package br.com.economigos.service.controler;
 import br.com.economigos.service.controler.dto.DetalhesRendaDto;
 import br.com.economigos.service.controler.dto.RendaDto;
 import br.com.economigos.service.controler.form.RendaForm;
+import br.com.economigos.service.model.Categoria;
 import br.com.economigos.service.model.Conta;
 import br.com.economigos.service.model.Renda;
 import br.com.economigos.service.repository.CategoriaRepository;
@@ -44,6 +45,7 @@ public class RendaControler {
 
         rendaRepository.save(renda);
         renda.addObserver(new Conta());
+        renda.addObserver(new Categoria());
         renda.notificaObservador("create");
 
         URI uri = uriBuilder.path("/receitas/{id}").buildAndExpand(renda.getId()).toUri();
@@ -67,6 +69,7 @@ public class RendaControler {
         if (optional.isPresent()) {
             Renda renda = form.atualizar(id, rendaRepository);
             renda.addObserver(new Conta());
+            renda.addObserver(new Categoria());
             renda.notificaObservador("update");
             return ResponseEntity.ok(new RendaDto(renda));
         } else {
@@ -81,8 +84,9 @@ public class RendaControler {
         if(optional.isPresent()){
             Renda renda = rendaRepository.getOne(id);
             renda.addObserver(new Conta());
+            renda.addObserver(new Categoria());
             rendaRepository.deleteById(id);
-            renda.notificaObservador("update");
+            renda.notificaObservador("delete");
             return ResponseEntity.ok().build();
         }else{
             return ResponseEntity.notFound().build();

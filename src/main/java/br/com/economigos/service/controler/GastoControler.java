@@ -3,6 +3,7 @@ package br.com.economigos.service.controler;
 import br.com.economigos.service.controler.dto.DetalhesGastoDto;
 import br.com.economigos.service.controler.dto.GastoDto;
 import br.com.economigos.service.controler.form.GastoForm;
+import br.com.economigos.service.model.Categoria;
 import br.com.economigos.service.model.Conta;
 import br.com.economigos.service.model.Gasto;
 import br.com.economigos.service.repository.CategoriaRepository;
@@ -44,6 +45,7 @@ public class GastoControler {
 
         gastoRepository.save(gasto);
         gasto.addObserver(new Conta());
+        gasto.addObserver(new Categoria());
         gasto.notificaObservador("create");
 
         URI uri = uriBuilder.path("/receitas/{id}").buildAndExpand(gasto.getId()).toUri();
@@ -67,6 +69,7 @@ public class GastoControler {
         if (optional.isPresent()) {
             Gasto gasto = form.atualizar(id, gastoRepository);
             gasto.addObserver(new Conta());
+            gasto.addObserver(new Categoria());
             gasto.notificaObservador("update");
             return ResponseEntity.ok(new GastoDto(gasto));
         } else {
@@ -82,6 +85,7 @@ public class GastoControler {
             Gasto gasto = gastoRepository.getOne(id);
             gasto.setPago(true);
             gasto.addObserver(new Conta());
+            gasto.addObserver(new Categoria());
             gasto.notificaObservador("update");
             return ResponseEntity.ok().body(new GastoDto(gasto));
         }
@@ -96,6 +100,7 @@ public class GastoControler {
             Gasto gasto = gastoRepository.getOne(id);
             gasto.setPago(false);
             gasto.addObserver(new Conta());
+            gasto.addObserver(new Categoria());
             gasto.notificaObservador("update");
             return ResponseEntity.ok().body(new GastoDto(gasto));
         }
@@ -110,6 +115,7 @@ public class GastoControler {
         if (optional.isPresent()) {
             Gasto gasto = gastoRepository.getOne(id);
             gasto.addObserver(new Conta());
+            gasto.addObserver(new Categoria());
             gastoRepository.deleteById(id);
             gasto.notificaObservador("delete");
             return ResponseEntity.ok().build();
