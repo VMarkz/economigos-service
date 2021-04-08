@@ -28,6 +28,7 @@ public class ContatoForm implements CommonForm{
         this.mensagem = mensagem;
     }
 
+    @Override
     public Contato converter() {
         return new Contato(this.email,this.mensagem);
     }

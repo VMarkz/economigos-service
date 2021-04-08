@@ -4,20 +4,17 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 @Entity
-public class Usuario implements Observer {
+public class Usuario {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String email;
     private String senha;
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany
     private List<Conta> contas;
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany
     private List<Meta> metas;
     private LocalDateTime dataCriacao = LocalDateTime.now();
 
