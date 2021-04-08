@@ -2,17 +2,19 @@ package br.com.economigos.service.model;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 @Entity
-public class Categoria {
+public class Categoria implements Observer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String categoria;
-    @OneToMany
+    @OneToMany(mappedBy = "categoria")
     private List<Gasto> gastos;
-    @OneToMany
+    @OneToMany(mappedBy = "categoria")
     private List<Renda> rendas;
 
     public Categoria(String categoria) {

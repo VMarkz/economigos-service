@@ -17,7 +17,7 @@ public class Cartao {
     private Boolean pago;
     private Double limite;
     private Double valor;
-    @OneToMany
+    @OneToMany(mappedBy = "cartao")
     private List<Gasto> gastos;
 
     public Cartao() {

@@ -1,12 +1,11 @@
 package br.com.economigos.service.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Observable;
+import java.util.Observer;
 
 @Entity
-public class Meta {
+public class Meta extends Observable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,6 +15,8 @@ public class Meta {
     private Boolean metaGasto;
     private Double valorInicial;
     private Double valorFinal;
+    @ManyToOne
+    private Usuario usuario;
 
     public Meta(String nome, String descricao, Boolean metaGasto, Double valorInicial, Double valorFinal) {
         this.nome = nome;
@@ -26,6 +27,14 @@ public class Meta {
     }
 
     public Meta() {
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public Long getId() {

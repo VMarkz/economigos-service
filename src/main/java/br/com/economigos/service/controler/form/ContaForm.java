@@ -17,9 +17,40 @@ public class ContaForm implements CommonForm{
     @NotNull @NotEmpty
     private String apelido;
 
-    @Override
     public Conta converter() {
         return (new Conta(this.banco, this.numeroConta, this.descricao, this.apelido));
+    }
+
+    public String getBanco() {
+        return banco;
+    }
+
+    public void setBanco(String banco) {
+        this.banco = banco;
+    }
+
+    public String getNumeroConta() {
+        return numeroConta;
+    }
+
+    public void setNumeroConta(String numeroConta) {
+        this.numeroConta = numeroConta;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getApelido() {
+        return apelido;
+    }
+
+    public void setApelido(String apelido) {
+        this.apelido = apelido;
     }
 
     public Conta atualizar(Long id, ContaRepository contaRepository){

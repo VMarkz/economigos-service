@@ -1,8 +1,10 @@
 package br.com.economigos.service.controler;
 
 import br.com.economigos.service.controler.dto.CartaoDto;
+import br.com.economigos.service.controler.dto.DetalhesUsuarioDto;
 import br.com.economigos.service.controler.form.CartaoForm;
 import br.com.economigos.service.model.Cartao;
+import br.com.economigos.service.model.Usuario;
 import br.com.economigos.service.repository.CartaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +39,16 @@ public class CartaoControler {
 
         URI uri = uriBuilder.path("economigos/cartoes/{id}").buildAndExpand(cartao.getId()).toUri();
         return ResponseEntity.created(uri).body(new CartaoDto(cartao));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CartaoDto> detalhar(@PathVariable Long id){
+        Optional<Cartao> cartao = cartaoRepository.findById(id);
+        if(cartao.isPresent()){
+            return ResponseEntity.ok().body(new CartaoDto(cartao.get()));
+        }else{
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PutMapping("/{id}")

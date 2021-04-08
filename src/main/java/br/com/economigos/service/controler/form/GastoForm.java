@@ -5,6 +5,8 @@ import br.com.economigos.service.model.Categoria;
 import br.com.economigos.service.model.Conta;
 import br.com.economigos.service.model.Gasto;
 import br.com.economigos.service.repository.CartaoRepository;
+import br.com.economigos.service.repository.CategoriaRepository;
+import br.com.economigos.service.repository.ContaRepository;
 import br.com.economigos.service.repository.GastoRepository;
 
 import javax.validation.constraints.NotEmpty;
@@ -16,34 +18,45 @@ import java.util.Optional;
 
 public class GastoForm {
 
-    @NotEmpty
+
     @NotNull
-    private Conta conta;
-    @NotEmpty
+    private String conta;
     @NotNull
     private Double valor;
     @NotNull
     private Boolean pago;
-    @NotEmpty
     @NotNull
     private String descricao;
-    @NotEmpty
     @NotNull
     private Boolean fixo;
-    @NotEmpty
     @NotNull
-    private Categoria categoria;
-    @NotEmpty
+    private String categoria;
     @NotNull
     private LocalDateTime dataPagamento;
     @NotNull
     private Long idCartao;
 
-    public Conta getConta() {
+    public Boolean getPago() {
+        return pago;
+    }
+
+    public void setPago(Boolean pago) {
+        this.pago = pago;
+    }
+
+    public Long getIdCartao() {
+        return idCartao;
+    }
+
+    public void setIdCartao(Long idCartao) {
+        this.idCartao = idCartao;
+    }
+
+    public String getConta() {
         return conta;
     }
 
-    public void setConta(Conta conta) {
+    public void setConta(String conta) {
         this.conta = conta;
     }
 
@@ -71,11 +84,11 @@ public class GastoForm {
         this.fixo = fixo;
     }
 
-    public Categoria getCategoria() {
+    public String getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(Categoria categoria) {
+    public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
 
@@ -87,19 +100,20 @@ public class GastoForm {
         this.dataPagamento = dataPagamento;
     }
 
-    public Gasto converter(CartaoRepository cartaoRepository) {
+    public Gasto converter(CartaoRepository cartaoRepository, ContaRepository contaRepository, CategoriaRepository categoriaRepository ) {
         Optional<Cartao> cartao = cartaoRepository.findById(this.idCartao);
-        if (cartao.isPresent()){
-            return new Gasto(this.valor,this.descricao,this.dataPagamento,this.fixo,this.categoria, this.pago,cartao.get());
+        Conta conta = contaRepository.findByApelido(this.conta);
+        Categoria categoria = categoriaRepository.findByCategoria(this.categoria);
+        if (cartao.isPresent()) {
+            return new Gasto(cartao.get(),categoria,this.valor,this.descricao,this.pago,this.fixo, this.dataPagamento, "cartão");
+        } else {
+            return new Gasto(conta, categoria, this.valor, this.descricao, this.fixo, this.pago, this.dataPagamento);
         }
-        return new Gasto(this.valor,this.descricao,this.dataPagamento,this.fixo,this.categoria, this.pago);
     }
 
     public Gasto atualizar(Long id, GastoRepository gastoRepository) {
         Gasto gasto = gastoRepository.getOne(id);
 
-        gasto.setConta(this.conta);
-        gasto.setCategoria(this.categoria);
         gasto.setDescricao(this.descricao);
         gasto.setFixo(this.fixo);
         gasto.setValor(this.valor);

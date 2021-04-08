@@ -3,9 +3,11 @@ package br.com.economigos.service.model;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 @Entity
-public class Conta {
+public class Conta extends Observable implements Observer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,9 +16,11 @@ public class Conta {
     private String numeroConta;
     private String descricao;
     private String apelido;
-    @OneToMany
+    @ManyToOne
+    private Usuario usuario;
+    @OneToMany(mappedBy = "conta")
     private List<Renda> rendas;
-    @OneToMany
+    @OneToMany(mappedBy = "conta")
     private List<Gasto> gastos;
 
     public Conta(){
@@ -30,6 +34,14 @@ public class Conta {
         this.apelido = apelido;
         rendas = new ArrayList<>();
         gastos = new ArrayList<>();
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public Long getId() {
