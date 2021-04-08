@@ -1,8 +1,10 @@
 package br.com.economigos.service.controler.form;
 
+import br.com.economigos.service.model.Cartao;
 import br.com.economigos.service.model.Categoria;
 import br.com.economigos.service.model.Conta;
 import br.com.economigos.service.model.Gasto;
+import br.com.economigos.service.repository.CartaoRepository;
 import br.com.economigos.service.repository.GastoRepository;
 
 import javax.validation.constraints.NotEmpty;
@@ -10,8 +12,9 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-public class GastoForm implements CommonForm{
+public class GastoForm {
 
     @NotEmpty
     @NotNull
@@ -33,6 +36,8 @@ public class GastoForm implements CommonForm{
     @NotEmpty
     @NotNull
     private LocalDateTime dataPagamento;
+    @NotNull
+    private Long idCartao;
 
     public Conta getConta() {
         return conta;
@@ -82,8 +87,11 @@ public class GastoForm implements CommonForm{
         this.dataPagamento = dataPagamento;
     }
 
-    @Override
-    public Gasto converter() {
+    public Gasto converter(CartaoRepository cartaoRepository) {
+        Optional<Cartao> cartao = cartaoRepository.findById(this.idCartao);
+        if (cartao.isPresent()){
+            return new Gasto(this.valor,this.descricao,this.dataPagamento,this.fixo,this.categoria, this.pago,cartao.get());
+        }
         return new Gasto(this.valor,this.descricao,this.dataPagamento,this.fixo,this.categoria, this.pago);
     }
 
