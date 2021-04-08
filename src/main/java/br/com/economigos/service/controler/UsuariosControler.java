@@ -45,12 +45,12 @@ public class UsuariosControler {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> detalhar(@PathVariable Long id){
+    public ResponseEntity<DetalhesUsuarioDto> detalhar(@PathVariable Long id){
         Optional<Usuario> usuario = usuarioRepository.findById(id);
         if(usuario.isPresent()){
             return ResponseEntity.ok().body(new DetalhesUsuarioDto(usuario.get()));
         }else{
-            return ResponseEntity.badRequest().body("Usuário já cadastrado.");
+            return ResponseEntity.badRequest().build();
         }
     }
 

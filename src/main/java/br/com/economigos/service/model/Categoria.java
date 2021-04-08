@@ -2,17 +2,19 @@ package br.com.economigos.service.model;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 @Entity
-public class Categoria {
+public class Categoria implements Observer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String categoria;
-    @OneToMany
+    @OneToMany(mappedBy = "categoria")
     private List<Gasto> gastos;
-    @OneToMany
+    @OneToMany(mappedBy = "categoria")
     private List<Renda> rendas;
 
     public Categoria(String categoria) {
@@ -52,5 +54,31 @@ public class Categoria {
 
     public void setRendas(List<Renda> rendas) {
         this.rendas = rendas;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        String acao = String.valueOf(arg);
+        System.out.println(acao);
+
+        if (o.getClass().equals(Gasto.class)) {
+            switch (acao) {
+                case "create":
+                    break;
+                case "update":
+                    break;
+                case "delete":
+                    break;
+            }
+        } else if (o.getClass().equals(Renda.class)) {
+            switch (acao) {
+                case "create":
+                    break;
+                case "update":
+                    break;
+                case "delete":
+                    break;
+            }
+        }
     }
 }

@@ -2,6 +2,7 @@ package br.com.economigos.service.controler;
 
 import br.com.economigos.service.controler.form.MetaForm;
 import br.com.economigos.service.model.Meta;
+import br.com.economigos.service.model.Usuario;
 import br.com.economigos.service.repository.MetaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,10 @@ public class MetaControler {
     @Transactional
     public ResponseEntity<Meta> cadastrar(@RequestBody @Valid MetaForm form, UriComponentsBuilder uriBuilder) {
         Meta meta = form.converter();
+
         metaRepository.save(meta);
+        meta.addObserver(new Usuario());
+        meta.notificaObservador("create");
 
         URI uri = uriBuilder.path("/Metas/{id}").buildAndExpand(meta.getId()).toUri();
         return ResponseEntity.created(uri).body(meta);
@@ -54,6 +58,8 @@ public class MetaControler {
         Optional<Meta> optional = metaRepository.findById(id);
         if (optional.isPresent()) {
             Meta meta = form.atualizar(id, metaRepository);
+            meta.addObserver(new Usuario());
+            meta.notificaObservador("update");
             return ResponseEntity.ok(meta);
         } else {
             return ResponseEntity.notFound().build();
@@ -65,7 +71,10 @@ public class MetaControler {
     public ResponseEntity<?> deletar(@PathVariable Long id){
         Optional<Meta> optional = metaRepository.findById(id);
         if(optional.isPresent()){
+            Meta meta = metaRepository.getOne(id);
+            meta.addObserver(new Usuario());
             metaRepository.deleteById(id);
+            meta.notificaObservador("create");
             return ResponseEntity.ok().build();
         }else{
             return ResponseEntity.notFound().build();

@@ -11,10 +11,18 @@ public class Gasto extends Contabil{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Boolean pago;
+    @ManyToOne
+    private Cartao cartao;
 
-    public Gasto(Double valor, String descricao, LocalDateTime data, Boolean fixo, Categoria categoria, Boolean pago) {
-        super(valor, descricao, fixo, categoria);
+    public Gasto(Conta conta, Categoria categoria,Double valor, String descricao, Boolean fixo, Boolean pago, LocalDateTime dataPagamento) {
+        super(conta, categoria, valor, descricao, fixo, dataPagamento);
         this.pago = pago;
+    }
+
+    public Gasto(Cartao cartao,  Categoria categoria,Double valor, String descricao, Boolean fixo, Boolean pago, LocalDateTime dataPagamento, String a) {
+        super(categoria, valor, descricao, fixo, dataPagamento);
+        this.pago = pago;
+        this.cartao = cartao;
     }
 
     public Gasto(){
@@ -34,5 +42,13 @@ public class Gasto extends Contabil{
 
     public void setPago(Boolean pago) {
         this.pago = pago;
+    }
+
+    public Cartao getCartao() {
+        return cartao;
+    }
+
+    public void setCartao(Cartao cartao) {
+        this.cartao = cartao;
     }
 }

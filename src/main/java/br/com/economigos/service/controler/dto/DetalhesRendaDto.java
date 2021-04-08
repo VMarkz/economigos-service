@@ -1,7 +1,5 @@
 package br.com.economigos.service.controler.dto;
 
-import br.com.economigos.service.model.Categoria;
-import br.com.economigos.service.model.Conta;
 import br.com.economigos.service.model.Renda;
 
 import java.time.LocalDateTime;
@@ -9,21 +7,21 @@ import java.time.LocalDateTime;
 public class DetalhesRendaDto {
 
     private Long id;
-    private Conta conta;
+    private ContaDto conta;
     private Double valor;
     private String descricao;
     private LocalDateTime dataPagamento;
     private Boolean fixo;
-    private Categoria categoria;
+    private CategoriaDto categoria;
 
     public DetalhesRendaDto(Renda renda) {
         this.id = renda.getId();
-        this.conta = renda.getConta();
+        this.conta = new ContaDto(renda.getConta());
         this.valor = renda.getValor();
         this.descricao = renda.getDescricao();
         this.dataPagamento = renda.getDataPagamento();
         this.fixo = renda.getFixo();
-        this.categoria = renda.getCategoria();
+        this.categoria = new CategoriaDto(renda.getCategoria());
     }
 
     public Long getId() {
@@ -34,11 +32,11 @@ public class DetalhesRendaDto {
         this.id = id;
     }
 
-    public Conta getConta() {
+    public ContaDto getConta() {
         return conta;
     }
 
-    public void setConta(Conta conta) {
+    public void setConta(ContaDto conta) {
         this.conta = conta;
     }
 
@@ -74,11 +72,11 @@ public class DetalhesRendaDto {
         this.fixo = fixo;
     }
 
-    public Categoria getCategoria() {
+    public CategoriaDto getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(Categoria categoria) {
+    public void setCategoria(CategoriaDto categoria) {
         this.categoria = categoria;
     }
 }
