@@ -26,8 +26,8 @@ public class Conta extends Observable implements Observer {
     public Conta(){
     }
 
-    public Conta(String banco, String numeroConta, String descricao, String apelido) {
-        this.id = id;
+    public Conta(Usuario usuario,String banco, String numeroConta, String descricao, String apelido) {
+        this.usuario = usuario;
         this.banco = banco;
         this.numeroConta = numeroConta;
         this.descricao = descricao;
