@@ -63,12 +63,8 @@ public class ContaForm implements CommonForm{
     }
 
     public Conta converter(UsuarioRepository usuarioRepository) {
-        Optional<Usuario> optional = usuarioRepository.findById(idUsuario);
-        if(optional.isPresent()){
             Usuario usuario = usuarioRepository.getOne(this.idUsuario);
             return (new Conta(usuario, this.banco, this.numeroConta, this.descricao, this.apelido));
-        }
-        return (new Conta());
     }
 
     public Conta atualizar(Long id, ContaRepository contaRepository){
