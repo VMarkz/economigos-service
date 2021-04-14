@@ -26,22 +26,14 @@ public class Conta extends Observable implements Observer {
     public Conta(){
     }
 
-    public Conta(String banco, String numeroConta, String descricao, String apelido) {
-        this.id = id;
+    public Conta(Usuario usuario,String banco, String numeroConta, String descricao, String apelido) {
+        this.usuario = usuario;
         this.banco = banco;
         this.numeroConta = numeroConta;
         this.descricao = descricao;
         this.apelido = apelido;
         rendas = new ArrayList<>();
         gastos = new ArrayList<>();
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
     }
 
     public Long getId() {
@@ -82,6 +74,14 @@ public class Conta extends Observable implements Observer {
 
     public void setApelido(String apelido) {
         this.apelido = apelido;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public List<Renda> getRendas() {

@@ -75,9 +75,14 @@ public class CategoriaControler {
 
     @GetMapping("/{id}")
     public ResponseEntity<DetalhesCategoriaDto> detalhar(@PathVariable Long id){
-        Optional<Categoria> categoria = categoriaRepository.findById(id);
-        if(categoria.isPresent()){
-            return ResponseEntity.ok().body(new DetalhesCategoriaDto(categoria.get()));
+        Optional<Categoria> optional = categoriaRepository.findById(id);
+        if(optional.isPresent()){
+            Categoria categoria = categoriaRepository.getOne(id);
+
+            System.out.println("GASTOS" + categoria.getGastos());
+            System.out.println("RENDAS" + categoria.getRendas());
+
+            return ResponseEntity.ok().body(new DetalhesCategoriaDto(categoria));
         }else{
             return ResponseEntity.notFound().build();
         }

@@ -1,10 +1,13 @@
 package br.com.economigos.service.controler.form;
 
 import br.com.economigos.service.model.Conta;
+import br.com.economigos.service.model.Usuario;
 import br.com.economigos.service.repository.ContaRepository;
+import br.com.economigos.service.repository.UsuarioRepository;
 import com.sun.istack.NotNull;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.Optional;
 
 public class ContaForm implements CommonForm{
 
@@ -16,9 +19,15 @@ public class ContaForm implements CommonForm{
     private String descricao;
     @NotNull @NotEmpty
     private String apelido;
+    @NotNull
+    private Long idUsuario;
 
-    public Conta converter() {
-        return (new Conta(this.banco, this.numeroConta, this.descricao, this.apelido));
+    public Long getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Long idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public String getBanco() {
@@ -51,6 +60,15 @@ public class ContaForm implements CommonForm{
 
     public void setApelido(String apelido) {
         this.apelido = apelido;
+    }
+
+    public Conta converter(UsuarioRepository usuarioRepository) {
+        Optional<Usuario> optional = usuarioRepository.findById(idUsuario);
+        if(optional.isPresent()){
+            Usuario usuario = usuarioRepository.getOne(this.idUsuario);
+            return (new Conta(usuario, this.banco, this.numeroConta, this.descricao, this.apelido));
+        }
+        return (new Conta());
     }
 
     public Conta atualizar(Long id, ContaRepository contaRepository){

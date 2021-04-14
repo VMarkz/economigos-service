@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@DiscriminatorValue(value = "R")
+//@DiscriminatorValue(value = "RENDA")
 public class Renda extends Contabil{
 
     @Id
@@ -13,7 +13,7 @@ public class Renda extends Contabil{
     private Boolean recebido;
 
     public Renda(Conta conta, Categoria categoria, Double valor, String descricao, Boolean fixo, Boolean recebido, LocalDateTime dataPagamento) {
-        super(conta,categoria,valor, descricao, fixo, dataPagamento);
+        super(conta,categoria,valor, descricao, fixo, dataPagamento, "Renda");
         this.recebido = recebido;
     }
 

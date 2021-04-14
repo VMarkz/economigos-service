@@ -5,42 +5,42 @@ import java.time.LocalDateTime;
 import java.util.Observable;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "tipo", length = 1, discriminatorType = DiscriminatorType.STRING)
-@DiscriminatorValue("P")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+//@DiscriminatorColumn(name = "tipo", length = 1, discriminatorType = DiscriminatorType.STRING)
+//@DiscriminatorValue("P")
 public abstract class Contabil extends Observable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
-    @Column(insertable = false, updatable = false)
+//    @Column(insertable = false, updatable = false)
     protected String tipo;
     @ManyToOne
     protected Conta conta;
+    @ManyToOne
+    protected Categoria categoria;
     protected Double valor;
     protected String descricao;
     protected LocalDateTime dataPagamento;
     protected Boolean fixo;
-    @ManyToOne
-    protected Categoria categoria;
 
-    public Contabil(Conta conta, Categoria categoria, Double valor, String descricao, Boolean fixo, LocalDateTime dataPagamento) {
+    public Contabil(Conta conta, Categoria categoria, Double valor, String descricao, Boolean fixo, LocalDateTime dataPagamento,String tipo) {
         this.conta = conta;
         this.categoria = categoria;
         this.valor = valor;
         this.descricao = descricao;
-        this.dataPagamento = LocalDateTime.now();
-        this.fixo = fixo;
         this.dataPagamento = dataPagamento;
+        this.fixo = fixo;
+        this.tipo = tipo;
     }
 
-    public Contabil(Categoria categoria, Double valor, String descricao, Boolean fixo, LocalDateTime dataPagamento) {
+    public Contabil(Categoria categoria, Double valor, String descricao, Boolean fixo, LocalDateTime dataPagamento, String tipo) {
         this.categoria = categoria;
         this.valor = valor;
         this.descricao = descricao;
-        this.dataPagamento = LocalDateTime.now();
-        this.fixo = fixo;
         this.dataPagamento = dataPagamento;
+        this.fixo = fixo;
+        this.tipo = tipo;
     }
 
     public Contabil() {
@@ -52,6 +52,30 @@ public abstract class Contabil extends Observable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public Conta getConta() {
+        return conta;
+    }
+
+    public void setConta(Conta conta) {
+        this.conta = conta;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 
     public Double getValor() {
@@ -78,36 +102,12 @@ public abstract class Contabil extends Observable {
         this.dataPagamento = dataPagamento;
     }
 
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
-    public Conta getConta() {
-        return conta;
-    }
-
-    public void setConta(Conta conta) {
-        this.conta = conta;
-    }
-
     public Boolean getFixo() {
         return fixo;
     }
 
     public void setFixo(Boolean fixo) {
         this.fixo = fixo;
-    }
-
-    public Categoria getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
     }
 
     public void notificaObservador(String acao){

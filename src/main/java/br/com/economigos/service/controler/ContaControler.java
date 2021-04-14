@@ -6,6 +6,7 @@ import br.com.economigos.service.controler.form.ContaForm;
 import br.com.economigos.service.model.Conta;
 import br.com.economigos.service.model.Usuario;
 import br.com.economigos.service.repository.ContaRepository;
+import br.com.economigos.service.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,8 @@ public class ContaControler {
 
     @Autowired
     ContaRepository contaRepository;
+    @Autowired
+    UsuarioRepository usuarioRepository;
 
     @GetMapping
     public List<ContaDto> listar(){
@@ -34,7 +37,7 @@ public class ContaControler {
     @PostMapping
     @Transactional
     public ResponseEntity<ContaDto> cadastrar(@RequestBody @Valid ContaForm form, UriComponentsBuilder uriBuilder) {
-        Conta conta = form.converter();
+        Conta conta = form.converter(usuarioRepository);
         contaRepository.save(conta);
         conta.addObserver(new Usuario());
         conta.notificaObservador("create");

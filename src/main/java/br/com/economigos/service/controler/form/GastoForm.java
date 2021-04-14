@@ -18,9 +18,12 @@ import java.util.Optional;
 
 public class GastoForm {
 
-
+    private Long idConta;
+    private Long idCartao;
     @NotNull
-    private String conta;
+    private Long idCategoria;
+    @NotNull
+    private Boolean gastoCartao;
     @NotNull
     private Double valor;
     @NotNull
@@ -30,18 +33,14 @@ public class GastoForm {
     @NotNull
     private Boolean fixo;
     @NotNull
-    private String categoria;
-    @NotNull
     private LocalDateTime dataPagamento;
-    @NotNull
-    private Long idCartao;
 
-    public Boolean getPago() {
-        return pago;
+    public Long getIdConta() {
+        return idConta;
     }
 
-    public void setPago(Boolean pago) {
-        this.pago = pago;
+    public void setIdConta(Long idConta) {
+        this.idConta = idConta;
     }
 
     public Long getIdCartao() {
@@ -52,12 +51,20 @@ public class GastoForm {
         this.idCartao = idCartao;
     }
 
-    public String getConta() {
-        return conta;
+    public Long getIdCategoria() {
+        return idCategoria;
     }
 
-    public void setConta(String conta) {
-        this.conta = conta;
+    public void setIdCategoria(Long idCategoria) {
+        this.idCategoria = idCategoria;
+    }
+
+    public Boolean getGastoCartao() {
+        return gastoCartao;
+    }
+
+    public void setGastoCartao(Boolean gastoCartao) {
+        this.gastoCartao = gastoCartao;
     }
 
     public Double getValor() {
@@ -66,6 +73,14 @@ public class GastoForm {
 
     public void setValor(Double valor) {
         this.valor = valor;
+    }
+
+    public Boolean getPago() {
+        return pago;
+    }
+
+    public void setPago(Boolean pago) {
+        this.pago = pago;
     }
 
     public String getDescricao() {
@@ -84,14 +99,6 @@ public class GastoForm {
         this.fixo = fixo;
     }
 
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
-
     public LocalDateTime getDataPagamento() {
         return dataPagamento;
     }
@@ -100,14 +107,28 @@ public class GastoForm {
         this.dataPagamento = dataPagamento;
     }
 
-    public Gasto converter(CartaoRepository cartaoRepository, ContaRepository contaRepository, CategoriaRepository categoriaRepository ) {
-        Optional<Cartao> cartao = cartaoRepository.findById(this.idCartao);
-        Conta conta = contaRepository.findByApelido(this.conta);
-        Categoria categoria = categoriaRepository.findByCategoria(this.categoria);
-        if (cartao.isPresent()) {
-            return new Gasto(cartao.get(),categoria,this.valor,this.descricao,this.pago,this.fixo, this.dataPagamento, "cartão");
+    public Gasto converter(CartaoRepository cartaoRepository, ContaRepository contaRepository, CategoriaRepository categoriaRepository) {
+
+        if (gastoCartao) {
+            Optional<Cartao> optionalCartao = cartaoRepository.findById(this.idCartao);
+            Optional<Categoria> optionalCategoria = categoriaRepository.findById(this.idCategoria);
+            if (optionalCartao.isPresent() && optionalCategoria.isPresent()) {
+                Cartao cartao = cartaoRepository.getOne(idCartao);
+                Categoria categoria = categoriaRepository.getOne(idCategoria);
+                return new Gasto(cartao, categoria, this.valor, this.descricao, this.pago, this.fixo, this.dataPagamento, "cartão");
+            } else {
+                return new Gasto();
+            }
         } else {
-            return new Gasto(conta, categoria, this.valor, this.descricao, this.fixo, this.pago, this.dataPagamento);
+            Optional<Conta> optionalConta = contaRepository.findById(this.idConta);
+            Optional<Categoria> optionalCategoria = categoriaRepository.findById(this.idCategoria);
+            if (optionalConta.isPresent() && optionalCategoria.isPresent()) {
+                Conta conta = contaRepository.getOne(idConta);
+                Categoria categoria = categoriaRepository.getOne(idCategoria);
+                return new Gasto(conta, categoria, this.valor, this.descricao, this.fixo, this.pago, this.dataPagamento);
+            } else {
+                return new Gasto();
+            }
         }
     }
 
