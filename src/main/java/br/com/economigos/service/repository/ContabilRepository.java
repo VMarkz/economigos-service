@@ -1,15 +1,10 @@
 package br.com.economigos.service.repository;
 
-import br.com.economigos.service.model.Conta;
 import br.com.economigos.service.model.Contabil;
-import br.com.economigos.service.model.Gasto;
+import br.com.economigos.service.utils.ListaObj;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ContabilRepository extends JpaRepository<Contabil, Long> {

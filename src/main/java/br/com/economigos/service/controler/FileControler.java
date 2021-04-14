@@ -7,6 +7,7 @@ import br.com.economigos.service.repository.ContabilRepository;
 import br.com.economigos.service.repository.GastoRepository;
 import br.com.economigos.service.repository.RendaRepository;
 import br.com.economigos.service.utils.FileIo;
+import br.com.economigos.service.utils.GravaArquivo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -56,13 +57,9 @@ public class FileControler {
     }
 
     @GetMapping("/export/extrato/{dias}")
-    public List<Contabil> getExtratoDias(@PathVariable Integer dias){
+    public void getExtratoDias(@PathVariable Integer dias){
         if(dias == 90){
-            return contabilRepository.findByDataPagamento90();
-        } else if (dias == 60) {
-            return contabilRepository.findByDataPagamento60();
-        } else {
-            return contabilRepository.findByDataPagamento30();
+            System.out.println(contabilRepository.findByDataPagamento90());
         }
     }
 
