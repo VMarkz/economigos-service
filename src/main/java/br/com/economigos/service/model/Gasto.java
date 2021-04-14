@@ -4,7 +4,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-//@DiscriminatorValue(value = "GASTO")
 public class Gasto extends Contabil{
 
     @Id
