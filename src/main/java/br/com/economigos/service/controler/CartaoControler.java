@@ -7,6 +7,7 @@ import br.com.economigos.service.controler.form.CartaoForm;
 import br.com.economigos.service.model.Cartao;
 import br.com.economigos.service.model.Usuario;
 import br.com.economigos.service.repository.CartaoRepository;
+import br.com.economigos.service.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,8 @@ public class CartaoControler {
 
     @Autowired
     CartaoRepository cartaoRepository;
+    @Autowired
+    UsuarioRepository usuarioRepository;
 
     @GetMapping
     public List<CartaoDto> listar(){
@@ -35,7 +38,7 @@ public class CartaoControler {
     @PostMapping
     @Transactional
     public ResponseEntity<CartaoDto> cadastrar(@RequestBody @Valid CartaoForm form, UriComponentsBuilder uriBuilder) {
-        Cartao cartao = form.converter();
+        Cartao cartao = form.converter(usuarioRepository);
         cartaoRepository.save(cartao);
 
         URI uri = uriBuilder.path("economigos/cartoes/{id}").buildAndExpand(cartao.getId()).toUri();

@@ -17,14 +17,16 @@ public class Cartao {
     private Boolean pago;
     private Double limite;
     private Double valor;
+    @ManyToOne
+    private Usuario usuario;
     @OneToMany(mappedBy = "cartao")
     private List<Gasto> gastos;
 
     public Cartao() {
     }
 
-    public Cartao(String nome, LocalDateTime fechamento, LocalDateTime vencimento, Boolean pago, Double limite) {
-        this.id = id;
+    public Cartao(Usuario usuario, String nome, LocalDateTime fechamento, LocalDateTime vencimento, Boolean pago, Double limite) {
+        this.usuario = usuario;
         this.nome = nome;
         this.fechamento = fechamento;
         this.vencimento = vencimento;
@@ -88,6 +90,14 @@ public class Cartao {
 
     public void setValor(Double valor) {
         this.valor = valor;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public List<Gasto> getGastos() {

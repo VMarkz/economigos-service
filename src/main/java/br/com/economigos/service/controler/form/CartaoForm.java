@@ -2,13 +2,18 @@ package br.com.economigos.service.controler.form;
 
 import br.com.economigos.service.model.Cartao;
 import br.com.economigos.service.model.Conta;
+import br.com.economigos.service.model.Usuario;
 import br.com.economigos.service.repository.CartaoRepository;
 import br.com.economigos.service.repository.ContaRepository;
+import br.com.economigos.service.repository.UsuarioRepository;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 public class CartaoForm implements CommonForm {
+
+    @NotNull
+    private Long idUsuario;
     @NotNull
     private String nome;
     @NotNull
@@ -19,6 +24,14 @@ public class CartaoForm implements CommonForm {
     private Boolean pago;
     @NotNull
     private Double limite;
+
+    public Long getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Long idUsuario) {
+        this.idUsuario = idUsuario;
+    }
 
     public String getNome() {
         return nome;
@@ -60,8 +73,9 @@ public class CartaoForm implements CommonForm {
         this.limite = limite;
     }
 
-    public Cartao converter() {
-        return (new Cartao(this.nome, this.fechamento, this.vencimento, this.pago, this.limite));
+    public Cartao converter(UsuarioRepository usuarioRepository) {
+        Usuario usuario = usuarioRepository.getOne(idUsuario);
+        return (new Cartao(usuario,this.nome, this.fechamento, this.vencimento, this.pago, this.limite));
     }
 
     public Cartao atualizar(Long id, CartaoRepository cartaoRepository){

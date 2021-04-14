@@ -13,6 +13,7 @@ public class DetalhesUsuarioDto {
     private LocalDateTime dataCriacao;
     private List<ContaDto> contaDtos;
     private List<MetaDto> metaDtos;
+    private List<CartaoDto> cartaoDtos;
 
     public DetalhesUsuarioDto(Usuario usuario) {
         this.id = usuario.getId();
@@ -20,6 +21,7 @@ public class DetalhesUsuarioDto {
         this.dataCriacao = usuario.getDataCriacao();
         this.contaDtos = ContaDto.converter(usuario.getContas());
         this.metaDtos = MetaDto.converter(usuario.getMetas());
+        this.cartaoDtos = CartaoDto.converter(usuario.getCartoes());
     }
 
     public Long getId() {
@@ -60,5 +62,13 @@ public class DetalhesUsuarioDto {
 
     public void setMetaDtos(List<MetaDto> metaDtos) {
         this.metaDtos = metaDtos;
+    }
+
+    public List<CartaoDto> getCartaoDtos() {
+        return cartaoDtos;
+    }
+
+    public void setCartaoDtos(List<CartaoDto> cartaoDtos) {
+        this.cartaoDtos = cartaoDtos;
     }
 }
