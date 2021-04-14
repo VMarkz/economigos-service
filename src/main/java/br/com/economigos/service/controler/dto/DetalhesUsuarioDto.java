@@ -1,5 +1,6 @@
 package br.com.economigos.service.controler.dto;
 
+import br.com.economigos.service.model.Meta;
 import br.com.economigos.service.model.Usuario;
 
 import java.time.LocalDateTime;
@@ -11,12 +12,16 @@ public class DetalhesUsuarioDto {
     private String email;
     private LocalDateTime dataCriacao;
     private List<ContaDto> contaDtos;
+    private List<MetaDto> metaDtos;
+    private List<CartaoDto> cartaoDtos;
 
     public DetalhesUsuarioDto(Usuario usuario) {
         this.id = usuario.getId();
         this.email = usuario.getEmail();
         this.dataCriacao = usuario.getDataCriacao();
         this.contaDtos = ContaDto.converter(usuario.getContas());
+        this.metaDtos = MetaDto.converter(usuario.getMetas());
+        this.cartaoDtos = CartaoDto.converter(usuario.getCartoes());
     }
 
     public Long getId() {
@@ -49,5 +54,21 @@ public class DetalhesUsuarioDto {
 
     public void setContaDtos(List<ContaDto> contaDtos) {
         this.contaDtos = contaDtos;
+    }
+
+    public List<MetaDto> getMetaDtos() {
+        return metaDtos;
+    }
+
+    public void setMetaDtos(List<MetaDto> metaDtos) {
+        this.metaDtos = metaDtos;
+    }
+
+    public List<CartaoDto> getCartaoDtos() {
+        return cartaoDtos;
+    }
+
+    public void setCartaoDtos(List<CartaoDto> cartaoDtos) {
+        this.cartaoDtos = cartaoDtos;
     }
 }

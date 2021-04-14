@@ -18,6 +18,8 @@ public class Usuario implements Observer {
     private List<Conta> contas;
     @OneToMany(mappedBy = "usuario")
     private List<Meta> metas;
+    @OneToMany(mappedBy = "usuario")
+    private List<Cartao> cartoes;
     private LocalDateTime dataCriacao = LocalDateTime.now();
 
     public Usuario() {
@@ -76,6 +78,14 @@ public class Usuario implements Observer {
 
     public void setDataCriacao(LocalDateTime dataCriacao) {
         this.dataCriacao = dataCriacao;
+    }
+
+    public List<Cartao> getCartoes() {
+        return cartoes;
+    }
+
+    public void setCartoes(List<Cartao> cartoes) {
+        this.cartoes = cartoes;
     }
 
     @Override
