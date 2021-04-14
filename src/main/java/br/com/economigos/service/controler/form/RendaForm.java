@@ -13,8 +13,9 @@ import java.time.LocalDateTime;
 
 public class RendaForm implements CommonForm {
 
+    private Long idConta;
     @NotNull
-    private String conta;
+    private Long idCategoria;
     @NotNull
     private Double valor;
     @NotNull
@@ -24,32 +25,22 @@ public class RendaForm implements CommonForm {
     @NotNull
     private Boolean fixo;
     @NotNull
-    private String categoria;
-    @NotNull
     private LocalDateTime dataPagamento;
 
-    public Boolean getRecebido() {
-        return recebido;
+    public Long getIdConta() {
+        return idConta;
     }
 
-    public void setRecebido(Boolean recebido) {
-        this.recebido = recebido;
+    public void setIdConta(Long idConta) {
+        this.idConta = idConta;
     }
 
-    public LocalDateTime getDataPagamento() {
-        return dataPagamento;
+    public Long getIdCategoria() {
+        return idCategoria;
     }
 
-    public void setDataPagamento(LocalDateTime dataPagamento) {
-        this.dataPagamento = dataPagamento;
-    }
-
-    public String getConta() {
-        return conta;
-    }
-
-    public void setConta(String conta) {
-        this.conta = conta;
+    public void setIdCategoria(Long idCategoria) {
+        this.idCategoria = idCategoria;
     }
 
     public Double getValor() {
@@ -58,6 +49,14 @@ public class RendaForm implements CommonForm {
 
     public void setValor(Double valor) {
         this.valor = valor;
+    }
+
+    public Boolean getRecebido() {
+        return recebido;
+    }
+
+    public void setRecebido(Boolean recebido) {
+        this.recebido = recebido;
     }
 
     public String getDescricao() {
@@ -76,17 +75,17 @@ public class RendaForm implements CommonForm {
         this.fixo = fixo;
     }
 
-    public String getCategoria() {
-        return categoria;
+    public LocalDateTime getDataPagamento() {
+        return dataPagamento;
     }
 
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
+    public void setDataPagamento(LocalDateTime dataPagamento) {
+        this.dataPagamento = dataPagamento;
     }
 
     public Renda converter(ContaRepository contaRepository, CategoriaRepository categoriaRepository) {
-        Conta conta = contaRepository.findByApelido(this.conta);
-        Categoria categoria = categoriaRepository.findByCategoria(this.categoria);
+        Conta conta = contaRepository.getOne(this.idConta);
+        Categoria categoria = categoriaRepository.getOne(this.idCategoria);
         return new Renda(conta, categoria, this.valor, this.descricao, this.fixo, this.recebido, this.dataPagamento);
     }
 

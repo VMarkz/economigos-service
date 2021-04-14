@@ -1,6 +1,7 @@
 package br.com.economigos.service.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -19,6 +20,8 @@ public class Categoria implements Observer {
 
     public Categoria(String categoria) {
         this.categoria = categoria;
+        this.gastos = new ArrayList<>();
+        this.rendas = new ArrayList<>();
     }
 
     public Categoria() {
@@ -36,7 +39,7 @@ public class Categoria implements Observer {
         return categoria;
     }
 
-    public void setCategoria(String categoria)  {
+    public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
 

@@ -1,11 +1,11 @@
 INSERT INTO USUARIO(data_criacao, email, senha) VALUES('2021-03-01', 'vitormarques@email.com', 'senha@123');
 INSERT INTO CATEGORIA(categoria) VALUES ('Alimento'),('Eletrônicos'),('Casa'),('Locomoção'),('Salário'), ('Entretenimento'), ('Investimento');
 INSERT INTO CONTA(apelido, banco, descricao, numero_conta) VALUES ('C6BANK', 'C6BANK', 'Contra Corrente', '1587389-032');
-INSERT INTO CONTABIL(tipo, data_pagamento, descricao, fixo, valor, categoria_id, conta_id) VALUES ('R', '2021-03-01', 'Meu salário', true, 2000.00, 5, 1);
-INSERT INTO CONTABIL(tipo, data_pagamento, descricao, fixo, valor, pago, categoria_id, conta_id) VALUES ('G', '2021-05-01', 'Netflix', true, 32.90, false, 6, 1);
-INSERT INTO CONTABIL(tipo, data_pagamento, descricao, fixo, valor, categoria_id, conta_id) VALUES ('R', '2021-03-01', 'Meu investimento', false, 2000.00, 7, 1);
-INSERT INTO CONTABIL(tipo, data_pagamento, descricao, fixo, valor, pago, categoria_id, conta_id) VALUES ('G', '2021-05-01', 'Spotify', true, 17.90, false, 6, 1);
-INSERT INTO CONTABIL(tipo, data_pagamento, descricao, fixo, valor, pago, categoria_id, conta_id) VALUES ('G', '2021-05-01', 'Coxinha', true, 17.90, false, 1, 1);
+-- INSERT INTO CONTABIL(tipo, data_pagamento, descricao, fixo, valor, categoria_id, conta_id) VALUES ('R', '2021-03-01', 'Meu salário', true, 2000.00, 5, 1);
+-- INSERT INTO CONTABIL(tipo, data_pagamento, descricao, fixo, valor, pago, categoria_id, conta_id) VALUES ('G', '2021-05-01', 'Netflix', true, 32.90, false, 6, 1);
+-- INSERT INTO CONTABIL(tipo, data_pagamento, descricao, fixo, valor, categoria_id, conta_id) VALUES ('R', '2021-03-01', 'Meu investimento', false, 2000.00, 7, 1);
+-- INSERT INTO CONTABIL(tipo, data_pagamento, descricao, fixo, valor, pago, categoria_id, conta_id) VALUES ('G', '2021-05-01', 'Spotify', true, 17.90, false, 6, 1);
+-- INSERT INTO CONTABIL(tipo, data_pagamento, descricao, fixo, valor, pago, categoria_id, conta_id) VALUES ('G', '2021-05-01', 'Coxinha', true, 17.90, false, 1, 1);
 INSERT INTO CONTATO(email, mensagem) VALUES ('usuario@email.com', 'Gostei muito do app de vocês!');
 INSERT INTO META(descricao, meta_gasto, nome, valor_inicial, valor_final) VALUES ('Viagem final de ano', true, 'Viagem', 0.00, 4000.00);
 INSERT INTO CARTAO(fechamento,limite,nome,pago,valor,vencimento) VALUES ('2021-03-15', 1000.0,'Cartão de crédito nacional C6Bank', true, 500.0, '2021-04-30')
