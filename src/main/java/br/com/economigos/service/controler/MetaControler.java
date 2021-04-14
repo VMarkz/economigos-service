@@ -1,9 +1,11 @@
 package br.com.economigos.service.controler;
 
+import br.com.economigos.service.controler.dto.MetaDto;
 import br.com.economigos.service.controler.form.MetaForm;
 import br.com.economigos.service.model.Meta;
 import br.com.economigos.service.model.Usuario;
 import br.com.economigos.service.repository.MetaRepository;
+import br.com.economigos.service.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,8 @@ public class MetaControler {
 
     @Autowired
     private MetaRepository metaRepository;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     @GetMapping
     public List<Meta> listar(){
@@ -31,15 +35,15 @@ public class MetaControler {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<Meta> cadastrar(@RequestBody @Valid MetaForm form, UriComponentsBuilder uriBuilder) {
-        Meta meta = form.converter();
+    public ResponseEntity<MetaDto> cadastrar(@RequestBody @Valid MetaForm form, UriComponentsBuilder uriBuilder) {
+        Meta meta = form.converter(usuarioRepository);
 
         metaRepository.save(meta);
         meta.addObserver(new Usuario());
         meta.notificaObservador("create");
 
         URI uri = uriBuilder.path("/Metas/{id}").buildAndExpand(meta.getId()).toUri();
-        return ResponseEntity.created(uri).body(meta);
+        return ResponseEntity.created(uri).body(new MetaDto(meta));
     }
 
     @GetMapping("/{id}")

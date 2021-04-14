@@ -1,21 +1,32 @@
 package br.com.economigos.service.controler.form;
 
 import br.com.economigos.service.model.Meta;
+import br.com.economigos.service.model.Usuario;
 import br.com.economigos.service.repository.MetaRepository;
+import br.com.economigos.service.repository.UsuarioRepository;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class MetaForm implements CommonForm{
 
-    @NotNull @NotEmpty
+    private Long idUsuario;
+    @NotNull
     private String nome;
     private String descricao;
-    @NotNull @NotEmpty
+    @NotNull
     private Boolean metaGasto;
     private Double valorInicial;
-    @NotNull @NotEmpty
+    @NotNull
     private Double valorFinal;
+
+    public Long getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Long idUsuario) {
+        this.idUsuario = idUsuario;
+    }
 
     public String getNome() {
         return nome;
@@ -57,8 +68,9 @@ public class MetaForm implements CommonForm{
         this.valorFinal = valorFinal;
     }
 
-    public Meta converter() {
-        return new Meta(this.nome,this.descricao,this.metaGasto,this.valorInicial,this.valorFinal);
+    public Meta converter(UsuarioRepository usuarioRepository) {
+        Usuario usuario = usuarioRepository.getOne(this.idUsuario);
+        return new Meta(usuario,this.nome,this.descricao,this.metaGasto,this.valorInicial,this.valorFinal);
     }
 
     public Meta atualizar(Long id, MetaRepository metaRepository) {

@@ -6,14 +6,11 @@ import java.util.Observable;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-//@DiscriminatorColumn(name = "tipo", length = 1, discriminatorType = DiscriminatorType.STRING)
-//@DiscriminatorValue("P")
 public abstract class Contabil extends Observable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
-//    @Column(insertable = false, updatable = false)
     protected String tipo;
     @ManyToOne
     protected Conta conta;
