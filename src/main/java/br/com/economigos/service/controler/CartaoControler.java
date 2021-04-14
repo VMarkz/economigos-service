@@ -1,6 +1,7 @@
 package br.com.economigos.service.controler;
 
 import br.com.economigos.service.controler.dto.CartaoDto;
+import br.com.economigos.service.controler.dto.DetalhesCartaoDto;
 import br.com.economigos.service.controler.dto.DetalhesUsuarioDto;
 import br.com.economigos.service.controler.form.CartaoForm;
 import br.com.economigos.service.model.Cartao;
@@ -42,10 +43,10 @@ public class CartaoControler {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CartaoDto> detalhar(@PathVariable Long id){
+    public ResponseEntity<DetalhesCartaoDto> detalhar(@PathVariable Long id){
         Optional<Cartao> cartao = cartaoRepository.findById(id);
         if(cartao.isPresent()){
-            return ResponseEntity.ok().body(new CartaoDto(cartao.get()));
+            return ResponseEntity.ok().body(new DetalhesCartaoDto(cartao.get()));
         }else{
             return ResponseEntity.badRequest().build();
         }
