@@ -15,7 +15,8 @@ public class Conta extends Observable implements Observer {
     private String banco;
     private String numeroConta;
     private String descricao;
-    private String apelido;
+    private String nome;
+    private Double valorAtual;
     @ManyToOne
     private Usuario usuario;
     @OneToMany(mappedBy = "conta")
@@ -26,18 +27,27 @@ public class Conta extends Observable implements Observer {
     public Conta(){
     }
 
-    public Conta(Usuario usuario,String banco, String numeroConta, String descricao, String apelido) {
+    public Conta(Usuario usuario,String banco, String numeroConta, String descricao, String nome) {
         this.usuario = usuario;
         this.banco = banco;
         this.numeroConta = numeroConta;
         this.descricao = descricao;
-        this.apelido = apelido;
+        this.nome = nome;
+        this.valorAtual = 0.0;
         rendas = new ArrayList<>();
         gastos = new ArrayList<>();
     }
 
     public Long getId() {
         return id;
+    }
+
+    public Double getValorAtual() {
+        return valorAtual;
+    }
+
+    public void setValorAtual(Double valorAtual) {
+        this.valorAtual = valorAtual;
     }
 
     public void setId(Long id) {
@@ -68,12 +78,12 @@ public class Conta extends Observable implements Observer {
         this.descricao = descricao;
     }
 
-    public String getApelido() {
-        return apelido;
+    public String getNome() {
+        return nome;
     }
 
-    public void setApelido(String apelido) {
-        this.apelido = apelido;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public Usuario getUsuario() {

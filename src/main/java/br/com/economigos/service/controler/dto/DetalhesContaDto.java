@@ -11,7 +11,8 @@ public class DetalhesContaDto implements CommonDto{
     private String banco;
     private String numeroConta;
     private String descricao;
-    private String apelido;
+    private String nome;
+    private Double valorAtual;
     private List<RendaDto> rendas;
     private List<GastoDto> gastos;
 
@@ -20,9 +21,18 @@ public class DetalhesContaDto implements CommonDto{
         this.banco = conta.getBanco();
         this.numeroConta = conta.getNumeroConta();
         this.descricao = conta.getDescricao();
-        this.apelido = conta.getApelido();
+        this.nome = conta.getNome();
+        this.valorAtual = conta.getValorAtual();
         this.rendas = RendaDto.converter(conta.getRendas());
         this.gastos = GastoDto.converter(conta.getGastos());
+    }
+
+    public Double getValorAtual() {
+        return valorAtual;
+    }
+
+    public void setValorAtual(Double valorAtual) {
+        this.valorAtual = valorAtual;
     }
 
     public Long getId() {
@@ -57,12 +67,12 @@ public class DetalhesContaDto implements CommonDto{
         this.descricao = descricao;
     }
 
-    public String getApelido() {
-        return apelido;
+    public String getNome() {
+        return nome;
     }
 
-    public void setApelido(String apelido) {
-        this.apelido = apelido;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public List<RendaDto> getRendas() {

@@ -18,7 +18,7 @@ public class ContaForm implements CommonForm{
     @NotNull @NotEmpty
     private String descricao;
     @NotNull @NotEmpty
-    private String apelido;
+    private String nome;
     @NotNull
     private Long idUsuario;
 
@@ -54,23 +54,23 @@ public class ContaForm implements CommonForm{
         this.descricao = descricao;
     }
 
-    public String getApelido() {
-        return apelido;
+    public String getNome() {
+        return nome;
     }
 
-    public void setApelido(String apelido) {
-        this.apelido = apelido;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public Conta converter(UsuarioRepository usuarioRepository) {
             Usuario usuario = usuarioRepository.getOne(this.idUsuario);
-            return (new Conta(usuario, this.banco, this.numeroConta, this.descricao, this.apelido));
+            return (new Conta(usuario, this.banco, this.numeroConta, this.descricao, this.nome));
     }
 
     public Conta atualizar(Long id, ContaRepository contaRepository){
         Conta conta = contaRepository.getOne(id);
 
-        conta.setApelido(this.apelido);
+        conta.setNome(this.nome);
         conta.setBanco(this.banco);
         conta.setDescricao(this.descricao);
         conta.setNumeroConta(this.numeroConta);
