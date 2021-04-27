@@ -31,23 +31,37 @@ public class FileIo {
         }
     }
 
-    public static void separarGastosRendas(List<Renda> rendas, List<Gasto> gastos) {
+    public static void separarGastosRendas(ListaObj<Renda> rendas, ListaObj<Gasto> gastos) {
 
         List<List> rendasConteudo = new ArrayList();
         List<List> gastosConteudo = new ArrayList();
 
-        rendas.forEach(renda -> {
+        for (int i = 0; i < rendas.getTamanho(); i++) {
             List<String> tempList = new ArrayList<>();
-            tempList.add(renda.getValor().toString());
-            tempList.add(renda.getDescricao().toString());
+            tempList.add(rendas.getElemento(i).getValor().toString());
+            tempList.add(rendas.getElemento(i).getDescricao().toString());
             rendasConteudo.add(tempList);
-        });
-        gastos.forEach(gasto -> {
+        }
+
+        for (int i = 0; i < gastos.getTamanho(); i++) {
             List<String> tempList = new ArrayList<>();
-            tempList.add(gasto.getValor().toString());
-            tempList.add(gasto.getDescricao().toString());
+            tempList.add(gastos.getElemento(i).getValor().toString());
+            tempList.add(gastos.getElemento(i).getDescricao().toString());
             gastosConteudo.add(tempList);
-        });
+        }
+
+//        rendas.forEach(renda -> {
+//            List<String> tempList = new ArrayList<>();
+//            tempList.add(renda.getValor().toString());
+//            tempList.add(renda.getDescricao().toString());
+//            rendasConteudo.add(tempList);
+//        });
+//        gastos.forEach(gasto -> {
+//            List<String> tempList = new ArrayList<>();
+//            tempList.add(gasto.getValor().toString());
+//            tempList.add(gasto.getDescricao().toString());
+//            gastosConteudo.add(tempList);
+//        });
 
         tratarGastosRendas(rendasConteudo,gastosConteudo);
     }

@@ -136,6 +136,7 @@ public class GastoForm {
         Gasto gasto = gastoRepository.getOne(id);
 
         gasto.setDescricao(this.descricao);
+        gasto.setPago(this.pago);
         gasto.setFixo(this.fixo);
         gasto.setValor(this.valor);
         gasto.setDataPagamento(this.dataPagamento);

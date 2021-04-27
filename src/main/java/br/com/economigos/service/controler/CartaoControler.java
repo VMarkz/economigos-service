@@ -5,7 +5,7 @@ import br.com.economigos.service.controler.dto.DetalhesCartaoDto;
 import br.com.economigos.service.controler.dto.DetalhesUsuarioDto;
 import br.com.economigos.service.controler.form.CartaoForm;
 import br.com.economigos.service.model.Cartao;
-import br.com.economigos.service.model.Usuario;
+//import br.com.economigos.service.model.Usuario;
 import br.com.economigos.service.repository.CartaoRepository;
 import br.com.economigos.service.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
