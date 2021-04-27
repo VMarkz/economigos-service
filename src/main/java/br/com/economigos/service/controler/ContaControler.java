@@ -36,6 +36,17 @@ public class ContaControler {
         return ContaDto.converter(contas);
     }
 
+    @GetMapping("/usuario/{idUsuario}")
+    public ResponseEntity<List<ContaDto>> listar(@PathVariable Long idUsuario){
+        Optional<Usuario> optional = usuarioRepository.findById(idUsuario);
+
+        if (optional.isPresent()){
+            List<Conta> contas = contaRepository.findAllByUsuario(idUsuario);
+            return ResponseEntity.ok().body(ContaDto.converter(contas));
+        }
+        return ResponseEntity.notFound().build();
+    }
+
     @PostMapping
     @Transactional
     public ResponseEntity<ContaDto> cadastrar(@RequestBody @Valid ContaForm form, UriComponentsBuilder uriBuilder) {
