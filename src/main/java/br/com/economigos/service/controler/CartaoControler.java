@@ -1,10 +1,12 @@
 package br.com.economigos.service.controler;
 
 import br.com.economigos.service.controler.dto.CartaoDto;
+import br.com.economigos.service.controler.dto.ContaDto;
 import br.com.economigos.service.controler.dto.DetalhesCartaoDto;
 import br.com.economigos.service.controler.dto.DetalhesUsuarioDto;
 import br.com.economigos.service.controler.form.CartaoForm;
 import br.com.economigos.service.model.Cartao;
+import br.com.economigos.service.model.Conta;
 import br.com.economigos.service.model.Usuario;
 import br.com.economigos.service.repository.CartaoRepository;
 import br.com.economigos.service.repository.UsuarioRepository;
@@ -33,6 +35,17 @@ public class CartaoControler {
     public List<CartaoDto> listar(){
         List<Cartao> cartoes = cartaoRepository.findAll();
         return CartaoDto.converter(cartoes);
+    }
+
+    @GetMapping("/usuario/{idUsuario}")
+    public ResponseEntity<List<CartaoDto>> listar(@PathVariable Long idUsuario){
+        Optional<Usuario> optional = usuarioRepository.findById(idUsuario);
+
+        if (optional.isPresent()){
+            List<Cartao> cartoes = cartaoRepository.findAllByUsuario(idUsuario);
+            return ResponseEntity.ok().body(CartaoDto.converter(cartoes));
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping
