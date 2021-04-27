@@ -4,6 +4,8 @@ import br.com.economigos.service.controler.dto.ContaDto;
 import br.com.economigos.service.controler.dto.DetalhesContaDto;
 import br.com.economigos.service.controler.form.ContaForm;
 import br.com.economigos.service.model.Conta;
+import br.com.economigos.service.model.Gasto;
+import br.com.economigos.service.model.Renda;
 import br.com.economigos.service.model.Usuario;
 import br.com.economigos.service.repository.ContaRepository;
 import br.com.economigos.service.repository.UsuarioRepository;
@@ -57,15 +59,26 @@ public class ContaControler {
         return ResponseEntity.created(uri).body(new ContaDto(conta));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<DetalhesContaDto> detalhar(@PathVariable Long id){
-        Optional<Conta> conta = contaRepository.findById(id);
-        if(conta.isPresent()){
-            return ResponseEntity.ok().body(new DetalhesContaDto(conta.get()));
+    @GetMapping("/{id}/usuario/{idUsuario}")
+    public ResponseEntity<DetalhesContaDto> detalhar(@PathVariable Long id, @PathVariable Long idUsuario){
+        Optional<Conta> optionalConta = contaRepository.findById(id);
+        Optional<Usuario> optionalUsuario = usuarioRepository.findById(idUsuario);
+        Optional<Conta> optionalContaUsuario = contaRepository.findContaByUsuario(id, idUsuario);
+        if(optionalConta.isPresent() && optionalUsuario.isPresent() && optionalContaUsuario.isPresent()){
+            Conta conta = contaRepository.getOne(id);
+            DetalhesContaDto detalhesContaDto = new DetalhesContaDto(conta);
+            for (Gasto gasto : contaRepository.getOne(id).getGastos()) {
+                  detalhesContaDto.setTotalGastos(detalhesContaDto.getTotalGastos() + gasto.getValor());
+            }
+            for (Renda renda : contaRepository.getOne(id).getRendas()) {
+                detalhesContaDto.setTotalRendas(detalhesContaDto.getTotalRendas() + renda.getValor());
+            }
+            return ResponseEntity.ok().body(detalhesContaDto);
         }else{
             return ResponseEntity.notFound().build();
         }
     }
+
 
     @PutMapping("/{id}")
     @Transactional
