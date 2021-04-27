@@ -1,7 +1,9 @@
 package br.com.economigos.service.controler;
 
+import br.com.economigos.service.controler.dto.CartaoDto;
 import br.com.economigos.service.controler.dto.MetaDto;
 import br.com.economigos.service.controler.form.MetaForm;
+import br.com.economigos.service.model.Cartao;
 import br.com.economigos.service.model.Meta;
 import br.com.economigos.service.model.Usuario;
 import br.com.economigos.service.repository.MetaRepository;
@@ -31,6 +33,17 @@ public class MetaControler {
     public List<Meta> listar(){
         List<Meta> metas = metaRepository.findAll();
         return metas;
+    }
+
+    @GetMapping("/usuario/{idUsuario}")
+    public ResponseEntity<List<MetaDto>> listar(@PathVariable Long idUsuario){
+        Optional<Usuario> optional = usuarioRepository.findById(idUsuario);
+
+        if (optional.isPresent()){
+            List<Meta> metas = metaRepository.findAllByUsuario(idUsuario);
+            return ResponseEntity.ok().body(MetaDto.converter(metas));
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping
