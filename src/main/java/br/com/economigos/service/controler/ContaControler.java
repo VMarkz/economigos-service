@@ -59,10 +59,12 @@ public class ContaControler {
         return ResponseEntity.created(uri).body(new ContaDto(conta));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<DetalhesContaDto> detalhar(@PathVariable Long id){
-        Optional<Conta> optional = contaRepository.findById(id);
-        if(optional.isPresent()){
+    @GetMapping("/{id}/usuario/{idUsuario}")
+    public ResponseEntity<DetalhesContaDto> detalhar(@PathVariable Long id, @PathVariable Long idUsuario){
+        Optional<Conta> optionalConta = contaRepository.findById(id);
+        Optional<Usuario> optionalUsuario = usuarioRepository.findById(idUsuario);
+        Optional<Conta> optionalContaUsuario = contaRepository.findContaByUsuario(id, idUsuario);
+        if(optionalConta.isPresent() && optionalUsuario.isPresent() && optionalContaUsuario.isPresent()){
             Conta conta = contaRepository.getOne(id);
             DetalhesContaDto detalhesContaDto = new DetalhesContaDto(conta);
             for (Gasto gasto : contaRepository.getOne(id).getGastos()) {
