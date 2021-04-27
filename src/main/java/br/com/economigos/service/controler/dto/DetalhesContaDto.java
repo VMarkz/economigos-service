@@ -11,10 +11,13 @@ public class DetalhesContaDto implements CommonDto{
     private String banco;
     private String numeroConta;
     private String descricao;
-    private String nome;
-    private Double valorAtual;
+    private String apelido;
+    private Double totalRendas;
+    private Double totalGastos;
     private List<RendaDto> rendas;
     private List<GastoDto> gastos;
+
+
 
     public DetalhesContaDto(Conta conta) {
         this.id = conta.getId();
@@ -25,6 +28,24 @@ public class DetalhesContaDto implements CommonDto{
         this.valorAtual = conta.getValorAtual();
         this.rendas = RendaDto.converter(conta.getRendas());
         this.gastos = GastoDto.converter(conta.getGastos());
+        this.totalRendas = 0.0;
+        this.totalGastos = 0.0;
+    }
+
+    public Double getTotalRendas() {
+        return totalRendas;
+    }
+
+    public void setTotalRendas(Double totalRendas) {
+        this.totalRendas = totalRendas;
+    }
+
+    public Double getTotalGastos() {
+        return totalGastos;
+    }
+
+    public void setTotalGastos(Double totalGastos) {
+        this.totalGastos = totalGastos;
     }
 
     public Double getValorAtual() {
