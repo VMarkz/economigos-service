@@ -1,7 +1,10 @@
 package br.com.economigos.service.model;
 
+import br.com.economigos.service.repository.GastoRepository;
+import br.com.economigos.service.repository.RendaRepository;
+
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Renda extends Contabil{
@@ -33,5 +36,14 @@ public class Renda extends Contabil{
 
     public void setRecebido(Boolean recebido) {
         this.recebido = recebido;
+    }
+
+    public static Double doSomething (String anoMes, RendaRepository rendaRepository, Long idConta){
+        Double soma = 0.0;
+
+        List<Renda> rendasMes = rendaRepository.findByDataPagamentoIsStartingWith(anoMes, idConta);
+        for (Renda renda : rendasMes) {
+            soma += renda.getValor(); }
+        return soma;
     }
 }

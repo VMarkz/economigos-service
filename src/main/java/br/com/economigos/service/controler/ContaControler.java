@@ -63,7 +63,8 @@ public class ContaControler {
     public List<ValorMensalTipoDto> contabilPorMes(@PathVariable Long idConta) {
         Optional<Conta> optionalConta = contaRepository.findById(idConta);
         if (optionalConta.isPresent()){
-            List<ValorMensalDto> valorMensalDtos = new ArrayList<>();
+            List<ValorMensalDto> valorMensalGastosDtos = new ArrayList<>();
+            List<ValorMensalDto> valorMensalRendasDtos = new ArrayList<>();
             List<ValorMensalTipoDto> valorMensalTipoDtos = new ArrayList<>();
 
             for (int i = 1; i <= 3; i++) {
@@ -71,15 +72,15 @@ public class ContaControler {
                 String anoMes = localDate.toString().substring(0, 7);
                 String mes = localDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.ENGLISH);
 
-                valorMensalDtos.add(new ValorMensalDto(mes, Gasto.doSomething(anoMes, gastoRepository, idConta)));
+                valorMensalGastosDtos.add(new ValorMensalDto(mes, Gasto.doSomething(anoMes, gastoRepository, idConta)));
+                valorMensalRendasDtos.add(new ValorMensalDto(mes, Renda.doSomething(anoMes, rendaRepository, idConta)));
             }
 
-            valorMensalTipoDtos.add(new ValorMensalTipoDto("Gasto", valorMensalDtos));
+            valorMensalTipoDtos.add(new ValorMensalTipoDto("Gasto", valorMensalGastosDtos));
+            valorMensalTipoDtos.add(new ValorMensalTipoDto("Renda", valorMensalRendasDtos));
             return valorMensalTipoDtos;
         }
-
         return null;
-
     }
 
     @PostMapping
