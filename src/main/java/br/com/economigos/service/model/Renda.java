@@ -9,9 +9,6 @@ import java.time.LocalDateTime;
 @Entity
 public class Renda extends Contabil{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private Boolean recebido;
 
     public Renda(Conta conta, Categoria categoria, Double valor, String descricao, Boolean fixo, Boolean recebido, LocalDateTime dataPagamento) {
