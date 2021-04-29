@@ -11,6 +11,8 @@ public class DetalhesUsuarioDto {
     private Long id;
     private String email;
     private LocalDateTime dataCriacao;
+    private Double rendaTotal;
+    private Double gastoTotal;
     private List<ContaDto> contaDtos;
     private List<MetaDto> metaDtos;
     private List<CartaoDto> cartaoDtos;
@@ -22,6 +24,24 @@ public class DetalhesUsuarioDto {
         this.contaDtos = ContaDto.converter(usuario.getContas());
         this.metaDtos = MetaDto.converter(usuario.getMetas());
         this.cartaoDtos = CartaoDto.converter(usuario.getCartoes());
+        this.rendaTotal = 0.0;
+        this.gastoTotal = 0.0;
+    }
+
+    public Double getRendaTotal() {
+        return rendaTotal;
+    }
+
+    public void setRendaTotal(Double rendaTotal) {
+        this.rendaTotal = rendaTotal;
+    }
+
+    public Double getGastoTotal() {
+        return gastoTotal;
+    }
+
+    public void setGastoTotal(Double gastoTotal) {
+        this.gastoTotal = gastoTotal;
     }
 
     public Long getId() {
