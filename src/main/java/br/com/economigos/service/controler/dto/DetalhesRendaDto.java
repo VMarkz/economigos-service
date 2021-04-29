@@ -10,7 +10,7 @@ public class DetalhesRendaDto {
     private ContaDto conta;
     private Double valor;
     private String descricao;
-    private LocalDateTime dataPagamento;
+    private String dataPagamento;
     private Boolean fixo;
     private CategoriaDto categoria;
 
@@ -56,11 +56,11 @@ public class DetalhesRendaDto {
         this.descricao = descricao;
     }
 
-    public LocalDateTime getData() {
+    public String getData() {
         return dataPagamento;
     }
 
-    public void setData(LocalDateTime data) {
+    public void setData(String data) {
         this.dataPagamento = data;
     }
 
