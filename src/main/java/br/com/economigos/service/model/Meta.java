@@ -2,7 +2,6 @@ package br.com.economigos.service.model;
 
 import javax.persistence.*;
 import java.util.Observable;
-import java.util.Observer;
 
 @Entity
 public class Meta extends Observable {

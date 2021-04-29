@@ -1,17 +1,13 @@
 package br.com.economigos.service.model;
 
-import br.com.economigos.service.repository.GastoRepository;
 import br.com.economigos.service.repository.RendaRepository;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
 import java.util.List;
 
 @Entity
 public class Renda extends Contabil{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private Boolean recebido;
 
     public Renda(Conta conta, Categoria categoria, Double valor, String descricao, Boolean fixo, Boolean recebido, String dataPagamento) {
