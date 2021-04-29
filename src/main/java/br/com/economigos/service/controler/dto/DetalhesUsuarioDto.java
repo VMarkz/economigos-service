@@ -11,6 +11,7 @@ public class DetalhesUsuarioDto {
     private Long id;
     private String email;
     private LocalDateTime dataCriacao;
+    private Double valorAtual;
     private List<ContaDto> contaDtos;
     private List<MetaDto> metaDtos;
     private List<CartaoDto> cartaoDtos;
@@ -22,6 +23,15 @@ public class DetalhesUsuarioDto {
         this.contaDtos = ContaDto.converter(usuario.getContas());
         this.metaDtos = MetaDto.converter(usuario.getMetas());
         this.cartaoDtos = CartaoDto.converter(usuario.getCartoes());
+        this.valorAtual = 0.0;
+    }
+
+    public Double getValorAtual() {
+        return valorAtual;
+    }
+
+    public void setValorAtual(Double valorAtual) {
+        this.valorAtual = valorAtual;
     }
 
     public Long getId() {

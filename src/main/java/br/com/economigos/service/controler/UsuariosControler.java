@@ -1,8 +1,12 @@
 package br.com.economigos.service.controler;
 
+import br.com.economigos.service.controler.dto.DetalhesContaDto;
 import br.com.economigos.service.controler.dto.DetalhesUsuarioDto;
 import br.com.economigos.service.controler.dto.UsuarioDto;
 import br.com.economigos.service.controler.form.UsuarioForm;
+import br.com.economigos.service.model.Conta;
+import br.com.economigos.service.model.Gasto;
+import br.com.economigos.service.model.Renda;
 import br.com.economigos.service.model.Usuario;
 import br.com.economigos.service.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,13 +50,19 @@ public class UsuariosControler {
 
     @GetMapping("/{id}")
     public ResponseEntity<DetalhesUsuarioDto> detalhar(@PathVariable Long id){
-        Optional<Usuario> usuario = usuarioRepository.findById(id);
-        if(usuario.isPresent()){
-            return ResponseEntity.ok().body(new DetalhesUsuarioDto(usuario.get()));
+        Optional<Usuario> optional = usuarioRepository.findById(id);
+        if(optional.isPresent()){
+            Usuario usuario = usuarioRepository.getOne(id);
+            DetalhesUsuarioDto detalhesUsuarioDto = new DetalhesUsuarioDto(usuario);
+            for(Conta conta : usuario.getContas()){
+                detalhesUsuarioDto.setValorAtual(detalhesUsuarioDto.getValorAtual()+conta.getValorAtual());
+            }
+            return ResponseEntity.ok().body(detalhesUsuarioDto);
         }else{
             return ResponseEntity.badRequest().build();
         }
     }
+
 
     @PutMapping("/{id}")
     @Transactional
