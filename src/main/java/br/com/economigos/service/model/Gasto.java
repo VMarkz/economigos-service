@@ -6,9 +6,6 @@ import java.time.LocalDateTime;
 @Entity
 public class Gasto extends Contabil{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private Boolean pago;
     @ManyToOne
     private Cartao cartao;
