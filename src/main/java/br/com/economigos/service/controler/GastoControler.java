@@ -1,5 +1,6 @@
 package br.com.economigos.service.controler;
 
+import br.com.economigos.service.controler.dto.ContaDto;
 import br.com.economigos.service.controler.dto.DetalhesGastoDto;
 import br.com.economigos.service.controler.dto.GastoDto;
 import br.com.economigos.service.controler.form.GastoForm;
@@ -82,15 +83,17 @@ public class GastoControler {
 
     @PutMapping("/pagar/{id}")
     @Transactional
-    public ResponseEntity<GastoDto> pagar(@PathVariable Long id) {
+    public ResponseEntity<ContaDto> pagar(@PathVariable Long id) {
         Optional<Gasto> optional = gastoRepository.findById(id);
         if (optional.isPresent()) {
             Gasto gasto = gastoRepository.getOne(id);
             gasto.setPago(true);
+            Conta conta = contaRepository.getOne(gasto.getConta().getId());
+            conta.setValorAtual((conta.getValorAtual() - gasto.getValor()));
             gasto.addObserver(new Conta());
             gasto.addObserver(new Categoria());
             gasto.notificaObservador("update");
-            return ResponseEntity.ok().body(new GastoDto(gasto));
+            return ResponseEntity.ok().body(new ContaDto(conta));
         }
         return ResponseEntity.notFound().build();
     }
