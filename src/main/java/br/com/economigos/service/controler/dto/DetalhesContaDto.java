@@ -12,10 +12,12 @@ public class DetalhesContaDto implements CommonDto{
     private String numeroConta;
     private String descricao;
     private String apelido;
+    private Double valorAtual;
     private Double totalRendas;
     private Double totalGastos;
     private List<RendaDto> rendas;
     private List<GastoDto> gastos;
+
 
 
 
@@ -24,7 +26,7 @@ public class DetalhesContaDto implements CommonDto{
         this.banco = conta.getBanco();
         this.numeroConta = conta.getNumeroConta();
         this.descricao = conta.getDescricao();
-        this.nome = conta.getNome();
+        this.apelido = conta.getApelido();
         this.valorAtual = conta.getValorAtual();
         this.rendas = RendaDto.converter(conta.getRendas());
         this.gastos = GastoDto.converter(conta.getGastos());
@@ -88,12 +90,12 @@ public class DetalhesContaDto implements CommonDto{
         this.descricao = descricao;
     }
 
-    public String getNome() {
-        return nome;
+    public String getApelido() {
+        return apelido;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setApelido(String nome) {
+        this.apelido = apelido;
     }
 
     public List<RendaDto> getRendas() {

@@ -15,7 +15,7 @@ public class Conta extends Observable implements Observer {
     private String banco;
     private String numeroConta;
     private String descricao;
-    private String nome;
+    private String apelido;
     private Double valorAtual;
     @ManyToOne
     private Usuario usuario;
@@ -32,7 +32,7 @@ public class Conta extends Observable implements Observer {
         this.banco = banco;
         this.numeroConta = numeroConta;
         this.descricao = descricao;
-        this.nome = nome;
+        this.apelido = nome;
         this.valorAtual = 0.0;
         rendas = new ArrayList<>();
         gastos = new ArrayList<>();
@@ -78,12 +78,12 @@ public class Conta extends Observable implements Observer {
         this.descricao = descricao;
     }
 
-    public String getNome() {
-        return nome;
+    public String getApelido() {
+        return apelido;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setApelido(String nome) {
+        this.apelido = apelido;
     }
 
     public Usuario getUsuario() {

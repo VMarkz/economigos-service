@@ -95,7 +95,7 @@ public class RendaControler {
 
     @PutMapping("/receber/{id}")
     @Transactional
-    public ResponseEntity<DetalhesContaDto> acrescentarRenda(@PathVariable Long id){
+    public ResponseEntity<ContaDto> receberRenda(@PathVariable Long id){
         Optional<Renda> optional = rendaRepository.findById(id);
 
         if (optional.isPresent()) {
@@ -104,7 +104,7 @@ public class RendaControler {
                 renda.setRecebido(true);
                 Conta conta = contaRepository.getOne(renda.getConta().getId());
                 conta.setValorAtual((conta.getValorAtual() + renda.getValor()));
-                return ResponseEntity.ok().body(new DetalhesContaDto(conta));
+                return ResponseEntity.ok().body(new ContaDto(conta));
             } else {
                 return ResponseEntity.badRequest().build();
             }

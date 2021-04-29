@@ -9,20 +9,22 @@ public class ContaDto implements CommonDto{
 
     private Long id;
     private String banco;
-    private String nome;
+    private String apelido;
+    private Double valorAtual;
 
     public ContaDto(Conta conta) {
         this.id = conta.getId();
         this.banco = conta.getBanco();
-        this.nome = conta.getNome();
+        this.apelido = conta.getApelido();
+        this.valorAtual = conta.getValorAtual();
     }
 
-    public String getNome() {
-        return nome;
+    public String getApelido() {
+        return apelido;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setApelido(String apelido) {
+        this.apelido = apelido;
     }
 
     public Long getId() {
@@ -39,6 +41,14 @@ public class ContaDto implements CommonDto{
 
     public void setBanco(String banco) {
         this.banco = banco;
+    }
+
+    public Double getValorAtual() {
+        return valorAtual;
+    }
+
+    public void setValorAtual(Double valorAtual) {
+        this.valorAtual = valorAtual;
     }
 
     public static List<ContaDto> converter(List<Conta> contas) {
