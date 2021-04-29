@@ -55,12 +55,7 @@ public class UsuariosControler {
             Usuario usuario = usuarioRepository.getOne(id);
             DetalhesUsuarioDto detalhesUsuarioDto = new DetalhesUsuarioDto(usuario);
             for(Conta conta : usuario.getContas()){
-                for(Renda renda : conta.getRendas()){
-                    detalhesUsuarioDto.setRendaTotal(detalhesUsuarioDto.getRendaTotal()+renda.getValor());
-                }
-                for(Gasto gasto : conta.getGastos()){
-                    detalhesUsuarioDto.setGastoTotal(detalhesUsuarioDto.getGastoTotal()+gasto.getValor());
-                }
+                detalhesUsuarioDto.setValorAtual(detalhesUsuarioDto.getValorAtual()+conta.getValorAtual());
             }
             return ResponseEntity.ok().body(detalhesUsuarioDto);
         }else{
