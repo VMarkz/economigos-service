@@ -18,10 +18,10 @@ public abstract class Contabil extends Observable {
     protected Categoria categoria;
     protected Double valor;
     protected String descricao;
-    protected LocalDateTime dataPagamento;
+    protected String dataPagamento;
     protected Boolean fixo;
 
-    public Contabil(Conta conta, Categoria categoria, Double valor, String descricao, Boolean fixo, LocalDateTime dataPagamento,String tipo) {
+    public Contabil(Conta conta, Categoria categoria, Double valor, String descricao, Boolean fixo, String dataPagamento,String tipo) {
         this.conta = conta;
         this.categoria = categoria;
         this.valor = valor;
@@ -31,7 +31,7 @@ public abstract class Contabil extends Observable {
         this.tipo = tipo;
     }
 
-    public Contabil(Categoria categoria, Double valor, String descricao, Boolean fixo, LocalDateTime dataPagamento, String tipo) {
+    public Contabil(Categoria categoria, Double valor, String descricao, Boolean fixo, String dataPagamento, String tipo) {
         this.categoria = categoria;
         this.valor = valor;
         this.descricao = descricao;
@@ -91,11 +91,11 @@ public abstract class Contabil extends Observable {
         this.descricao = descricao;
     }
 
-    public LocalDateTime getDataPagamento() {
+    public String getDataPagamento() {
         return dataPagamento;
     }
 
-    public void setDataPagamento(LocalDateTime dataPagamento) {
+    public void setDataPagamento(String dataPagamento) {
         this.dataPagamento = dataPagamento;
     }
 

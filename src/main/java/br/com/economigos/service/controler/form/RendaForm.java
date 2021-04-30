@@ -25,7 +25,7 @@ public class RendaForm implements CommonForm {
     @NotNull
     private Boolean fixo;
     @NotNull
-    private LocalDateTime dataPagamento;
+    private String dataPagamento;
 
     public Long getIdConta() {
         return idConta;
@@ -75,11 +75,11 @@ public class RendaForm implements CommonForm {
         this.fixo = fixo;
     }
 
-    public LocalDateTime getDataPagamento() {
+    public String getDataPagamento() {
         return dataPagamento;
     }
 
-    public void setDataPagamento(LocalDateTime dataPagamento) {
+    public void setDataPagamento(String dataPagamento) {
         this.dataPagamento = dataPagamento;
     }
 
