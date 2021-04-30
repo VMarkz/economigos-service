@@ -34,7 +34,7 @@ public class Renda extends Contabil{
         this.recebido = recebido;
     }
 
-    public static Double doSomething (String anoMes, RendaRepository rendaRepository, Long idConta){
+    public static Double getUltimosMeses (String anoMes, RendaRepository rendaRepository, Long idConta){
         Double soma = 0.0;
 
         List<Renda> rendasMes = rendaRepository.findByDataPagamentoIsStartingWith(anoMes, idConta);

@@ -60,7 +60,7 @@ public class ContaControler {
     }
 
     @GetMapping("/{idConta}/ultimos-meses")
-    public List<ValorMensalTipoDto> contabilPorMes(@PathVariable Long idConta) {
+    public ResponseEntity<List<ValorMensalTipoDto>> contabilPorMes(@PathVariable Long idConta) {
         Optional<Conta> optionalConta = contaRepository.findById(idConta);
         if (optionalConta.isPresent()){
             List<ValorMensalDto> valorMensalGastosDtos = new ArrayList<>();
@@ -72,15 +72,15 @@ public class ContaControler {
                 String anoMes = localDate.toString().substring(0, 7);
                 String mes = localDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.ENGLISH);
 
-                valorMensalGastosDtos.add(new ValorMensalDto(mes, Gasto.doSomething(anoMes, gastoRepository, idConta)));
-                valorMensalRendasDtos.add(new ValorMensalDto(mes, Renda.doSomething(anoMes, rendaRepository, idConta)));
+                valorMensalGastosDtos.add(new ValorMensalDto(mes, Gasto.getUltimosMeses(anoMes, gastoRepository, idConta)));
+                valorMensalRendasDtos.add(new ValorMensalDto(mes, Renda.getUltimosMeses(anoMes, rendaRepository, idConta)));
             }
 
             valorMensalTipoDtos.add(new ValorMensalTipoDto("Gasto", valorMensalGastosDtos));
             valorMensalTipoDtos.add(new ValorMensalTipoDto("Renda", valorMensalRendasDtos));
-            return valorMensalTipoDtos;
+            return ResponseEntity.ok().body(valorMensalTipoDtos);
         }
-        return null;
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping
