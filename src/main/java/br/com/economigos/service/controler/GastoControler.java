@@ -44,7 +44,7 @@ public class GastoControler {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<?> cadastrar(@RequestBody @Valid GastoForm form, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<GastoDto> cadastrar(@RequestBody @Valid GastoForm form, UriComponentsBuilder uriBuilder) {
         Gasto gasto = form.converter(cartaoRepository, contaRepository, categoriaRepository);
 
         gastoRepository.save(gasto);
