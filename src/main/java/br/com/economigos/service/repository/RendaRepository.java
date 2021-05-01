@@ -10,6 +10,6 @@ import java.util.List;
 public interface RendaRepository extends JpaRepository<Renda, Long> {
 
     @Query("SELECT r FROM Renda r WHERE r.recebido = true AND conta_id = ?2 AND r.dataPagamento LIKE ?1%")
-    List<Renda> findByDataPagamentoIsStartingWith(String anoMes, Long idConta);
+    List<Renda> findByDataPagamentoIsStartingWithByConta(String anoMes, Long idConta);
 
 }

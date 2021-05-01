@@ -54,7 +54,7 @@ public class Gasto extends Contabil{
     public static Double getUltimosMeses (String anoMes, GastoRepository gastoRepository, Long idConta){
         Double soma = 0.0;
 
-        List<Gasto> gastosMes01 = gastoRepository.findByDataPagamentoIsStartingWith(anoMes, idConta);
+        List<Gasto> gastosMes01 = gastoRepository.findByDataPagamentoIsStartingWithByConta(anoMes, idConta);
         for (Gasto gasto : gastosMes01) {
             soma += gasto.getValor(); }
         return soma;
