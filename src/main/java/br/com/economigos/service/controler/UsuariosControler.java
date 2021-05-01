@@ -102,7 +102,6 @@ public class UsuariosControler {
     public ResponseEntity<List<ValorMensalTipoDto>> ultimosMeses(@PathVariable Long id) {
         Optional<Usuario> optionalUsuario = usuarioRepository.findById(id);
         if (optionalUsuario.isPresent()) {
-            System.out.println("ACOU USUARIO");
             Usuario usuario = usuarioRepository.getOne(id);
 
             List<ValorMensalDto> valorMensalGastosDtos = new ArrayList<>();

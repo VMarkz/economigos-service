@@ -97,9 +97,7 @@ public class GastoControler {
             Conta conta = contaRepository.getOne(gasto.getConta().getId());
             if (!gasto.getPago()) {
                 gasto.setPago(true);
-                System.out.println("Está pagando...");
                 conta.setValorAtual((conta.getValorAtual() - gasto.getValor()));
-                System.out.println("Pagou!");
                 gasto.addObserver(new Conta());
                 gasto.addObserver(new Categoria());
                 gasto.notificaObservador("update");
