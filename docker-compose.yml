@@ -1,0 +1,33 @@
+version: "3"
+services:
+  economigos-db:
+    image: postgres:latest
+    network_mode: bridge
+    container_name: economigos-db
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    expose:
+    - 5432
+    ports:
+      - 5432:5432
+    environment:
+         - POSTGRES_PASSWORD=economigos@123
+         - POSTGRES_USER=economigos
+         - POSTGRES_DB=economigos-db
+    restart: unless-stopped
+# APP*****************************************
+  springbootapp:
+    image: economigos/economigos-service:latest
+    network_mode: bridge
+    container_name: economigos-service
+    expose:
+      - 8080
+    ports:
+      - 8080:8080
+    restart: unless-stopped
+    depends_on:
+      - economigos-db
+    links:
+      - economigos-db
+volumes:
+  postgres-data:
