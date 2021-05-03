@@ -12,8 +12,8 @@ services:
       - 5432:5432
     environment:
          - POSTGRES_PASSWORD=economigos@123
-         - POSTGRES_USER=economigos
-         - POSTGRES_DB=economigos-db
+         - POSTGRES_USER=postgres
+         - POSTGRES_DB=postgres
     restart: unless-stopped
 # APP*****************************************
   springbootapp:
