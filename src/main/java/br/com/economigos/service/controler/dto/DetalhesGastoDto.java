@@ -12,7 +12,7 @@ public class DetalhesGastoDto {
     private ContaDto conta;
     private Double valor;
     private String descricao;
-    private LocalDateTime dataPagamento;
+    private String dataPagamento;
     private Boolean fixo;
     private CategoriaDto categoria;
 
@@ -58,11 +58,11 @@ public class DetalhesGastoDto {
         this.descricao = descricao;
     }
 
-    public LocalDateTime getDataPagamento() {
+    public String getDataPagamento() {
         return dataPagamento;
     }
 
-    public void setDataPagamento(LocalDateTime dataPagamento) {
+    public void setDataPagamento(String dataPagamento) {
         this.dataPagamento = dataPagamento;
     }
 

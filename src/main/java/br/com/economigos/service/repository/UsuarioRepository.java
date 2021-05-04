@@ -12,11 +12,12 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     //Query padronizada pelo spring.data
 //    List<Usuario> findByUsuario(String usuario);
     // Exemplo de query personalizada
-      @Query("SELECT u FROM Usuario u WHERE u.email = :usuarioEmail AND u.senha = :usuarioSenha")
-      List<Usuario> findByLogin(@Param("usuarioEmail") String usuarioEmail,
+    @Query("SELECT u FROM Usuario u WHERE u.email = :usuarioEmail AND u.senha = :usuarioSenha")
+    List<Usuario> findByLogin(@Param("usuarioEmail") String usuarioEmail,
                                   @Param("usuarioSenha") String usuarioSenha);
 
     @Query("SELECT u FROM Usuario u WHERE u.email = :usuarioEmail")
     List<Usuario> findByEmail(@Param("usuarioEmail") String usuarioEmail);
+
 
 }

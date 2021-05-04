@@ -1,10 +1,10 @@
 package br.com.economigos.service.controler;
 
-import br.com.economigos.service.controler.dto.DetalhesRendaDto;
-import br.com.economigos.service.controler.dto.RendaDto;
+import br.com.economigos.service.controler.dto.*;
 import br.com.economigos.service.controler.form.RendaForm;
 import br.com.economigos.service.model.Categoria;
 import br.com.economigos.service.model.Conta;
+import br.com.economigos.service.model.Gasto;
 import br.com.economigos.service.model.Renda;
 import br.com.economigos.service.repository.CategoriaRepository;
 import br.com.economigos.service.repository.ContaRepository;
@@ -47,6 +47,11 @@ public class RendaControler {
         renda.addObserver(new Conta());
         renda.addObserver(new Categoria());
         renda.notificaObservador("create");
+
+        if(renda.getRecebido()){
+            renda.setRecebido(false);
+            receberRenda(renda.getId());
+        }
 
         URI uri = uriBuilder.path("/receitas/{id}").buildAndExpand(renda.getId()).toUri();
         return ResponseEntity.created(uri).body(new RendaDto(renda));
@@ -91,6 +96,26 @@ public class RendaControler {
         }else{
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @PutMapping("/receber/{id}")
+    @Transactional
+    public ResponseEntity<?> receberRenda(@PathVariable Long id){
+        Optional<Renda> optionalRenda = rendaRepository.findById(id);
+        Optional<Conta> optionalConta = contaRepository.findById(optionalRenda.get().getConta().getId());
+
+        if (optionalRenda.isPresent() && optionalConta.isPresent()) {
+            Renda renda = rendaRepository.getOne(id);
+            Conta conta = contaRepository.getOne(renda.getConta().getId());
+            if(!renda.getRecebido()){
+                renda.setRecebido(true);
+                conta.setValorAtual((conta.getValorAtual() + renda.getValor()));
+                return ResponseEntity.ok().body(new ContaDto(conta));
+            } else {
+                return ResponseEntity.badRequest().body("Renda já recebida");
+            }
+        }
+        return ResponseEntity.notFound().build();
     }
 
 }
