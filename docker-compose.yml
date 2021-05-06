@@ -1,21 +1,37 @@
-version: '3'
- 
+version: "3"
+
 services:
-  db:
-    image: "postgres"
+  postgres:
+    image: postgres:13.2-alpine
+    network_mode: bridge
+    container_name: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    expose:
+      - 5432
     ports:
-      - "5432:5432"
+      - 5432:5432
     environment:
-      POSTGRES_DB: tc
-      POSTGRES_USER: tc
-      POSTGRES_PASSWORD: tc
-  app:
-    build: .
+      - POSTGRES_PASSWORD=economigos@123
+    restart: unless-stopped
+# APP***************
+  springbootapp:
+    image: economigos/economigos-service:latest
+    network_mode: bridge
+    container_name: springbootapp
+    expose:
+      - 8080
     ports:
-      - "8080:8080"
+      - 8080:8080
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db/tc
-      SPRING_DATASOURCE_USERNAME: tc
-      SPRING_DATASOURCE_PASSWORD: tc
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=economigos@123
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create-drop
+    restart: unless-stopped
     depends_on:
-      - db
+      - postgres
+    links:
+      - postgres
+volumes:
+  postgres-data:
