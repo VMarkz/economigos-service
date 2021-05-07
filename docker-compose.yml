@@ -12,7 +12,9 @@ services:
     ports:
       - 5432:5432
     environment:
+      - POSTGRES_USER=economigos
       - POSTGRES_PASSWORD=economigos@123
+      - POSTGRES_DB=economigos_db
     restart: unless-stopped
 # APP***************
   springbootapp:
@@ -24,8 +26,8 @@ services:
     ports:
       - 8080:8080
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/postgres
-      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/economigos_db
+      - SPRING_DATASOURCE_USERNAME=economigos
       - SPRING_DATASOURCE_PASSWORD=economigos@123
       - SPRING_JPA_HIBERNATE_DDL_AUTO=create-drop
     restart: unless-stopped
