@@ -32,12 +32,14 @@ public class CartaoControler {
     UsuarioRepository usuarioRepository;
 
     @GetMapping
+    @Transactional
     public List<CartaoDto> listar(){
         List<Cartao> cartoes = cartaoRepository.findAll();
         return CartaoDto.converter(cartoes);
     }
 
     @GetMapping("/usuario/{idUsuario}")
+    @Transactional
     public ResponseEntity<List<CartaoDto>> listar(@PathVariable Long idUsuario){
         Optional<Usuario> optional = usuarioRepository.findById(idUsuario);
 
@@ -59,6 +61,7 @@ public class CartaoControler {
     }
 
     @GetMapping("/{id}")
+    @Transactional
     public ResponseEntity<DetalhesCartaoDto> detalhar(@PathVariable Long id){
         Optional<Cartao> cartao = cartaoRepository.findById(id);
         if(cartao.isPresent()){

@@ -30,12 +30,14 @@ public class MetaControler {
     private UsuarioRepository usuarioRepository;
 
     @GetMapping
+    @Transactional
     public List<Meta> listar(){
         List<Meta> metas = metaRepository.findAll();
         return metas;
     }
 
     @GetMapping("/usuario/{idUsuario}")
+    @Transactional
     public ResponseEntity<List<MetaDto>> listar(@PathVariable Long idUsuario){
         Optional<Usuario> optional = usuarioRepository.findById(idUsuario);
 
@@ -60,6 +62,7 @@ public class MetaControler {
     }
 
     @GetMapping("/{id}")
+    @Transactional
     public ResponseEntity<Meta> detalhar(@PathVariable Long id){
         Optional<Meta> optional = metaRepository.findById(id);
         if(optional.isPresent()){

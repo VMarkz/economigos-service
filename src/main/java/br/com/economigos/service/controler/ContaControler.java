@@ -43,12 +43,14 @@ public class ContaControler {
     UsuarioRepository usuarioRepository;
 
     @GetMapping
+    @Transactional
     public List<ContaDto> listar(){
         List<Conta> contas = contaRepository.findAll();
         return ContaDto.converter(contas);
     }
 
     @GetMapping("/usuario/{idUsuario}")
+    @Transactional
     public ResponseEntity<List<ContaDto>> listar(@PathVariable Long idUsuario){
         Optional<Usuario> optional = usuarioRepository.findById(idUsuario);
 
@@ -60,6 +62,7 @@ public class ContaControler {
     }
 
     @GetMapping("/{idConta}/ultimos-meses")
+    @Transactional
     public ResponseEntity<List<ValorMensalTipoDto>> contabilPorMes(@PathVariable Long idConta) {
         Optional<Conta> optionalConta = contaRepository.findById(idConta);
         if (optionalConta.isPresent()){
@@ -96,6 +99,7 @@ public class ContaControler {
     }
 
     @GetMapping("/{id}/usuario/{idUsuario}")
+    @Transactional
     public ResponseEntity<DetalhesContaDto> detalhar(@PathVariable Long id, @PathVariable Long idUsuario){
         Optional<Conta> optionalConta = contaRepository.findById(id);
         Optional<Usuario> optionalUsuario = usuarioRepository.findById(idUsuario);

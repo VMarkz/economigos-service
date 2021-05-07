@@ -58,6 +58,7 @@ public class RendaControler {
     }
 
     @GetMapping("/{id}")
+    @Transactional
     public ResponseEntity<DetalhesRendaDto> detalhar(@PathVariable Long id){
         Optional<Renda> renda = rendaRepository.findById(id);
         if(renda.isPresent()){
