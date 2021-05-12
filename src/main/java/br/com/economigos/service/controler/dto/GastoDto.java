@@ -12,6 +12,7 @@ public class GastoDto implements CommonDto{
     private Double valor;
     private Boolean pago;
     private String descricao;
+    private String dataPagamento;
 
     public GastoDto(Gasto gasto) {
         this.id = gasto.getId();
@@ -19,6 +20,7 @@ public class GastoDto implements CommonDto{
         this.valor = gasto.getValor();
         this.pago = gasto.getPago();
         this.descricao = gasto.getDescricao();
+        this.dataPagamento = gasto.getDataPagamento();
     }
 
     public Long getId() {
@@ -65,4 +67,11 @@ public class GastoDto implements CommonDto{
        return gastos.stream().map(GastoDto::new).collect(Collectors.toList());
     }
 
+    public String getDataPagamento() {
+        return dataPagamento;
+    }
+
+    public void setDataPagamento(String dataPagamento) {
+        this.dataPagamento = dataPagamento;
+    }
 }
