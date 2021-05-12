@@ -1,19 +1,15 @@
 package br.com.economigos.service.controler;
 
-import br.com.economigos.service.controler.dto.ContaDto;
-import br.com.economigos.service.controler.dto.DetalhesContaDto;
-import br.com.economigos.service.controler.dto.ValorMensalDto;
-import br.com.economigos.service.controler.dto.ValorMensalTipoDto;
+import br.com.economigos.service.controler.dto.*;
 import br.com.economigos.service.controler.form.ContaForm;
-import br.com.economigos.service.model.Conta;
-import br.com.economigos.service.model.Gasto;
-import br.com.economigos.service.model.Renda;
-import br.com.economigos.service.model.Usuario;
+import br.com.economigos.service.model.*;
 import br.com.economigos.service.repository.ContaRepository;
 import br.com.economigos.service.repository.GastoRepository;
 import br.com.economigos.service.repository.RendaRepository;
 import br.com.economigos.service.repository.UsuarioRepository;
+import br.com.economigos.service.utils.PilhaObj;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -22,15 +18,14 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.TextStyle;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/economigos/contas")
+
 public class ContaControler {
 
     @Autowired
@@ -113,6 +108,26 @@ public class ContaControler {
         }else{
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("{id}/ultimas-atividades")
+    public Page<ContabilUltimasAtividadesDto> ultimasAtividades(@PathVariable Long id, Pageable pageable){
+        List<Renda> rendas = rendaRepository.findRendaByConta(id);
+        List<Gasto> gastos = gastoRepository.findGastoByConta(id);
+        List<ContabilUltimasAtividadesDto> list = new ArrayList<>();
+        PilhaObj<ContabilUltimasAtividadesDto> pile= new PilhaObj<>(5);
+
+        for(Renda renda : rendas){
+            list.add(new ContabilUltimasAtividadesDto(renda.getDescricao(),
+                    renda.getDataPagamento(), renda.getValor(), renda.getTipo()));
+        }
+        for(Gasto gasto : gastos){
+            list.add(new ContabilUltimasAtividadesDto(gasto.getDescricao(),
+                    gasto.getDataPagamento(), gasto.getValor(), gasto.getTipo()));
+        }
+        
+        Page page = new PageImpl(list);
+        return page;
     }
 
 

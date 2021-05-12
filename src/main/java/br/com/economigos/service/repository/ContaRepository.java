@@ -1,6 +1,9 @@
 package br.com.economigos.service.repository;
 
 import br.com.economigos.service.model.Conta;
+import br.com.economigos.service.model.Contabil;
+import br.com.economigos.service.model.Gasto;
+import br.com.economigos.service.model.Renda;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,4 +20,5 @@ public interface ContaRepository extends JpaRepository<Conta, Long> {
     @Query("SELECT c FROM Conta c WHERE usuario_id = :idUsuario AND id = :id")
     Optional<Conta> findContaByUsuario(@Param("id") Long id,
                                        @Param("idUsuario") Long idUsuario);
+
 }
