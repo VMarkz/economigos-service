@@ -25,14 +25,15 @@ public class Cartao {
     public Cartao() {
     }
 
-    public Cartao(Usuario usuario, String nome, LocalDateTime fechamento, LocalDateTime vencimento, Boolean pago, Double limite) {
+    public Cartao(Usuario usuario, String nome, LocalDateTime fechamento, LocalDateTime vencimento, Boolean pago,
+                  Double limite,Double valor) {
         this.usuario = usuario;
         this.nome = nome;
         this.fechamento = fechamento;
         this.vencimento = vencimento;
         this.pago = pago;
         this.limite = limite;
-        this.valor = 0.0;
+        this.valor = valor;
         this.gastos = new ArrayList<>();
     }
 

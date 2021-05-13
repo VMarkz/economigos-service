@@ -71,9 +71,11 @@ public class CartaoControler {
     @GetMapping("/{id}")
     @Transactional
     public ResponseEntity<DetalhesCartaoDto> detalhar(@PathVariable Long id){
-        Optional<Cartao> cartao = cartaoRepository.findById(id);
-        if(cartao.isPresent()){
-            return ResponseEntity.ok().body(new DetalhesCartaoDto(cartao.get()));
+        Optional<Cartao> cartaoOptional = cartaoRepository.findById(id);
+        if(cartaoOptional.isPresent()){
+            Cartao cartao = cartaoRepository.getOne(id);
+            cartao.setValor(gastoRepository.somaGastosCartao(id,"2021-02-15", "2021-03-15"));
+            return ResponseEntity.ok().body(new DetalhesCartaoDto(cartao));
         }else{
             return ResponseEntity.badRequest().build();
         }
@@ -122,10 +124,4 @@ public class CartaoControler {
             return ResponseEntity.notFound().build();
         }
     }
-
-//    @GetMapping("/fatura/{id}")
-//    @Transactional
-//    public ResponseEntity<GastoDto> valorFaturaAtual(){
-//        List<Gasto>
-//    }
 }

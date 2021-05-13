@@ -5,6 +5,7 @@ import br.com.economigos.service.model.Conta;
 import br.com.economigos.service.model.Usuario;
 import br.com.economigos.service.repository.CartaoRepository;
 import br.com.economigos.service.repository.ContaRepository;
+import br.com.economigos.service.repository.GastoRepository;
 import br.com.economigos.service.repository.UsuarioRepository;
 
 import javax.validation.constraints.NotNull;
@@ -75,7 +76,7 @@ public class CartaoForm implements CommonForm {
 
     public Cartao converter(UsuarioRepository usuarioRepository) {
         Usuario usuario = usuarioRepository.getOne(idUsuario);
-        return (new Cartao(usuario,this.nome, this.fechamento, this.vencimento, this.pago, this.limite));
+        return (new Cartao(usuario,this.nome, this.fechamento, this.vencimento, this.pago, this.limite, 0.00));
     }
 
     public Cartao atualizar(Long id, CartaoRepository cartaoRepository){
