@@ -9,7 +9,4 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface ContabilRepository extends JpaRepository<Contabil, Long> {
-    @Query(value = "SELECT id, data_pagamento, descricao, valor, tipo FROM GASTO  where conta_id = 1 UNION SELECT " +
-            "id, data_pagamento, descricao, valor, tipo FROM RENDA where conta_id = 1 order by data_pagamento desc;",nativeQuery = true)
-    List<?> findUltimasAtividades();
 }

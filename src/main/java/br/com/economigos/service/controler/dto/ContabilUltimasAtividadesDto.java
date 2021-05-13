@@ -2,7 +2,12 @@ package br.com.economigos.service.controler.dto;
 
 import br.com.economigos.service.model.Gasto;
 
-public class ContabilUltimasAtividadesDto {
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+
+public class ContabilUltimasAtividadesDto implements Comparable<ContabilUltimasAtividadesDto>{
     private String descricao;
     private String data;
     private Double valor;
@@ -48,5 +53,21 @@ public class ContabilUltimasAtividadesDto {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    @Override
+    public int compareTo(ContabilUltimasAtividadesDto o) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        formatter = formatter.withLocale(Locale.ENGLISH);
+
+        LocalDateTime thisRendaDate = LocalDateTime.parse(this.getData(), formatter);
+        LocalDateTime outraRendaDate = LocalDateTime.parse(o.getData(), formatter);
+
+        if (thisRendaDate.isAfter(outraRendaDate)) {
+            return -1;
+        } if (thisRendaDate.isBefore(outraRendaDate)) {
+            return 1;
+        }
+        return 0;
     }
 }

@@ -17,4 +17,7 @@ public interface GastoRepository extends JpaRepository<Gasto, Long> {
     @Query("SELECT g FROM Gasto g WHERE conta_id = ?1")
     List<Gasto> findGastoByConta(Long idConta);
 
+    @Query("SELECT g FROM Gasto g WHERE cartao_id = ?1")
+    List<Gasto> findGastoByCartao(Long idConta);
+
 }

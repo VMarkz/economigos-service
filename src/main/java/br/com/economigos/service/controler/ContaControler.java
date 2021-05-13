@@ -110,24 +110,30 @@ public class ContaControler {
         }
     }
 
-    @GetMapping("{id}/ultimas-atividades")
-    public Page<ContabilUltimasAtividadesDto> ultimasAtividades(@PathVariable Long id, Pageable pageable){
-        List<Renda> rendas = rendaRepository.findRendaByConta(id);
-        List<Gasto> gastos = gastoRepository.findGastoByConta(id);
-        List<ContabilUltimasAtividadesDto> list = new ArrayList<>();
-        PilhaObj<ContabilUltimasAtividadesDto> pile= new PilhaObj<>(5);
+    @GetMapping("{idConta}/usuario/{idUsuario}/ultimas-atividades")
+    public ResponseEntity<List<ContabilUltimasAtividadesDto>> ultimasAtividades(@PathVariable Long idUsuario, @PathVariable Long idConta){
+        Optional<Conta> optionalConta = contaRepository.findContaByUsuario(idConta, idUsuario);
+        if (optionalConta.isPresent()){
+            Conta conta = contaRepository.getOne(idConta);
+            List<Renda> rendas = rendaRepository.findRendaByConta(conta.getId());
+            List<Gasto> gastos = gastoRepository.findGastoByConta(conta.getId());
+            List<ContabilUltimasAtividadesDto> ultimasAtividadesDtos = new ArrayList<>();
 
-        for(Renda renda : rendas){
-            list.add(new ContabilUltimasAtividadesDto(renda.getDescricao(),
-                    renda.getDataPagamento(), renda.getValor(), renda.getTipo()));
+            for(Renda renda : rendas){
+                ultimasAtividadesDtos.add(new ContabilUltimasAtividadesDto(renda.getDescricao(),
+                        renda.getDataPagamento(), renda.getValor(), renda.getTipo()));
+            }
+            for(Gasto gasto : gastos){
+                ultimasAtividadesDtos.add(new ContabilUltimasAtividadesDto(gasto.getDescricao(),
+                        gasto.getDataPagamento(), gasto.getValor(), gasto.getTipo()));
+            }
+
+            Collections.sort(ultimasAtividadesDtos);
+
+            return ResponseEntity.ok().body(ultimasAtividadesDtos);
+        } else {
+            return ResponseEntity.notFound().build();
         }
-        for(Gasto gasto : gastos){
-            list.add(new ContabilUltimasAtividadesDto(gasto.getDescricao(),
-                    gasto.getDataPagamento(), gasto.getValor(), gasto.getTipo()));
-        }
-        
-        Page page = new PageImpl(list);
-        return page;
     }
 
 

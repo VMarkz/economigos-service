@@ -17,8 +17,8 @@ public interface ContaRepository extends JpaRepository<Conta, Long> {
     @Query("SELECT c FROM Conta c WHERE usuario_id = :idUsuario")
     List<Conta> findAllByUsuario(@Param("idUsuario") Long idUsuario);
 
-    @Query("SELECT c FROM Conta c WHERE usuario_id = :idUsuario AND id = :id")
-    Optional<Conta> findContaByUsuario(@Param("id") Long id,
+    @Query("SELECT c FROM Conta c WHERE usuario_id = :idUsuario AND id = :idConta")
+    Optional<Conta> findContaByUsuario(@Param("idConta") Long idConta,
                                        @Param("idUsuario") Long idUsuario);
 
 }
