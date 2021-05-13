@@ -74,7 +74,7 @@ public class CartaoControler {
     }
 
     @GetMapping("{idCartao}/usuario/{idUsuario}/ultimas-atividades")
-    public ResponseEntity<List<ContabilUltimasAtividadesDto>> ultimasAtividades(@PathVariable Long idUsuario, @PathVariable Long idCartao){
+    public ResponseEntity<UltimasAtividadesDto> ultimasAtividades(@PathVariable Long idUsuario, @PathVariable Long idCartao){
         Optional<Cartao> optionalCartao = cartaoRepository.findCartaoByUsuario(idCartao, idUsuario);
         if (optionalCartao.isPresent()){
             Cartao cartao = cartaoRepository.getOne(idCartao);
@@ -87,7 +87,7 @@ public class CartaoControler {
 
             Collections.sort(ultimasAtividadesDtos);
 
-            return ResponseEntity.ok().body(ultimasAtividadesDtos);
+            return ResponseEntity.ok().body(new UltimasAtividadesDto("cartao", cartao.getId(), ultimasAtividadesDtos));
         } else {
             return ResponseEntity.notFound().build();
         }
