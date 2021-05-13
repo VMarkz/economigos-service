@@ -1,15 +1,9 @@
 package br.com.economigos.service.controler;
 
-import br.com.economigos.service.controler.dto.CartaoDto;
-import br.com.economigos.service.controler.dto.ContaDto;
-import br.com.economigos.service.controler.dto.DetalhesCartaoDto;
-import br.com.economigos.service.controler.dto.DetalhesUsuarioDto;
+import br.com.economigos.service.controler.dto.*;
 import br.com.economigos.service.controler.form.CartaoForm;
-import br.com.economigos.service.model.Cartao;
-import br.com.economigos.service.model.Conta;
-import br.com.economigos.service.model.Usuario;
-import br.com.economigos.service.repository.CartaoRepository;
-import br.com.economigos.service.repository.UsuarioRepository;
+import br.com.economigos.service.model.*;
+import br.com.economigos.service.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +12,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +26,12 @@ public class CartaoControler {
     CartaoRepository cartaoRepository;
     @Autowired
     UsuarioRepository usuarioRepository;
+    @Autowired
+    GastoRepository gastoRepository;
+    @Autowired
+    RendaRepository rendaRepository;
+    @Autowired
+    ContaRepository contaRepository;
 
     @GetMapping
     @Transactional
@@ -68,6 +70,26 @@ public class CartaoControler {
             return ResponseEntity.ok().body(new DetalhesCartaoDto(cartao.get()));
         }else{
             return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @GetMapping("{idCartao}/usuario/{idUsuario}/ultimas-atividades")
+    public ResponseEntity<List<ContabilUltimasAtividadesDto>> ultimasAtividades(@PathVariable Long idUsuario, @PathVariable Long idCartao){
+        Optional<Cartao> optionalCartao = cartaoRepository.findCartaoByUsuario(idCartao, idUsuario);
+        if (optionalCartao.isPresent()){
+            Cartao cartao = cartaoRepository.getOne(idCartao);
+            List<Gasto> gastos = gastoRepository.findGastoByCartao(cartao.getId());
+            List<ContabilUltimasAtividadesDto> ultimasAtividadesDtos = new ArrayList<>();
+            for(Gasto gasto : gastos){
+                ultimasAtividadesDtos.add(new ContabilUltimasAtividadesDto(gasto.getDescricao(),
+                        gasto.getDataPagamento(), gasto.getValor(), gasto.getTipo()));
+            }
+
+            Collections.sort(ultimasAtividadesDtos);
+
+            return ResponseEntity.ok().body(ultimasAtividadesDtos);
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 
