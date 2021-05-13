@@ -115,7 +115,7 @@ public class ContaControler {
     }
 
     @GetMapping("{idConta}/usuario/{idUsuario}/ultimas-atividades")
-    public ResponseEntity<List<ContabilUltimasAtividadesDto>> ultimasAtividades(@PathVariable Long idUsuario, @PathVariable Long idConta){
+    public ResponseEntity<UltimasAtividadesDto> ultimasAtividades(@PathVariable Long idUsuario, @PathVariable Long idConta){
         Optional<Conta> optionalConta = contaRepository.findContaByUsuario(idConta, idUsuario);
         if (optionalConta.isPresent()){
             Conta conta = contaRepository.getOne(idConta);
@@ -134,7 +134,7 @@ public class ContaControler {
 
             Collections.sort(ultimasAtividadesDtos);
 
-            return ResponseEntity.ok().body(ultimasAtividadesDtos);
+            return ResponseEntity.ok().body(new UltimasAtividadesDto("conta",conta.getId(),ultimasAtividadesDtos));
         } else {
             return ResponseEntity.notFound().build();
         }
