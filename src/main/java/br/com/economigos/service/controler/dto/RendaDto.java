@@ -11,12 +11,14 @@ public class RendaDto implements CommonDto{
     private Double valor;
     private Boolean recebido;
     private String descricao;
+    private String dataPagamento;
 
     public RendaDto(Renda renda) {
         this.id = renda.getId();
         this.valor = renda.getValor();
         this.recebido = renda.getRecebido();
         this.descricao = renda.getDescricao();
+        this.dataPagamento = renda.getDataPagamento();
     }
 
     public Long getId() {
@@ -49,6 +51,14 @@ public class RendaDto implements CommonDto{
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public String getDataPagamento() {
+        return dataPagamento;
+    }
+
+    public void setDataPagamento(String dataPagamento) {
+        this.dataPagamento = dataPagamento;
     }
 
     public static List<RendaDto> converter(List<Renda> rendas) {

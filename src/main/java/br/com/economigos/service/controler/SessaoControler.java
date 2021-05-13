@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class SessaoControler {
 /////CRIAR ENDPOINT PARA RETORNAR TODOS OS LOGADOS ATRUALMENTE
 
     @PostMapping("/login")
+    @Transactional
     public ResponseEntity<?> logar(@RequestBody @Valid UsuarioLoginForm form){
         usuarios = usuarioRepository.findByLogin(form.getEmail(), form.getSenha());
 
@@ -37,6 +39,7 @@ public class SessaoControler {
     }
 
     @GetMapping("/logout")
+    @Transactional
     public ResponseEntity<?> logout() {
 
         if(sessao.getStatus()){

@@ -24,12 +24,14 @@ public class CategoriaControler {
     private CategoriaRepository categoriaRepository;
 
     @GetMapping
+    @Transactional
     public List<CategoriaDto> listar(){
         List<Categoria> categorias = categoriaRepository.findAll();
         return CategoriaDto.converter(categorias);
     }
 
     @GetMapping("/porcentagem-gastos")
+    @Transactional
     public HashMap<String, Double> listarPorcentagemCategoriaGasto(){
         List<Categoria> categorias = categoriaRepository.findAll();
 
@@ -74,6 +76,7 @@ public class CategoriaControler {
     }
 
     @GetMapping("/{id}")
+    @Transactional
     public ResponseEntity<DetalhesCategoriaDto> detalhar(@PathVariable Long id){
         Optional<Categoria> optional = categoriaRepository.findById(id);
         if(optional.isPresent()){

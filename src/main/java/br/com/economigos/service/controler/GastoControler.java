@@ -45,18 +45,24 @@ public class GastoControler {
     @PostMapping
     @Transactional
     public ResponseEntity<GastoDto> cadastrar(@RequestBody @Valid GastoForm form, UriComponentsBuilder uriBuilder) {
-        Gasto gasto = form.converter(cartaoRepository,contaRepository, categoriaRepository);
+        Gasto gasto = form.converter(cartaoRepository, contaRepository, categoriaRepository);
 
         gastoRepository.save(gasto);
         gasto.addObserver(new Conta());
         gasto.addObserver(new Categoria());
         gasto.notificaObservador("create");
 
+        if (gasto.getPago()) {
+            gasto.setPago(false);
+            pagarGasto(gasto.getId());
+        }
+
         URI uri = uriBuilder.path("/receitas/{id}").buildAndExpand(gasto.getId()).toUri();
         return ResponseEntity.created(uri).body(new GastoDto(gasto));
     }
 
     @GetMapping("/{id}")
+    @Transactional
     public ResponseEntity<DetalhesGastoDto> detalhar(@PathVariable Long id) {
         Optional<Gasto> gasto = gastoRepository.findById(id);
         if (gasto.isPresent()) {
@@ -83,17 +89,23 @@ public class GastoControler {
 
     @PutMapping("/pagar/{id}")
     @Transactional
-    public ResponseEntity<ContaDto> pagar(@PathVariable Long id) {
-        Optional<Gasto> optional = gastoRepository.findById(id);
-        if (optional.isPresent()) {
+    public ResponseEntity<?> pagarGasto(@PathVariable Long id) {
+        Optional<Gasto> optionalGasto = gastoRepository.findById(id);
+        Optional<Conta> optionalConta = contaRepository.findById(optionalGasto.get().getConta().getId());
+
+        if (optionalGasto.isPresent() && optionalConta.isPresent()) {
             Gasto gasto = gastoRepository.getOne(id);
-            gasto.setPago(true);
             Conta conta = contaRepository.getOne(gasto.getConta().getId());
-            conta.setValorAtual((conta.getValorAtual() - gasto.getValor()));
-            gasto.addObserver(new Conta());
-            gasto.addObserver(new Categoria());
-            gasto.notificaObservador("update");
-            return ResponseEntity.ok().body(new ContaDto(conta));
+            if (!gasto.getPago()) {
+                gasto.setPago(true);
+                conta.setValorAtual((conta.getValorAtual() - gasto.getValor()));
+                gasto.addObserver(new Conta());
+                gasto.addObserver(new Categoria());
+                gasto.notificaObservador("update");
+                return ResponseEntity.ok().body(new ContaDto(conta));
+            } else {
+                return ResponseEntity.badRequest().body("Gasto já pago");
+            }
         }
         return ResponseEntity.notFound().build();
     }
@@ -129,7 +141,6 @@ public class GastoControler {
             return ResponseEntity.notFound().build();
         }
     }
-
 
 
 }

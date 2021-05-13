@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import javax.transaction.Transactional;
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -36,6 +37,7 @@ public class FileControler {
     GastoRepository gastoRepository;
 
     @GetMapping("/export")
+    @Transactional
     public ResponseEntity<Resource> getFile() throws IOException {
         String filename = "rendas&gastos.csv";
 

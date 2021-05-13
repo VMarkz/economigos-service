@@ -48,11 +48,17 @@ public class RendaControler {
         renda.addObserver(new Categoria());
         renda.notificaObservador("create");
 
+        if(renda.getRecebido()){
+            renda.setRecebido(false);
+            receberRenda(renda.getId());
+        }
+
         URI uri = uriBuilder.path("/receitas/{id}").buildAndExpand(renda.getId()).toUri();
         return ResponseEntity.created(uri).body(new RendaDto(renda));
     }
 
     @GetMapping("/{id}")
+    @Transactional
     public ResponseEntity<DetalhesRendaDto> detalhar(@PathVariable Long id){
         Optional<Renda> renda = rendaRepository.findById(id);
         if(renda.isPresent()){
@@ -95,18 +101,19 @@ public class RendaControler {
 
     @PutMapping("/receber/{id}")
     @Transactional
-    public ResponseEntity<ContaDto> receberRenda(@PathVariable Long id){
-        Optional<Renda> optional = rendaRepository.findById(id);
+    public ResponseEntity<?> receberRenda(@PathVariable Long id){
+        Optional<Renda> optionalRenda = rendaRepository.findById(id);
+        Optional<Conta> optionalConta = contaRepository.findById(optionalRenda.get().getConta().getId());
 
-        if (optional.isPresent()) {
+        if (optionalRenda.isPresent() && optionalConta.isPresent()) {
             Renda renda = rendaRepository.getOne(id);
+            Conta conta = contaRepository.getOne(renda.getConta().getId());
             if(!renda.getRecebido()){
                 renda.setRecebido(true);
-                Conta conta = contaRepository.getOne(renda.getConta().getId());
                 conta.setValorAtual((conta.getValorAtual() + renda.getValor()));
                 return ResponseEntity.ok().body(new ContaDto(conta));
             } else {
-                return ResponseEntity.badRequest().build();
+                return ResponseEntity.badRequest().body("Renda já recebida");
             }
         }
         return ResponseEntity.notFound().build();
