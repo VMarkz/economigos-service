@@ -3,6 +3,7 @@ package br.com.economigos.service.model;
 import br.com.economigos.service.repository.GastoRepository;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -12,15 +13,17 @@ public class Gasto extends Contabil{
     private Boolean pago;
     @ManyToOne
     private Cartao cartao;
+    private Integer parcelas;
 
     public Gasto(Conta conta, Categoria categoria,Double valor, String descricao, Boolean fixo, Boolean pago, String dataPagamento) {
         super(conta, categoria, valor, descricao, fixo, dataPagamento, "Gasto");
         this.pago = pago;
     }
 
-    public Gasto(Cartao cartao,  Categoria categoria,Double valor, String descricao, Boolean fixo, Boolean pago, String dataPagamento, String a) {
+    public Gasto(Cartao cartao,  Categoria categoria,Double valor, Integer parcelas, String descricao, Boolean fixo, Boolean pago, String dataPagamento) {
         super(categoria, valor, descricao, fixo, dataPagamento, "Gasto");
         this.pago = pago;
+        this.parcelas = parcelas;
         this.cartao = cartao;
     }
 
@@ -51,6 +54,14 @@ public class Gasto extends Contabil{
         this.cartao = cartao;
     }
 
+    public Integer getParcelas() {
+        return parcelas;
+    }
+
+    public void setParcelas(Integer parcelas) {
+        this.parcelas = parcelas;
+    }
+
     public static Double getUltimosMeses (String anoMes, GastoRepository gastoRepository, Long idConta){
         Double soma = 0.0;
 
@@ -58,6 +69,19 @@ public class Gasto extends Contabil{
         for (Gasto gasto : gastosMes01) {
             soma += gasto.getValor(); }
         return soma;
+    }
+    public Double getValorParcela(Gasto gasto){
+        return gasto.valor/ gasto.parcelas;
+    }
+    public void dividirParcela(Gasto gasto, GastoRepository gastoRepository){
+        Double valorDaParcela = getValorParcela(gasto);
+            for (int i = 0; i <= parcelas; i++){
+                String novaData = LocalDate.now().plusMonths(i).toString();
+                gastoRepository.save(new Gasto(gasto.getCartao(),gasto.getCategoria(),valorDaParcela, i+1, gasto.getDescricao(), gasto.getFixo(),
+                        gasto.getPago(), novaData));
+                ;
+            }
+
     }
 
 }

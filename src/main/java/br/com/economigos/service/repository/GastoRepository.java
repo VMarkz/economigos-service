@@ -11,5 +11,6 @@ public interface GastoRepository extends JpaRepository<Gasto, Long> {
 
     @Query("SELECT g FROM Gasto g WHERE g.pago = true AND conta_id = ?2 AND g.dataPagamento LIKE ?1%")
     List<Gasto> findByDataPagamentoIsStartingWithByConta(String anoMes, Long idConta);
+//    Double somaGastosCartao (Long idCartao, )
 
 }

@@ -52,9 +52,15 @@ public class GastoControler {
         gasto.addObserver(new Categoria());
         gasto.notificaObservador("create");
 
-        if (gasto.getPago()) {
-            gasto.setPago(false);
-            pagarGasto(gasto.getId());
+
+        if (form.getGastoCartao()){
+            gasto.dividirParcela(gasto, gastoRepository);
+            gasto.getValorParcela(gasto);
+        } else {
+            if (gasto.getPago()) {
+                gasto.setPago(false);
+                pagarGasto(gasto.getId());
+            }
         }
 
         URI uri = uriBuilder.path("/receitas/{id}").buildAndExpand(gasto.getId()).toUri();

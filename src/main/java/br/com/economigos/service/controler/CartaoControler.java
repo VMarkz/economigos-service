@@ -1,12 +1,10 @@
 package br.com.economigos.service.controler;
 
-import br.com.economigos.service.controler.dto.CartaoDto;
-import br.com.economigos.service.controler.dto.ContaDto;
-import br.com.economigos.service.controler.dto.DetalhesCartaoDto;
-import br.com.economigos.service.controler.dto.DetalhesUsuarioDto;
+import br.com.economigos.service.controler.dto.*;
 import br.com.economigos.service.controler.form.CartaoForm;
 import br.com.economigos.service.model.Cartao;
 import br.com.economigos.service.model.Conta;
+import br.com.economigos.service.model.Gasto;
 import br.com.economigos.service.model.Usuario;
 import br.com.economigos.service.repository.CartaoRepository;
 import br.com.economigos.service.repository.UsuarioRepository;
@@ -91,4 +89,10 @@ public class CartaoControler {
             return ResponseEntity.notFound().build();
         }
     }
+
+//    @GetMapping("/fatura/{id}")
+//    @Transactional
+//    public ResponseEntity<GastoDto> valorFaturaAtual(){
+//        List<Gasto>
+//    }
 }
