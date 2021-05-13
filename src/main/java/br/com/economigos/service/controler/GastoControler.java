@@ -68,6 +68,7 @@ public class GastoControler {
     }
 
     @GetMapping("/{id}")
+    @Transactional
     public ResponseEntity<DetalhesGastoDto> detalhar(@PathVariable Long id) {
         Optional<Gasto> gasto = gastoRepository.findById(id);
         if (gasto.isPresent()) {

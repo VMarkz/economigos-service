@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
@@ -22,12 +23,14 @@ public class ContatoControler {
     ContatoRepository contatoRepository;
 
     @GetMapping
+    @Transactional
     public List<Contato> listar(){
         List<Contato> contatos = contatoRepository.findAll();
         return contatos;
     }
 
     @PostMapping
+    @Transactional
     public ResponseEntity<Contato> cadastrar(@RequestBody @Valid ContatoForm form, UriComponentsBuilder uriBuilder){
         Contato contato = form.converter();
         contatoRepository.save(contato);
@@ -37,6 +40,7 @@ public class ContatoControler {
     }
 
     @GetMapping("/{id}")
+    @Transactional
     public ResponseEntity<Contato> detalhar(@PathVariable Long id){
         Optional<Contato> contato = contatoRepository.findById(id);
 

@@ -59,6 +59,7 @@ public class UsuariosControler {
     }
 
     @GetMapping("/{id}")
+    @Transactional
     public ResponseEntity<DetalhesUsuarioDto> detalhar(@PathVariable Long id) {
         Optional<Usuario> optional = usuarioRepository.findById(id);
         if (optional.isPresent()) {
@@ -99,6 +100,7 @@ public class UsuariosControler {
     }
 
     @GetMapping("/{id}/ultimos-meses")
+    @Transactional
     public ResponseEntity<List<ValorMensalTipoDto>> ultimosMeses(@PathVariable Long id) {
         Optional<Usuario> optionalUsuario = usuarioRepository.findById(id);
         if (optionalUsuario.isPresent()) {
