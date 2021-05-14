@@ -1,6 +1,7 @@
 package br.com.economigos.service.model;
 
 import br.com.economigos.service.repository.GastoRepository;
+import br.com.economigos.service.utils.converters.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -75,9 +76,11 @@ public class Gasto extends Contabil{
     }
     public void dividirParcela(Gasto gasto, GastoRepository gastoRepository){
         Double valorDaParcela = getValorParcela(gasto);
-            for (int i = 0; i <= parcelas; i++){
-                String novaData = LocalDate.now().plusMonths(i).toString();
-                gastoRepository.save(new Gasto(gasto.getCartao(),gasto.getCategoria(),valorDaParcela, i+1, gasto.getDescricao(), gasto.getFixo(),
+            for (int i = 0; i < parcelas; i++){
+                LocalDate dataConvertida = Data.converterDate(gasto.getDataPagamento());
+                String novaData = dataConvertida.plusMonths(i).toString();
+                gastoRepository.save(new Gasto(gasto.getCartao(),gasto.getCategoria(),valorDaParcela,
+                        i+1, gasto.getDescricao(), gasto.getFixo(),
                         gasto.getPago(), novaData));
                 ;
             }

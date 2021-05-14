@@ -18,10 +18,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -74,7 +74,29 @@ public class CartaoControler {
         Optional<Cartao> cartaoOptional = cartaoRepository.findById(id);
         if(cartaoOptional.isPresent()){
             Cartao cartao = cartaoRepository.getOne(id);
-            cartao.setValor(gastoRepository.somaGastosCartao(id,"2021-02-15", "2021-03-15"));
+            Integer diaFechamento = cartao.getFechamento().getDayOfMonth();
+            Integer diaAtual = LocalDate.now().getDayOfMonth();
+            Integer mesAtual = LocalDate.now().getMonth().getValue();
+            Integer mesComparacao = 0;
+            String data1 ="";
+            String data2 = "";
+            Integer anoAtual = LocalDate.now().getYear();
+            Double somaGastosCartao =0.0;
+            if (diaAtual > diaFechamento){
+                mesComparacao = mesAtual + 1;
+                data1 = String.format("%d-%02d-%02d", anoAtual,mesAtual,diaFechamento);
+                data2 = String.format("%d-%02d-%02d", anoAtual,mesComparacao,diaFechamento);
+                somaGastosCartao = gastoRepository.somaGastosCartao(id, data1, data2);
+            } else {
+                mesComparacao = mesAtual - 1;
+                data1 = String.format("%d-%02d-%02d", anoAtual,mesComparacao,diaFechamento);
+                data2 = String.format("%d-%02d-%02d", anoAtual,mesAtual,diaFechamento);
+                somaGastosCartao = gastoRepository.somaGastosCartao(id, data1, data2);
+            }
+            System.out.println("-------------------------------------------------------\n" + mesComparacao + "\n" + data1 + "\n" + data2);
+            if (somaGastosCartao != null){
+                cartao.setValor(somaGastosCartao);
+            }
             return ResponseEntity.ok().body(new DetalhesCartaoDto(cartao));
         }else{
             return ResponseEntity.badRequest().build();

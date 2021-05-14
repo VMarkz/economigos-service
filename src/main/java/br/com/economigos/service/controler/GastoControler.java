@@ -4,6 +4,7 @@ import br.com.economigos.service.controler.dto.ContaDto;
 import br.com.economigos.service.controler.dto.DetalhesGastoDto;
 import br.com.economigos.service.controler.dto.GastoDto;
 import br.com.economigos.service.controler.form.GastoForm;
+import br.com.economigos.service.model.Cartao;
 import br.com.economigos.service.model.Categoria;
 import br.com.economigos.service.model.Conta;
 import br.com.economigos.service.model.Gasto;
@@ -47,16 +48,21 @@ public class GastoControler {
     public ResponseEntity<GastoDto> cadastrar(@RequestBody @Valid GastoForm form, UriComponentsBuilder uriBuilder) {
         Gasto gasto = form.converter(cartaoRepository, contaRepository, categoriaRepository);
 
-        gastoRepository.save(gasto);
         gasto.addObserver(new Conta());
         gasto.addObserver(new Categoria());
         gasto.notificaObservador("create");
 
 
         if (form.getGastoCartao()){
+            Optional<Cartao> cartaoOptional = cartaoRepository.findById(gasto.getCartao().getId());
+            if (cartaoOptional.isPresent()){
+                Cartao cartao = cartaoRepository.getOne(gasto.getCartao().getId());
+                cartao.setLimite(cartao.getLimite() - gasto.getValor());
+            }
             gasto.dividirParcela(gasto, gastoRepository);
             gasto.getValorParcela(gasto);
         } else {
+            gastoRepository.save(gasto);
             if (gasto.getPago()) {
                 gasto.setPago(false);
                 pagarGasto(gasto.getId());

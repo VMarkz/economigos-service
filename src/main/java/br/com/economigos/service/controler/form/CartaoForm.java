@@ -76,7 +76,7 @@ public class CartaoForm implements CommonForm {
 
     public Cartao converter(UsuarioRepository usuarioRepository) {
         Usuario usuario = usuarioRepository.getOne(idUsuario);
-        return (new Cartao(usuario,this.nome, this.fechamento, this.vencimento, this.pago, this.limite, 0.00));
+        return (new Cartao(usuario,this.nome, this.fechamento, this.vencimento, this.pago, this.limite));
     }
 
     public Cartao atualizar(Long id, CartaoRepository cartaoRepository){
