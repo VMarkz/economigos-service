@@ -41,7 +41,8 @@ public class RendaController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<RendaDto> cadastrar(@RequestBody @Valid RendaForm form, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<RendaDto> cadastrar(@RequestBody @Valid RendaForm form,
+                                              UriComponentsBuilder uriBuilder) {
         Renda renda = form.converter(contaRepository, categoriaRepository);
 
         rendaRepository.save(renda);
@@ -62,6 +63,7 @@ public class RendaController {
     @Transactional
     public ResponseEntity<DetalhesRendaDto> detalhar(@PathVariable Long id) {
         Optional<Renda> renda = rendaRepository.findById(id);
+
         if (renda.isPresent()) {
             return ResponseEntity.ok().body(new DetalhesRendaDto(renda.get()));
         } else {
@@ -71,13 +73,17 @@ public class RendaController {
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<RendaDto> alterar(@PathVariable Long id, @RequestBody @Valid RendaForm form) {
+    public ResponseEntity<RendaDto> alterar(@PathVariable Long id,
+                                            @RequestBody @Valid RendaForm form) {
         Optional<Renda> optional = rendaRepository.findById(id);
+
         if (optional.isPresent()) {
             Renda renda = form.atualizar(id, rendaRepository);
+
             renda.addObserver(new Conta());
             renda.addObserver(new Categoria());
             renda.notificaObservador("update");
+
             return ResponseEntity.ok(new RendaDto(renda));
         } else {
             return ResponseEntity.notFound().build();
@@ -88,12 +94,15 @@ public class RendaController {
     @Transactional
     public ResponseEntity<?> deletar(@PathVariable Long id) {
         Optional<Renda> optional = rendaRepository.findById(id);
+
         if (optional.isPresent()) {
             Renda renda = rendaRepository.getOne(id);
+
             renda.addObserver(new Conta());
             renda.addObserver(new Categoria());
             rendaRepository.deleteById(id);
             renda.notificaObservador("delete");
+
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.notFound().build();
@@ -109,9 +118,11 @@ public class RendaController {
         if (optionalRenda.isPresent() && optionalConta.isPresent()) {
             Renda renda = rendaRepository.getOne(id);
             Conta conta = contaRepository.getOne(renda.getConta().getId());
+
             if (!renda.getRecebido()) {
                 renda.setRecebido(true);
                 conta.setValorAtual((conta.getValorAtual() + renda.getValor()));
+
                 return ResponseEntity.ok().body(new ContaDto(conta));
             } else {
                 return ResponseEntity.badRequest().body("Renda já recebida");

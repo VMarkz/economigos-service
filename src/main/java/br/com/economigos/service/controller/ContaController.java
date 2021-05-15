@@ -88,7 +88,8 @@ public class ContaController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<ContaDto> cadastrar(@RequestBody @Valid ContaForm form, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<ContaDto> cadastrar(@RequestBody @Valid ContaForm form,
+                                              UriComponentsBuilder uriBuilder) {
         Conta conta = form.converter(usuarioRepository);
         contaRepository.save(conta);
         conta.addObserver(new Usuario());
@@ -100,19 +101,24 @@ public class ContaController {
 
     @GetMapping("/{id}/usuario/{idUsuario}")
     @Transactional
-    public ResponseEntity<DetalhesContaDto> detalhar(@PathVariable Long id, @PathVariable Long idUsuario) {
+    public ResponseEntity<DetalhesContaDto> detalhar(@PathVariable Long id,
+                                                     @PathVariable Long idUsuario) {
         Optional<Conta> optionalConta = contaRepository.findById(id);
         Optional<Usuario> optionalUsuario = usuarioRepository.findById(idUsuario);
         Optional<Conta> optionalContaUsuario = contaRepository.findContaByUsuario(id, idUsuario);
+
         if (optionalConta.isPresent() && optionalUsuario.isPresent() && optionalContaUsuario.isPresent()) {
             Conta conta = contaRepository.getOne(id);
             DetalhesContaDto detalhesContaDto = new DetalhesContaDto(conta);
+
             for (Gasto gasto : contaRepository.getOne(id).getGastos()) {
                 detalhesContaDto.setTotalGastos(detalhesContaDto.getTotalGastos() + gasto.getValor());
             }
+
             for (Renda renda : contaRepository.getOne(id).getRendas()) {
                 detalhesContaDto.setTotalRendas(detalhesContaDto.getTotalRendas() + renda.getValor());
             }
+
             return ResponseEntity.ok().body(detalhesContaDto);
         } else {
             return ResponseEntity.notFound().build();
@@ -120,10 +126,14 @@ public class ContaController {
     }
 
     @GetMapping("{idConta}/usuario/{idUsuario}/ultimas-atividades")
-    public ResponseEntity<UltimasAtividadesDto> ultimasAtividades(@PathVariable Long idUsuario, @PathVariable Long idConta) {
+    @Transactional
+    public ResponseEntity<UltimasAtividadesDto> ultimasAtividades(@PathVariable Long idUsuario,
+                                                                  @PathVariable Long idConta) {
         Optional<Conta> optionalConta = contaRepository.findContaByUsuario(idConta, idUsuario);
+
         if (optionalConta.isPresent()) {
             Conta conta = contaRepository.getOne(idConta);
+
             List<Renda> rendas = rendaRepository.findRendaByConta(conta.getId());
             List<Gasto> gastos = gastoRepository.findGastoByConta(conta.getId());
             List<ContabilUltimasAtividadesDto> ultimasAtividadesDtos = new ArrayList<>();
@@ -132,6 +142,7 @@ public class ContaController {
                 ultimasAtividadesDtos.add(new ContabilUltimasAtividadesDto(renda.getDescricao(),
                         renda.getDataPagamento(), renda.getValor(), renda.getTipo()));
             }
+
             for (Gasto gasto : gastos) {
                 ultimasAtividadesDtos.add(new ContabilUltimasAtividadesDto(gasto.getDescricao(),
                         gasto.getDataPagamento(), gasto.getValor(), gasto.getTipo()));
@@ -148,12 +159,15 @@ public class ContaController {
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<ContaDto> alterar(@PathVariable Long id, @RequestBody @Valid ContaForm form) {
+    public ResponseEntity<ContaDto> alterar(@PathVariable Long id,
+                                            @RequestBody @Valid ContaForm form) {
         Optional<Conta> optional = contaRepository.findById(id);
+
         if (optional.isPresent()) {
             Conta conta = form.atualizar(id, contaRepository);
             conta.addObserver(new Usuario());
             conta.notificaObservador("update");
+
             return ResponseEntity.ok(new ContaDto(conta));
         } else {
             return ResponseEntity.notFound().build();
@@ -164,11 +178,13 @@ public class ContaController {
     @Transactional
     public ResponseEntity<?> deletar(@PathVariable Long id) {
         Optional<Conta> optional = contaRepository.findById(id);
+
         if (optional.isPresent()) {
             Conta conta = contaRepository.getOne(id);
             conta.addObserver(new Usuario());
             contaRepository.deleteById(id);
             conta.notificaObservador("create");
+
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.notFound().build();

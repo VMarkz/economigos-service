@@ -67,7 +67,8 @@ public class CategoriaController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<Categoria> cadastrar(@RequestBody @Valid CategoriaForm form, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<Categoria> cadastrar(@RequestBody @Valid CategoriaForm form,
+                                               UriComponentsBuilder uriBuilder) {
         Categoria categoria = form.converter();
         categoriaRepository.save(categoria);
 
@@ -81,10 +82,6 @@ public class CategoriaController {
         Optional<Categoria> optional = categoriaRepository.findById(id);
         if (optional.isPresent()) {
             Categoria categoria = categoriaRepository.getOne(id);
-
-            System.out.println("GASTOS" + categoria.getGastos());
-            System.out.println("RENDAS" + categoria.getRendas());
-
             return ResponseEntity.ok().body(new DetalhesCategoriaDto(categoria));
         } else {
             return ResponseEntity.notFound().build();
@@ -93,7 +90,8 @@ public class CategoriaController {
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<Categoria> alterar(@PathVariable Long id, @RequestBody @Valid CategoriaForm form) {
+    public ResponseEntity<Categoria> alterar(@PathVariable Long id,
+                                             @RequestBody @Valid CategoriaForm form) {
         Optional<Categoria> optional = categoriaRepository.findById(id);
         if (optional.isPresent()) {
             Categoria categoria = form.atualizar(id, categoriaRepository);

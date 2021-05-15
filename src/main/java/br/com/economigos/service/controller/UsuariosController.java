@@ -47,15 +47,16 @@ public class UsuariosController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<UsuarioDto> cadastrar(@RequestBody @Valid UsuarioForm form, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<UsuarioDto> cadastrar(@RequestBody @Valid UsuarioForm form,
+                                                UriComponentsBuilder uriBuilder) {
         Usuario usuario = form.converter();
+
         if (!form.verificarCadastro(form.getEmail(), usuarioRepository)) {
             usuarioRepository.save(usuario);
 
             URI uri = uriBuilder.path("/usuarios/{id}").buildAndExpand(usuario.getId()).toUri();
             return ResponseEntity.created(uri).body(new UsuarioDto(usuario));
         }
-        ;
         return ResponseEntity.badRequest().build();
     }
 
@@ -78,8 +79,10 @@ public class UsuariosController {
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<UsuarioDto> alterar(@PathVariable Long id, @RequestBody @Valid UsuarioForm form) {
+    public ResponseEntity<UsuarioDto> alterar(@PathVariable Long id,
+                                              @RequestBody @Valid UsuarioForm form) {
         Optional<Usuario> optional = usuarioRepository.findById(id);
+
         if (optional.isPresent()) {
             Usuario usuario = form.atualizar(id, usuarioRepository);
             return ResponseEntity.ok(new UsuarioDto(usuario));
@@ -92,6 +95,7 @@ public class UsuariosController {
     @Transactional
     public ResponseEntity<?> deletar(@PathVariable Long id) {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
+
         if (usuario.isPresent()) {
             usuarioRepository.deleteById(id);
             return ResponseEntity.ok().build();
@@ -104,6 +108,7 @@ public class UsuariosController {
     @Transactional
     public ResponseEntity<List<ValorMensalTipoDto>> ultimosMeses(@PathVariable Long id) {
         Optional<Usuario> optionalUsuario = usuarioRepository.findById(id);
+
         if (optionalUsuario.isPresent()) {
             Usuario usuario = usuarioRepository.getOne(id);
 
@@ -124,6 +129,7 @@ public class UsuariosController {
 
             valorMensalTipoDtos.add(new ValorMensalTipoDto("Gasto", valorMensalGastosDtos));
             valorMensalTipoDtos.add(new ValorMensalTipoDto("Renda", valorMensalRendasDtos));
+
             return ResponseEntity.ok().body(valorMensalTipoDtos);
         }
         return ResponseEntity.notFound().build();

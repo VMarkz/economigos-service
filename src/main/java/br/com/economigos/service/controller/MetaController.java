@@ -48,7 +48,8 @@ public class MetaController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<MetaDto> cadastrar(@RequestBody @Valid MetaForm form, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<MetaDto> cadastrar(@RequestBody @Valid MetaForm form,
+                                             UriComponentsBuilder uriBuilder) {
         Meta meta = form.converter(usuarioRepository);
 
         metaRepository.save(meta);
@@ -63,6 +64,7 @@ public class MetaController {
     @Transactional
     public ResponseEntity<Meta> detalhar(@PathVariable Long id) {
         Optional<Meta> optional = metaRepository.findById(id);
+
         if (optional.isPresent()) {
             return ResponseEntity.ok().body(optional.get());
         } else {
@@ -72,12 +74,16 @@ public class MetaController {
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<Meta> alterar(@PathVariable Long id, @RequestBody @Valid MetaForm form) {
+    public ResponseEntity<Meta> alterar(@PathVariable Long id,
+                                        @RequestBody @Valid MetaForm form) {
         Optional<Meta> optional = metaRepository.findById(id);
+
         if (optional.isPresent()) {
             Meta meta = form.atualizar(id, metaRepository);
+
             meta.addObserver(new Usuario());
             meta.notificaObservador("update");
+
             return ResponseEntity.ok(meta);
         } else {
             return ResponseEntity.notFound().build();
@@ -88,11 +94,14 @@ public class MetaController {
     @Transactional
     public ResponseEntity<?> deletar(@PathVariable Long id) {
         Optional<Meta> optional = metaRepository.findById(id);
+
         if (optional.isPresent()) {
             Meta meta = metaRepository.getOne(id);
+
             meta.addObserver(new Usuario());
             metaRepository.deleteById(id);
             meta.notificaObservador("create");
+
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.notFound().build();

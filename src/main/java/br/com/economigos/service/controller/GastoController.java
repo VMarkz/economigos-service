@@ -37,6 +37,7 @@ public class GastoController {
     private CategoriaRepository categoriaRepository;
 
     @GetMapping
+    @Transactional
     public List<GastoDto> listar() {
         List<Gasto> gastos = gastoRepository.findAll();
         return GastoDto.converter(gastos);
@@ -44,7 +45,8 @@ public class GastoController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<GastoDto> cadastrar(@RequestBody @Valid GastoForm form, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<GastoDto> cadastrar(@RequestBody @Valid GastoForm form,
+                                              UriComponentsBuilder uriBuilder) {
         Gasto gasto = form.converter(cartaoRepository, contaRepository, categoriaRepository);
 
         gastoRepository.save(gasto);
@@ -65,6 +67,7 @@ public class GastoController {
     @Transactional
     public ResponseEntity<DetalhesGastoDto> detalhar(@PathVariable Long id) {
         Optional<Gasto> gasto = gastoRepository.findById(id);
+
         if (gasto.isPresent()) {
             return ResponseEntity.ok().body(new DetalhesGastoDto(gasto.get()));
         } else {
@@ -74,13 +77,16 @@ public class GastoController {
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<GastoDto> alterar(@PathVariable Long id, @RequestBody @Valid GastoForm form) {
+    public ResponseEntity<GastoDto> alterar(@PathVariable Long id,
+                                            @RequestBody @Valid GastoForm form) {
         Optional<Gasto> optional = gastoRepository.findById(id);
+
         if (optional.isPresent()) {
             Gasto gasto = form.atualizar(id, gastoRepository);
             gasto.addObserver(new Conta());
             gasto.addObserver(new Categoria());
             gasto.notificaObservador("update");
+
             return ResponseEntity.ok(new GastoDto(gasto));
         } else {
             return ResponseEntity.notFound().build();
@@ -96,12 +102,14 @@ public class GastoController {
         if (optionalGasto.isPresent() && optionalConta.isPresent()) {
             Gasto gasto = gastoRepository.getOne(id);
             Conta conta = contaRepository.getOne(gasto.getConta().getId());
+
             if (!gasto.getPago()) {
                 gasto.setPago(true);
                 conta.setValorAtual((conta.getValorAtual() - gasto.getValor()));
                 gasto.addObserver(new Conta());
                 gasto.addObserver(new Categoria());
                 gasto.notificaObservador("update");
+
                 return ResponseEntity.ok().body(new ContaDto(conta));
             } else {
                 return ResponseEntity.badRequest().body("Gasto já pago");
@@ -114,12 +122,15 @@ public class GastoController {
     @Transactional
     public ResponseEntity<GastoDto> cancelarPagamento(@PathVariable Long id) {
         Optional<Gasto> optional = gastoRepository.findById(id);
+
         if (optional.isPresent()) {
             Gasto gasto = gastoRepository.getOne(id);
+
             gasto.setPago(false);
             gasto.addObserver(new Conta());
             gasto.addObserver(new Categoria());
             gasto.notificaObservador("update");
+
             return ResponseEntity.ok().body(new GastoDto(gasto));
         }
         return ResponseEntity.notFound().build();
@@ -130,12 +141,15 @@ public class GastoController {
     @Transactional
     public ResponseEntity<?> deletar(@PathVariable Long id) {
         Optional<Gasto> optional = gastoRepository.findById(id);
+
         if (optional.isPresent()) {
             Gasto gasto = gastoRepository.getOne(id);
+
             gasto.addObserver(new Conta());
             gasto.addObserver(new Categoria());
             gastoRepository.deleteById(id);
             gasto.notificaObservador("delete");
+
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.notFound().build();

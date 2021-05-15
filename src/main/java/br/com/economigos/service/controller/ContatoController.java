@@ -31,7 +31,8 @@ public class ContatoController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<Contato> cadastrar(@RequestBody @Valid ContatoForm form, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<Contato> cadastrar(@RequestBody @Valid ContatoForm form,
+                                             UriComponentsBuilder uriBuilder) {
         Contato contato = form.converter();
         contatoRepository.save(contato);
 

@@ -59,7 +59,8 @@ public class CartaoController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<CartaoDto> cadastrar(@RequestBody @Valid CartaoForm form, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<CartaoDto> cadastrar(@RequestBody @Valid CartaoForm form,
+                                               UriComponentsBuilder uriBuilder) {
         Cartao cartao = form.converter(usuarioRepository);
         cartaoRepository.save(cartao);
 
@@ -79,12 +80,15 @@ public class CartaoController {
     }
 
     @GetMapping("{idCartao}/usuario/{idUsuario}/ultimas-atividades")
-    public ResponseEntity<UltimasAtividadesDto> ultimasAtividades(@PathVariable Long idUsuario, @PathVariable Long idCartao) {
+    public ResponseEntity<UltimasAtividadesDto> ultimasAtividades(@PathVariable Long idUsuario,
+                                                                  @PathVariable Long idCartao) {
         Optional<Cartao> optionalCartao = cartaoRepository.findCartaoByUsuario(idCartao, idUsuario);
         if (optionalCartao.isPresent()) {
             Cartao cartao = cartaoRepository.getOne(idCartao);
+
             List<Gasto> gastos = gastoRepository.findGastoByCartao(cartao.getId());
             List<ContabilUltimasAtividadesDto> ultimasAtividadesDtos = new ArrayList<>();
+
             for (Gasto gasto : gastos) {
                 ultimasAtividadesDtos.add(new ContabilUltimasAtividadesDto(gasto.getDescricao(),
                         gasto.getDataPagamento(), gasto.getValor(), gasto.getTipo()));
@@ -100,7 +104,8 @@ public class CartaoController {
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<CartaoDto> alterar(@PathVariable Long id, @RequestBody @Valid CartaoForm form) {
+    public ResponseEntity<CartaoDto> alterar(@PathVariable Long id,
+                                             @RequestBody @Valid CartaoForm form) {
         Optional<Cartao> optional = cartaoRepository.findById(id);
         if (optional.isPresent()) {
             Cartao cartao = form.atualizar(id, cartaoRepository);
@@ -114,6 +119,7 @@ public class CartaoController {
     @Transactional
     public ResponseEntity<?> deletar(@PathVariable Long id) {
         Optional<Cartao> cartao = cartaoRepository.findById(id);
+
         if (cartao.isPresent()) {
             cartaoRepository.deleteById(id);
             return ResponseEntity.ok().build();

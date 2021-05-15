@@ -23,8 +23,6 @@ public class SessaoController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-/////CRIAR ENDPOINT PARA RETORNAR TODOS OS LOGADOS ATRUALMENTE
-
     @PostMapping("/login")
     @Transactional
     public ResponseEntity<?> logar(@RequestBody @Valid UsuarioLoginForm form) {
