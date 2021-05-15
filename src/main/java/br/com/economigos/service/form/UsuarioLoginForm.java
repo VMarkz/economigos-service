@@ -7,9 +7,11 @@ import javax.validation.constraints.Size;
 
 public class UsuarioLoginForm {
 
-    @NotNull @NotEmpty
+    @NotNull
+    @NotEmpty
     private String email;
-    @NotNull @Size(min = 8)
+    @NotNull
+    @Size(min = 8)
     private String senha;
 
     public String getEmail() {

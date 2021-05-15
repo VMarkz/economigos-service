@@ -24,10 +24,10 @@ public class Conta extends Observable implements Observer {
     @OneToMany(mappedBy = "conta")
     private List<Gasto> gastos;
 
-    public Conta(){
+    public Conta() {
     }
 
-    public Conta(Usuario usuario,String banco, String numeroConta, String descricao, String nome) {
+    public Conta(Usuario usuario, String banco, String numeroConta, String descricao, String nome) {
         this.usuario = usuario;
         this.banco = banco;
         this.numeroConta = numeroConta;
@@ -42,16 +42,16 @@ public class Conta extends Observable implements Observer {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Double getValorAtual() {
         return valorAtual;
     }
 
     public void setValorAtual(Double valorAtual) {
         this.valorAtual = valorAtual;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getBanco() {
@@ -110,11 +110,11 @@ public class Conta extends Observable implements Observer {
         this.gastos = gastos;
     }
 
-    public void adcionarGasto(Gasto gasto){
+    public void adcionarGasto(Gasto gasto) {
         gastos.add(gasto);
     }
 
-    public void adcionarRenda(Renda renda){
+    public void adcionarRenda(Renda renda) {
         rendas.add(renda);
     }
 
@@ -149,7 +149,7 @@ public class Conta extends Observable implements Observer {
         }
     }
 
-    public void notificaObservador(String acao){
+    public void notificaObservador(String acao) {
         setChanged();
         notifyObservers(acao);
     }

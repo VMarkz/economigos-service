@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-public class ContabilUltimasAtividadesDto implements Comparable<ContabilUltimasAtividadesDto>{
+public class ContabilUltimasAtividadesDto implements Comparable<ContabilUltimasAtividadesDto> {
     private String descricao;
     private String data;
     private Double valor;
@@ -62,7 +62,8 @@ public class ContabilUltimasAtividadesDto implements Comparable<ContabilUltimasA
 
         if (thisRendaDate.isAfter(outraRendaDate)) {
             return -1;
-        } if (thisRendaDate.isBefore(outraRendaDate)) {
+        }
+        if (thisRendaDate.isBefore(outraRendaDate)) {
             return 1;
         }
         return 0;

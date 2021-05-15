@@ -1,7 +1,6 @@
 package br.com.economigos.service.model;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Observable;
 
 @Entity
@@ -21,7 +20,7 @@ public abstract class Contabil extends Observable {
     protected String dataPagamento;
     protected Boolean fixo;
 
-    public Contabil(Conta conta, Categoria categoria, Double valor, String descricao, Boolean fixo, String dataPagamento,String tipo) {
+    public Contabil(Conta conta, Categoria categoria, Double valor, String descricao, Boolean fixo, String dataPagamento, String tipo) {
         this.conta = conta;
         this.categoria = categoria;
         this.valor = valor;
@@ -107,7 +106,7 @@ public abstract class Contabil extends Observable {
         this.fixo = fixo;
     }
 
-    public void notificaObservador(String acao){
+    public void notificaObservador(String acao) {
         setChanged();
         notifyObservers(acao);
     }

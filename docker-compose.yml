@@ -16,7 +16,7 @@ services:
       - POSTGRES_PASSWORD=economigos@123
       - POSTGRES_DB=economigos_db
     restart: unless-stopped
-# APP***************
+  # APP***************
   springbootapp:
     image: economigos/economigos-service:latest
     network_mode: bridge
@@ -45,9 +45,9 @@ services:
     expose:
       - 3000
     ports:
-        - 3000:3000
+      - 3000:3000
     environment:
-        - NODE_ENV=development
+      - NODE_ENV=development
     restart: unless-stopped
     depends_on:
       - springbootapp

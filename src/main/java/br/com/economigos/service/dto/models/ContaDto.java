@@ -19,6 +19,10 @@ public class ContaDto {
         this.valorAtual = conta.getValorAtual();
     }
 
+    public static List<ContaDto> converter(List<Conta> contas) {
+        return contas.stream().map(ContaDto::new).collect(Collectors.toList());
+    }
+
     public String getApelido() {
         return apelido;
     }
@@ -49,10 +53,6 @@ public class ContaDto {
 
     public void setValorAtual(Double valorAtual) {
         this.valorAtual = valorAtual;
-    }
-
-    public static List<ContaDto> converter(List<Conta> contas) {
-        return contas.stream().map(ContaDto::new).collect(Collectors.toList());
     }
 
 }

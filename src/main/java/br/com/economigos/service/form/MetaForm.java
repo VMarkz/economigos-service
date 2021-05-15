@@ -7,7 +7,7 @@ import br.com.economigos.service.repository.UsuarioRepository;
 
 import javax.validation.constraints.NotNull;
 
-public class MetaForm{
+public class MetaForm {
 
     private Long idUsuario;
     @NotNull
@@ -69,7 +69,7 @@ public class MetaForm{
 
     public Meta converter(UsuarioRepository usuarioRepository) {
         Usuario usuario = usuarioRepository.getOne(this.idUsuario);
-        return new Meta(usuario,this.nome,this.descricao,this.metaGasto,this.valorInicial,this.valorFinal);
+        return new Meta(usuario, this.nome, this.descricao, this.metaGasto, this.valorInicial, this.valorFinal);
     }
 
     public Meta atualizar(Long id, MetaRepository metaRepository) {

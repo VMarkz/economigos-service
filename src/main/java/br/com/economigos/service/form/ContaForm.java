@@ -8,15 +8,19 @@ import com.sun.istack.NotNull;
 
 import javax.validation.constraints.NotEmpty;
 
-public class ContaForm{
+public class ContaForm {
 
-    @NotNull @NotEmpty
+    @NotNull
+    @NotEmpty
     private String banco;
-    @NotNull @NotEmpty
+    @NotNull
+    @NotEmpty
     private String numeroConta;
-    @NotNull @NotEmpty
+    @NotNull
+    @NotEmpty
     private String descricao;
-    @NotNull @NotEmpty
+    @NotNull
+    @NotEmpty
     private String apelido;
     @NotNull
     private Long idUsuario;
@@ -62,11 +66,11 @@ public class ContaForm{
     }
 
     public Conta converter(UsuarioRepository usuarioRepository) {
-            Usuario usuario = usuarioRepository.getOne(this.idUsuario);
-            return (new Conta(usuario, this.banco, this.numeroConta, this.descricao, this.apelido));
+        Usuario usuario = usuarioRepository.getOne(this.idUsuario);
+        return (new Conta(usuario, this.banco, this.numeroConta, this.descricao, this.apelido));
     }
 
-    public Conta atualizar(Long id, ContaRepository contaRepository){
+    public Conta atualizar(Long id, ContaRepository contaRepository) {
         Conta conta = contaRepository.getOne(id);
 
         conta.setApelido(this.apelido);

@@ -10,7 +10,8 @@ import java.util.Observer;
 @Entity
 public class Usuario implements Observer {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String email;
     private String senha;

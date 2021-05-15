@@ -9,7 +9,7 @@ import br.com.economigos.service.repository.RendaRepository;
 
 import javax.validation.constraints.NotNull;
 
-public class RendaForm{
+public class RendaForm {
 
     private Long idConta;
     @NotNull

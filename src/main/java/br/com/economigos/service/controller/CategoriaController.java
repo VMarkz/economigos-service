@@ -25,21 +25,21 @@ public class CategoriaController {
 
     @GetMapping
     @Transactional
-    public List<CategoriaDto> listar(){
+    public List<CategoriaDto> listar() {
         List<Categoria> categorias = categoriaRepository.findAll();
         return CategoriaDto.converter(categorias);
     }
 
     @GetMapping("/porcentagem-gastos")
     @Transactional
-    public HashMap<String, Double> listarPorcentagemCategoriaGasto(){
+    public HashMap<String, Double> listarPorcentagemCategoriaGasto() {
         List<Categoria> categorias = categoriaRepository.findAll();
 
         Double valorTotal = 0.0;
 
         List<HashMap<String, Double>> categoriaSomas = new ArrayList<>();
 
-        for(int i=0; i<categorias.size(); i++){
+        for (int i = 0; i < categorias.size(); i++) {
             HashMap<String, Double> tempHashmap = new HashMap<>();
             String tempCategoria = categorias.get(i).getCategoria();
             Double tempSoma = 0.0;
@@ -55,7 +55,7 @@ public class CategoriaController {
         }
 
         for (HashMap<String, Double> categoriaSoma : categoriaSomas) {
-            for(Map.Entry<String, Double> entry: categoriaSoma.entrySet()){
+            for (Map.Entry<String, Double> entry : categoriaSoma.entrySet()) {
                 Double porcentagem = (categoriaSoma.get(entry.getKey()) * 100.0) / valorTotal;
                 categoriaSomas.get(0).put(entry.getKey(), porcentagem);
             }
@@ -77,23 +77,23 @@ public class CategoriaController {
 
     @GetMapping("/{id}")
     @Transactional
-    public ResponseEntity<DetalhesCategoriaDto> detalhar(@PathVariable Long id){
+    public ResponseEntity<DetalhesCategoriaDto> detalhar(@PathVariable Long id) {
         Optional<Categoria> optional = categoriaRepository.findById(id);
-        if(optional.isPresent()){
+        if (optional.isPresent()) {
             Categoria categoria = categoriaRepository.getOne(id);
 
             System.out.println("GASTOS" + categoria.getGastos());
             System.out.println("RENDAS" + categoria.getRendas());
 
             return ResponseEntity.ok().body(new DetalhesCategoriaDto(categoria));
-        }else{
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<Categoria> alterar(@PathVariable Long id, @RequestBody @Valid CategoriaForm form){
+    public ResponseEntity<Categoria> alterar(@PathVariable Long id, @RequestBody @Valid CategoriaForm form) {
         Optional<Categoria> optional = categoriaRepository.findById(id);
         if (optional.isPresent()) {
             Categoria categoria = form.atualizar(id, categoriaRepository);
@@ -105,12 +105,12 @@ public class CategoriaController {
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity<?> deletar(@PathVariable Long id){
+    public ResponseEntity<?> deletar(@PathVariable Long id) {
         Optional<Categoria> optional = categoriaRepository.findById(id);
-        if(optional.isPresent()){
+        if (optional.isPresent()) {
             categoriaRepository.deleteById(id);
             return ResponseEntity.ok().build();
-        }else{
+        } else {
             return ResponseEntity.notFound().build();
         }
     }

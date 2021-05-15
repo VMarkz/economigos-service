@@ -6,9 +6,10 @@ import br.com.economigos.service.repository.CategoriaRepository;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-public class CategoriaForm{
+public class CategoriaForm {
 
-    @NotNull @NotEmpty
+    @NotNull
+    @NotEmpty
     private String categoria;
 
     public CategoriaForm() {
@@ -26,7 +27,7 @@ public class CategoriaForm{
         return new Categoria(this.categoria);
     }
 
-    public Categoria atualizar(Long id, CategoriaRepository categoriaRepository){
+    public Categoria atualizar(Long id, CategoriaRepository categoriaRepository) {
         Categoria categoria = categoriaRepository.getOne(id);
 
         categoria.setCategoria(this.categoria);

@@ -24,14 +24,14 @@ public class ContatoController {
 
     @GetMapping
     @Transactional
-    public List<Contato> listar(){
+    public List<Contato> listar() {
         List<Contato> contatos = contatoRepository.findAll();
         return contatos;
     }
 
     @PostMapping
     @Transactional
-    public ResponseEntity<Contato> cadastrar(@RequestBody @Valid ContatoForm form, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<Contato> cadastrar(@RequestBody @Valid ContatoForm form, UriComponentsBuilder uriBuilder) {
         Contato contato = form.converter();
         contatoRepository.save(contato);
 
@@ -41,12 +41,12 @@ public class ContatoController {
 
     @GetMapping("/{id}")
     @Transactional
-    public ResponseEntity<Contato> detalhar(@PathVariable Long id){
+    public ResponseEntity<Contato> detalhar(@PathVariable Long id) {
         Optional<Contato> contato = contatoRepository.findById(id);
 
-        if(contato.isPresent()){
+        if (contato.isPresent()) {
             return ResponseEntity.ok().body(contato.get());
-        }else{
+        } else {
             return ResponseEntity.notFound().build();
         }
     }

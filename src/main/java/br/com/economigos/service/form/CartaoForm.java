@@ -8,7 +8,7 @@ import br.com.economigos.service.repository.UsuarioRepository;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
-public class CartaoForm{
+public class CartaoForm {
 
     @NotNull
     private Long idUsuario;
@@ -73,10 +73,10 @@ public class CartaoForm{
 
     public Cartao converter(UsuarioRepository usuarioRepository) {
         Usuario usuario = usuarioRepository.getOne(idUsuario);
-        return (new Cartao(usuario,this.nome, this.fechamento, this.vencimento, this.pago, this.limite));
+        return (new Cartao(usuario, this.nome, this.fechamento, this.vencimento, this.pago, this.limite));
     }
 
-    public Cartao atualizar(Long id, CartaoRepository cartaoRepository){
+    public Cartao atualizar(Long id, CartaoRepository cartaoRepository) {
         Cartao cartao = cartaoRepository.getOne(id);
 
         cartao.setNome(this.nome);

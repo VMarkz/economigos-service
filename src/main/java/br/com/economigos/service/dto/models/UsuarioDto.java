@@ -15,6 +15,10 @@ public class UsuarioDto {
         this.email = usuario.getEmail();
     }
 
+    public static List<UsuarioDto> converter(List<Usuario> usuarios) {
+        return usuarios.stream().map(UsuarioDto::new).collect(Collectors.toList());
+    }
+
     public Long getId() {
         return id;
     }
@@ -29,10 +33,6 @@ public class UsuarioDto {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public static List<UsuarioDto> converter(List<Usuario> usuarios) {
-        return usuarios.stream().map(UsuarioDto::new).collect(Collectors.toList());
     }
 
 }

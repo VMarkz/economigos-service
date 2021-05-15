@@ -5,11 +5,13 @@ import br.com.economigos.service.model.Contato;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-public class ContatoForm{
+public class ContatoForm {
 
-    @NotNull @NotEmpty
+    @NotNull
+    @NotEmpty
     private String email;
-    @NotNull @NotEmpty
+    @NotNull
+    @NotEmpty
     private String mensagem;
 
     public String getEmail() {
@@ -29,6 +31,6 @@ public class ContatoForm{
     }
 
     public Contato converter() {
-        return new Contato(this.email,this.mensagem);
+        return new Contato(this.email, this.mensagem);
     }
 }

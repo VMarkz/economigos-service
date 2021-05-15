@@ -23,6 +23,10 @@ public class MetaDto {
         this.valorFinal = meta.getValorFinal();
     }
 
+    public static List<MetaDto> converter(List<Meta> metas) {
+        return metas.stream().map(MetaDto::new).collect(Collectors.toList());
+    }
+
     public Long getId() {
         return id;
     }
@@ -69,9 +73,5 @@ public class MetaDto {
 
     public void setValorFinal(Double valorFinal) {
         this.valorFinal = valorFinal;
-    }
-
-    public static List<MetaDto> converter(List<Meta> metas) {
-        return metas.stream().map(MetaDto::new).collect(Collectors.toList());
     }
 }

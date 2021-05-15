@@ -1,6 +1,7 @@
 package br.com.economigos.service.controller;
 
-import br.com.economigos.service.dto.*;
+import br.com.economigos.service.dto.ValorMensalDto;
+import br.com.economigos.service.dto.ValorMensalTipoDto;
 import br.com.economigos.service.dto.models.UsuarioDto;
 import br.com.economigos.service.dto.models.details.DetalhesUsuarioDto;
 import br.com.economigos.service.form.UsuarioForm;
@@ -13,13 +14,11 @@ import br.com.economigos.service.repository.RendaRepository;
 import br.com.economigos.service.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-
-import javax.transaction.Transactional;
-import javax.validation.Valid;
-
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.net.URI;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
@@ -34,11 +33,11 @@ import java.util.Optional;
 public class UsuariosController {
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
-    @Autowired
     GastoRepository gastoRepository;
     @Autowired
     RendaRepository rendaRepository;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     @GetMapping
     public List<UsuarioDto> listar() {
@@ -119,7 +118,7 @@ public class UsuariosController {
 
                 for (Conta conta : usuario.getContas()) {
                     valorMensalGastosDtos.add(new ValorMensalDto(mes, Gasto.getUltimosMeses(anoMes, gastoRepository, conta.getId())));
-                    valorMensalRendasDtos.add(new ValorMensalDto(mes, Renda.getUltimosMeses(anoMes, rendaRepository , conta.getId())));
+                    valorMensalRendasDtos.add(new ValorMensalDto(mes, Renda.getUltimosMeses(anoMes, rendaRepository, conta.getId())));
                 }
             }
 

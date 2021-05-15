@@ -1,9 +1,9 @@
 package br.com.economigos.service.controller;
 
+import br.com.economigos.service.dto.models.UsuarioDto;
 import br.com.economigos.service.form.UsuarioLoginForm;
 import br.com.economigos.service.model.Sessao;
 import br.com.economigos.service.model.Usuario;
-import br.com.economigos.service.dto.models.UsuarioDto;
 import br.com.economigos.service.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,13 +27,13 @@ public class SessaoController {
 
     @PostMapping("/login")
     @Transactional
-    public ResponseEntity<?> logar(@RequestBody @Valid UsuarioLoginForm form){
+    public ResponseEntity<?> logar(@RequestBody @Valid UsuarioLoginForm form) {
         usuarios = usuarioRepository.findByLogin(form.getEmail(), form.getSenha());
 
-        if(!usuarios.isEmpty()){
+        if (!usuarios.isEmpty()) {
             sessao = new Sessao((UsuarioDto.converter(usuarios)).get(0));
             return ResponseEntity.ok(sessao);
-        }else{
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
@@ -42,10 +42,10 @@ public class SessaoController {
     @Transactional
     public ResponseEntity<?> logout() {
 
-        if(sessao.getStatus()){
+        if (sessao.getStatus()) {
             sessao.logout();
             return ResponseEntity.ok(sessao);
-        }else{
+        } else {
             return ResponseEntity.badRequest().build();
         }
     }

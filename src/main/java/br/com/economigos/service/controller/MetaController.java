@@ -29,17 +29,17 @@ public class MetaController {
 
     @GetMapping
     @Transactional
-    public List<Meta> listar(){
+    public List<Meta> listar() {
         List<Meta> metas = metaRepository.findAll();
         return metas;
     }
 
     @GetMapping("/usuario/{idUsuario}")
     @Transactional
-    public ResponseEntity<List<MetaDto>> listar(@PathVariable Long idUsuario){
+    public ResponseEntity<List<MetaDto>> listar(@PathVariable Long idUsuario) {
         Optional<Usuario> optional = usuarioRepository.findById(idUsuario);
 
-        if (optional.isPresent()){
+        if (optional.isPresent()) {
             List<Meta> metas = metaRepository.findAllByUsuario(idUsuario);
             return ResponseEntity.ok().body(MetaDto.converter(metas));
         }
@@ -61,18 +61,18 @@ public class MetaController {
 
     @GetMapping("/{id}")
     @Transactional
-    public ResponseEntity<Meta> detalhar(@PathVariable Long id){
+    public ResponseEntity<Meta> detalhar(@PathVariable Long id) {
         Optional<Meta> optional = metaRepository.findById(id);
-        if(optional.isPresent()){
+        if (optional.isPresent()) {
             return ResponseEntity.ok().body(optional.get());
-        }else{
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<Meta> alterar(@PathVariable Long id, @RequestBody @Valid MetaForm form){
+    public ResponseEntity<Meta> alterar(@PathVariable Long id, @RequestBody @Valid MetaForm form) {
         Optional<Meta> optional = metaRepository.findById(id);
         if (optional.isPresent()) {
             Meta meta = form.atualizar(id, metaRepository);
@@ -86,15 +86,15 @@ public class MetaController {
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity<?> deletar(@PathVariable Long id){
+    public ResponseEntity<?> deletar(@PathVariable Long id) {
         Optional<Meta> optional = metaRepository.findById(id);
-        if(optional.isPresent()){
+        if (optional.isPresent()) {
             Meta meta = metaRepository.getOne(id);
             meta.addObserver(new Usuario());
             metaRepository.deleteById(id);
             meta.notificaObservador("create");
             return ResponseEntity.ok().build();
-        }else{
+        } else {
             return ResponseEntity.notFound().build();
         }
     }

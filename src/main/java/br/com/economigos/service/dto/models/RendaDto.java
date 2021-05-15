@@ -21,6 +21,10 @@ public class RendaDto {
         this.dataPagamento = renda.getDataPagamento();
     }
 
+    public static List<RendaDto> converter(List<Renda> rendas) {
+        return rendas.stream().map(RendaDto::new).collect(Collectors.toList());
+    }
+
     public Long getId() {
         return id;
     }
@@ -59,10 +63,6 @@ public class RendaDto {
 
     public void setDataPagamento(String dataPagamento) {
         this.dataPagamento = dataPagamento;
-    }
-
-    public static List<RendaDto> converter(List<Renda> rendas) {
-        return rendas.stream().map(RendaDto::new).collect(Collectors.toList());
     }
 
 }

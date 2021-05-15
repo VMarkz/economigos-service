@@ -21,8 +21,6 @@ public class DetalhesContaDto {
     private List<GastoDto> gastos;
 
 
-
-
     public DetalhesContaDto(Conta conta) {
         this.id = conta.getId();
         this.banco = conta.getBanco();
@@ -34,6 +32,10 @@ public class DetalhesContaDto {
         this.gastos = GastoDto.converter(conta.getGastos());
         this.totalRendas = 0.0;
         this.totalGastos = 0.0;
+    }
+
+    public static List<DetalhesContaDto> converter(List<Conta> contas) {
+        return contas.stream().map(DetalhesContaDto::new).collect(Collectors.toList());
     }
 
     public Double getTotalRendas() {
@@ -114,10 +116,6 @@ public class DetalhesContaDto {
 
     public void setGastos(List<GastoDto> gastos) {
         this.gastos = gastos;
-    }
-
-    public static List<DetalhesContaDto> converter(List<Conta> contas) {
-        return contas.stream().map(DetalhesContaDto::new).collect(Collectors.toList());
     }
 
 }

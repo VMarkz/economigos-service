@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CartaoDto{
+public class CartaoDto {
 
     private Long id;
     private String nome;
@@ -18,6 +18,10 @@ public class CartaoDto{
         this.nome = cartao.getNome();
         this.vencimento = cartao.getVencimento();
         this.valor = cartao.getValor();
+    }
+
+    public static List<CartaoDto> converter(List<Cartao> cartoes) {
+        return cartoes.stream().map(CartaoDto::new).collect(Collectors.toList());
     }
 
     public Long getId() {
@@ -50,9 +54,5 @@ public class CartaoDto{
 
     public void setValor(Double valor) {
         this.valor = valor;
-    }
-
-    public static List<CartaoDto> converter(List<Cartao> cartoes) {
-        return cartoes.stream().map(CartaoDto::new).collect(Collectors.toList());
     }
 }

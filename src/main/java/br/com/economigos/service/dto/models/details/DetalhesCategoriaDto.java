@@ -21,6 +21,10 @@ public class DetalhesCategoriaDto {
         this.gastos = GastoDto.converter(categoria.getGastos());
     }
 
+    public static List<DetalhesCategoriaDto> converter(List<Categoria> categorias) {
+        return categorias.stream().map(DetalhesCategoriaDto::new).collect(Collectors.toList());
+    }
+
     public Long getId() {
         return id;
     }
@@ -51,10 +55,6 @@ public class DetalhesCategoriaDto {
 
     public void setRendas(List<RendaDto> rendas) {
         this.rendas = rendas;
-    }
-
-    public static List<DetalhesCategoriaDto> converter(List<Categoria> categorias) {
-        return categorias.stream().map(DetalhesCategoriaDto::new).collect(Collectors.toList());
     }
 
 }

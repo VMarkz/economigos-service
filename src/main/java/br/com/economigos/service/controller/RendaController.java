@@ -34,7 +34,7 @@ public class RendaController {
     private CategoriaRepository categoriaRepository;
 
     @GetMapping
-    public List<RendaDto> listar(){
+    public List<RendaDto> listar() {
         List<Renda> rendas = rendaRepository.findAll();
         return RendaDto.converter(rendas);
     }
@@ -49,7 +49,7 @@ public class RendaController {
         renda.addObserver(new Categoria());
         renda.notificaObservador("create");
 
-        if(renda.getRecebido()){
+        if (renda.getRecebido()) {
             renda.setRecebido(false);
             receberRenda(renda.getId());
         }
@@ -60,18 +60,18 @@ public class RendaController {
 
     @GetMapping("/{id}")
     @Transactional
-    public ResponseEntity<DetalhesRendaDto> detalhar(@PathVariable Long id){
+    public ResponseEntity<DetalhesRendaDto> detalhar(@PathVariable Long id) {
         Optional<Renda> renda = rendaRepository.findById(id);
-        if(renda.isPresent()){
+        if (renda.isPresent()) {
             return ResponseEntity.ok().body(new DetalhesRendaDto(renda.get()));
-        }else{
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<RendaDto> alterar(@PathVariable Long id, @RequestBody @Valid RendaForm form){
+    public ResponseEntity<RendaDto> alterar(@PathVariable Long id, @RequestBody @Valid RendaForm form) {
         Optional<Renda> optional = rendaRepository.findById(id);
         if (optional.isPresent()) {
             Renda renda = form.atualizar(id, rendaRepository);
@@ -86,30 +86,30 @@ public class RendaController {
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity<?> deletar(@PathVariable Long id){
+    public ResponseEntity<?> deletar(@PathVariable Long id) {
         Optional<Renda> optional = rendaRepository.findById(id);
-        if(optional.isPresent()){
+        if (optional.isPresent()) {
             Renda renda = rendaRepository.getOne(id);
             renda.addObserver(new Conta());
             renda.addObserver(new Categoria());
             rendaRepository.deleteById(id);
             renda.notificaObservador("delete");
             return ResponseEntity.ok().build();
-        }else{
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @PutMapping("/receber/{id}")
     @Transactional
-    public ResponseEntity<?> receberRenda(@PathVariable Long id){
+    public ResponseEntity<?> receberRenda(@PathVariable Long id) {
         Optional<Renda> optionalRenda = rendaRepository.findById(id);
         Optional<Conta> optionalConta = contaRepository.findById(optionalRenda.get().getConta().getId());
 
         if (optionalRenda.isPresent() && optionalConta.isPresent()) {
             Renda renda = rendaRepository.getOne(id);
             Conta conta = contaRepository.getOne(renda.getConta().getId());
-            if(!renda.getRecebido()){
+            if (!renda.getRecebido()) {
                 renda.setRecebido(true);
                 conta.setValorAtual((conta.getValorAtual() + renda.getValor()));
                 return ResponseEntity.ok().body(new ContaDto(conta));

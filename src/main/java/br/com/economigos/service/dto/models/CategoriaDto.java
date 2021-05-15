@@ -15,6 +15,10 @@ public class CategoriaDto {
         this.categoria = categoria.getCategoria();
     }
 
+    public static List<CategoriaDto> converter(List<Categoria> categorias) {
+        return categorias.stream().map(CategoriaDto::new).collect(Collectors.toList());
+    }
+
     public Long getId() {
         return id;
     }
@@ -29,10 +33,6 @@ public class CategoriaDto {
 
     public void setCategoria(String categoria) {
         this.categoria = categoria;
-    }
-
-    public static List<CategoriaDto> converter(List<Categoria> categorias) {
-        return categorias.stream().map(CategoriaDto::new).collect(Collectors.toList());
     }
 
 }

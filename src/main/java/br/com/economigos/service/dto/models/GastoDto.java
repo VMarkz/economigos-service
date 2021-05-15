@@ -5,7 +5,7 @@ import br.com.economigos.service.model.Gasto;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class GastoDto{
+public class GastoDto {
 
     private Long id;
     private String categoria;
@@ -23,6 +23,10 @@ public class GastoDto{
         this.dataPagamento = gasto.getDataPagamento();
     }
 
+    public static List<GastoDto> converter(List<Gasto> gastos) {
+        return gastos.stream().map(GastoDto::new).collect(Collectors.toList());
+    }
+
     public Long getId() {
         return id;
     }
@@ -35,16 +39,16 @@ public class GastoDto{
         return valor;
     }
 
+    public void setValor(Double valor) {
+        this.valor = valor;
+    }
+
     public String getCategoria() {
         return categoria;
     }
 
     public void setCategoria(String categoria) {
         this.categoria = categoria;
-    }
-
-    public void setValor(Double valor) {
-        this.valor = valor;
     }
 
     public Boolean getPago() {
@@ -61,10 +65,6 @@ public class GastoDto{
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
-    }
-
-    public static List<GastoDto> converter(List<Gasto> gastos) {
-       return gastos.stream().map(GastoDto::new).collect(Collectors.toList());
     }
 
     public String getDataPagamento() {
