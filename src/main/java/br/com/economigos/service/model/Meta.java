@@ -16,14 +16,18 @@ public class Meta extends Observable {
     private Double valorFinal;
     @ManyToOne
     private Usuario usuario;
+    private Boolean ativa;
+    private Boolean finalizada;
 
-    public Meta(Usuario usuario, String nome, String descricao, Boolean metaGasto, Double valorAtual, Double valorFinal) {
-        this.usuario = usuario;
+    public Meta(String nome, String descricao, Boolean metaGasto, Double valorAtual, Double valorFinal, Usuario usuario) {
         this.nome = nome;
         this.descricao = descricao;
         this.metaGasto = metaGasto;
         this.valorAtual = valorAtual;
         this.valorFinal = valorFinal;
+        this.usuario = usuario;
+        this.ativa = true;
+        this.finalizada = false;
     }
 
     public Meta() {
@@ -83,6 +87,22 @@ public class Meta extends Observable {
 
     public void setValorFinal(Double valorFinal) {
         this.valorFinal = valorFinal;
+    }
+
+    public Boolean getAtiva() {
+        return ativa;
+    }
+
+    public void setAtiva(Boolean ativa) {
+        this.ativa = ativa;
+    }
+
+    public Boolean getFinalizada() {
+        return finalizada;
+    }
+
+    public void setFinalizada(Boolean finalizada) {
+        this.finalizada = finalizada;
     }
 
     public void notificaObservador(String acao) {
