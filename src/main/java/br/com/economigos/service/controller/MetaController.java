@@ -90,6 +90,27 @@ public class MetaController {
         }
     }
 
+    @PatchMapping("/{id}")
+    @Transactional
+    public ResponseEntity<Meta> atualizarValor(@PathVariable Long id,
+                                               @RequestBody Double valor,
+                                               @RequestBody Boolean acrecentando) {
+        Optional<Meta> optionalMeta = metaRepository.findById(id);
+
+        if (optionalMeta.isPresent()) {
+            Meta meta = metaRepository.getOne(id);
+            if(acrecentando){
+                meta.setValorAtual(meta.getValorAtual() + valor);
+                return ResponseEntity.ok().body(meta);
+            }else{
+                meta.setValorAtual(meta.getValorAtual() - valor);
+                return ResponseEntity.ok().body(meta);
+            }
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<?> deletar(@PathVariable Long id) {

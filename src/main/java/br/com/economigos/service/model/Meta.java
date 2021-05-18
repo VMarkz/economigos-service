@@ -12,17 +12,17 @@ public class Meta extends Observable {
     private String nome;
     private String descricao;
     private Boolean metaGasto;
-    private Double valorInicial;
+    private Double valorAtual;
     private Double valorFinal;
     @ManyToOne
     private Usuario usuario;
 
-    public Meta(Usuario usuario, String nome, String descricao, Boolean metaGasto, Double valorInicial, Double valorFinal) {
+    public Meta(Usuario usuario, String nome, String descricao, Boolean metaGasto, Double valorAtual, Double valorFinal) {
         this.usuario = usuario;
         this.nome = nome;
         this.descricao = descricao;
         this.metaGasto = metaGasto;
-        this.valorInicial = valorInicial;
+        this.valorAtual = valorAtual;
         this.valorFinal = valorFinal;
     }
 
@@ -69,12 +69,12 @@ public class Meta extends Observable {
         this.metaGasto = metaGasto;
     }
 
-    public Double getValorInicial() {
-        return valorInicial;
+    public Double getValorAtual() {
+        return valorAtual;
     }
 
-    public void setValorInicial(Double valorInicial) {
-        this.valorInicial = valorInicial;
+    public void setValorAtual(Double valorAtual) {
+        this.valorAtual = valorAtual;
     }
 
     public Double getValorFinal() {

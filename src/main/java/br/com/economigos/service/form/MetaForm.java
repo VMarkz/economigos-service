@@ -78,7 +78,7 @@ public class MetaForm {
         meta.setNome(this.nome);
         meta.setDescricao(this.descricao);
         meta.setMetaGasto(this.metaGasto);
-        meta.setValorInicial(this.valorInicial);
+        meta.setValorAtual(this.valorInicial);
         meta.setValorFinal(this.valorFinal);
 
         return meta;

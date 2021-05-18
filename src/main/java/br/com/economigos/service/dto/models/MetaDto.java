@@ -19,7 +19,7 @@ public class MetaDto {
         this.nome = meta.getNome();
         this.descricao = meta.getDescricao();
         this.metaGasto = meta.getMetaGasto();
-        this.valorInicial = meta.getValorInicial();
+        this.valorInicial = meta.getValorAtual();
         this.valorFinal = meta.getValorFinal();
     }
 
