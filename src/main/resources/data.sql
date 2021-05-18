@@ -12,8 +12,8 @@ INSERT INTO CONTA(apelido, banco, descricao, numero_conta, usuario_id, valor_atu
 VALUES ('C6BANK', 'C6BANK', 'Contra Corrente', '1587389-032', 1, 0.0);
 INSERT INTO CARTAO(fechamento, limite, nome, pago, valor, vencimento, usuario_id)
 VALUES ('2021-03-15', 1000.0, 'C6Bank', true, 500.0, '2021-04-30', 1);
-INSERT INTO META(descricao, meta_gasto, nome, valor_inicial, valor_final, usuario_id)
-VALUES ('Viagem final de ano', false, 'Viagem', 0.00, 4000.00, 1);
+INSERT INTO META(descricao, meta_gasto, nome, valor_atual, valor_final, usuario_id, ativa, finalizada)
+VALUES ('Viagem final de ano', false, 'Viagem', 0.00, 4000.00, 1, true, false);
 INSERT INTO CONTATO(email, mensagem)
 VALUES ('usuario@email.com', 'Gostei muito do app de vocês!');
 INSERT INTO RENDA(id, data_pagamento, descricao, fixo, tipo, valor, categoria_id, conta_id, recebido)

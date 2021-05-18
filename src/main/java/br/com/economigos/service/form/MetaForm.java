@@ -15,7 +15,7 @@ public class MetaForm {
     private String descricao;
     @NotNull
     private Boolean metaGasto;
-    private Double valorInicial;
+    private Double valorAtual;
     @NotNull
     private Double valorFinal;
 
@@ -51,12 +51,12 @@ public class MetaForm {
         this.metaGasto = metaGasto;
     }
 
-    public Double getValorInicial() {
-        return valorInicial;
+    public Double getValorAtual() {
+        return valorAtual;
     }
 
-    public void setValorInicial(Double valorInicial) {
-        this.valorInicial = valorInicial;
+    public void setValorAtual(Double valorAtual) {
+        this.valorAtual = valorAtual;
     }
 
     public Double getValorFinal() {
@@ -69,7 +69,7 @@ public class MetaForm {
 
     public Meta converter(UsuarioRepository usuarioRepository) {
         Usuario usuario = usuarioRepository.getOne(this.idUsuario);
-        return new Meta(usuario, this.nome, this.descricao, this.metaGasto, this.valorInicial, this.valorFinal);
+        return new Meta(this.nome, this.descricao, this.metaGasto, this.valorAtual, this.valorFinal, usuario);
     }
 
     public Meta atualizar(Long id, MetaRepository metaRepository) {
@@ -78,7 +78,7 @@ public class MetaForm {
         meta.setNome(this.nome);
         meta.setDescricao(this.descricao);
         meta.setMetaGasto(this.metaGasto);
-        meta.setValorInicial(this.valorInicial);
+        meta.setValorAtual(this.valorAtual);
         meta.setValorFinal(this.valorFinal);
 
         return meta;

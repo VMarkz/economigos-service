@@ -62,11 +62,12 @@ public class MetaController {
 
     @GetMapping("/{id}")
     @Transactional
-    public ResponseEntity<Meta> detalhar(@PathVariable Long id) {
-        Optional<Meta> optional = metaRepository.findById(id);
+    public ResponseEntity<MetaDto> detalhar(@PathVariable Long id) {
+        Optional<Meta> optionalMeta = metaRepository.findById(id);
 
-        if (optional.isPresent()) {
-            return ResponseEntity.ok().body(optional.get());
+        if (optionalMeta.isPresent()) {
+            Meta meta = metaRepository.getOne(id);
+            return ResponseEntity.ok().body(new MetaDto(meta));
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -74,8 +75,8 @@ public class MetaController {
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<Meta> alterar(@PathVariable Long id,
-                                        @RequestBody @Valid MetaForm form) {
+    public ResponseEntity<MetaDto> alterar(@PathVariable Long id,
+                                           @RequestBody @Valid MetaForm form) {
         Optional<Meta> optional = metaRepository.findById(id);
 
         if (optional.isPresent()) {
@@ -84,7 +85,62 @@ public class MetaController {
             meta.addObserver(new Usuario());
             meta.notificaObservador("update");
 
-            return ResponseEntity.ok(meta);
+            return ResponseEntity.ok(new MetaDto(meta));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PatchMapping("/{id}")
+    @Transactional
+    public ResponseEntity<MetaDto> atualizarValor(@PathVariable Long id,
+                                                  @RequestBody Double valor,
+                                                  @RequestBody Boolean acrecentando) {
+        Optional<Meta> optionalMeta = metaRepository.findById(id);
+
+        if (optionalMeta.isPresent()) {
+            Meta meta = metaRepository.getOne(id);
+            if (acrecentando) {
+                meta.setValorAtual(meta.getValorAtual() + valor);
+                return ResponseEntity.ok().body(new MetaDto(meta));
+            } else {
+                meta.setValorAtual(meta.getValorAtual() - valor);
+                return ResponseEntity.ok().body(new MetaDto(meta));
+            }
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PatchMapping("/{id}/desativar-ativar")
+    @Transactional
+    public ResponseEntity<MetaDto> destivarAtivar(@PathVariable Long id) {
+        Optional<Meta> optionalMeta = metaRepository.findById(id);
+
+        if (optionalMeta.isPresent()) {
+            Meta meta = metaRepository.getOne(id);
+            if (meta.getAtiva()) {
+                meta.setAtiva(false);
+                return ResponseEntity.ok().body(new MetaDto(meta));
+            } else {
+                meta.setAtiva(true);
+                return ResponseEntity.ok().body(new MetaDto(meta));
+            }
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PatchMapping("/{id}/finalizar")
+    @Transactional
+    public ResponseEntity<MetaDto> finalizar(@PathVariable Long id) {
+        Optional<Meta> optionalMeta = metaRepository.findById(id);
+
+        if (optionalMeta.isPresent()) {
+            Meta meta = metaRepository.getOne(id);
+
+            meta.setFinalizada(true);
+            return ResponseEntity.ok().body(new MetaDto(meta));
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -100,7 +156,7 @@ public class MetaController {
 
             meta.addObserver(new Usuario());
             metaRepository.deleteById(id);
-            meta.notificaObservador("create");
+            meta.notificaObservador("delete");
 
             return ResponseEntity.ok().build();
         } else {

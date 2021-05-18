@@ -13,14 +13,18 @@ public class MetaDto {
     private Boolean metaGasto;
     private Double valorInicial;
     private Double valorFinal;
+    private Boolean ativa;
+    private Boolean finalizada;
 
     public MetaDto(Meta meta) {
         this.id = meta.getId();
         this.nome = meta.getNome();
         this.descricao = meta.getDescricao();
         this.metaGasto = meta.getMetaGasto();
-        this.valorInicial = meta.getValorInicial();
+        this.valorInicial = meta.getValorAtual();
         this.valorFinal = meta.getValorFinal();
+        this.ativa = meta.getAtiva();
+        this.finalizada = meta.getFinalizada();
     }
 
     public static List<MetaDto> converter(List<Meta> metas) {
@@ -73,5 +77,21 @@ public class MetaDto {
 
     public void setValorFinal(Double valorFinal) {
         this.valorFinal = valorFinal;
+    }
+
+    public Boolean getAtiva() {
+        return ativa;
+    }
+
+    public void setAtiva(Boolean ativa) {
+        this.ativa = ativa;
+    }
+
+    public Boolean getFinalizada() {
+        return finalizada;
+    }
+
+    public void setFinalizada(Boolean finalizada) {
+        this.finalizada = finalizada;
     }
 }

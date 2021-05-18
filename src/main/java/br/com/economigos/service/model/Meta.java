@@ -12,18 +12,22 @@ public class Meta extends Observable {
     private String nome;
     private String descricao;
     private Boolean metaGasto;
-    private Double valorInicial;
+    private Double valorAtual;
     private Double valorFinal;
     @ManyToOne
     private Usuario usuario;
+    private Boolean ativa;
+    private Boolean finalizada;
 
-    public Meta(Usuario usuario, String nome, String descricao, Boolean metaGasto, Double valorInicial, Double valorFinal) {
-        this.usuario = usuario;
+    public Meta(String nome, String descricao, Boolean metaGasto, Double valorAtual, Double valorFinal, Usuario usuario) {
         this.nome = nome;
         this.descricao = descricao;
         this.metaGasto = metaGasto;
-        this.valorInicial = valorInicial;
+        this.valorAtual = valorAtual;
         this.valorFinal = valorFinal;
+        this.usuario = usuario;
+        this.ativa = true;
+        this.finalizada = false;
     }
 
     public Meta() {
@@ -69,12 +73,12 @@ public class Meta extends Observable {
         this.metaGasto = metaGasto;
     }
 
-    public Double getValorInicial() {
-        return valorInicial;
+    public Double getValorAtual() {
+        return valorAtual;
     }
 
-    public void setValorInicial(Double valorInicial) {
-        this.valorInicial = valorInicial;
+    public void setValorAtual(Double valorAtual) {
+        this.valorAtual = valorAtual;
     }
 
     public Double getValorFinal() {
@@ -83,6 +87,22 @@ public class Meta extends Observable {
 
     public void setValorFinal(Double valorFinal) {
         this.valorFinal = valorFinal;
+    }
+
+    public Boolean getAtiva() {
+        return ativa;
+    }
+
+    public void setAtiva(Boolean ativa) {
+        this.ativa = ativa;
+    }
+
+    public Boolean getFinalizada() {
+        return finalizada;
+    }
+
+    public void setFinalizada(Boolean finalizada) {
+        this.finalizada = finalizada;
     }
 
     public void notificaObservador(String acao) {
