@@ -1,11 +1,14 @@
 package br.com.economigos.service.controller;
 
+import br.com.economigos.service.dto.PorcentagemCategoriaDto;
 import br.com.economigos.service.dto.models.CategoriaDto;
 import br.com.economigos.service.dto.models.details.DetalhesCategoriaDto;
 import br.com.economigos.service.form.CategoriaForm;
 import br.com.economigos.service.model.Categoria;
 import br.com.economigos.service.model.Gasto;
+import br.com.economigos.service.model.Usuario;
 import br.com.economigos.service.repository.CategoriaRepository;
+import br.com.economigos.service.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +17,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/economigos/categorias")
@@ -22,6 +27,8 @@ public class CategoriaController {
 
     @Autowired
     private CategoriaRepository categoriaRepository;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     @GetMapping
     @Transactional
@@ -32,37 +39,44 @@ public class CategoriaController {
 
     @GetMapping("/porcentagem-gastos")
     @Transactional
-    public HashMap<String, Double> listarPorcentagemCategoriaGasto() {
+    public ResponseEntity<List<PorcentagemCategoriaDto>> listarPorcentagemCategoriaGasto(@RequestParam Long idUsuario) {
         List<Categoria> categorias = categoriaRepository.findAll();
 
-        Double valorTotal = 0.0;
+        Optional<Usuario> optionalUsuario = usuarioRepository.findById(idUsuario);
 
-        List<HashMap<String, Double>> categoriaSomas = new ArrayList<>();
+        if (optionalUsuario.isPresent()) {
+            Double valorTotal = 0.0;
 
-        for (int i = 0; i < categorias.size(); i++) {
-            HashMap<String, Double> tempHashmap = new HashMap<>();
-            String tempCategoria = categorias.get(i).getCategoria();
-            Double tempSoma = 0.0;
+            List<PorcentagemCategoriaDto> categoriaSomada = new ArrayList<>();
 
-            for (Gasto gasto : categorias.get(i).getGastos()) {
-                tempSoma += gasto.getValor();
+            for (int i = 0; i < categorias.size(); i++) {
+                String tempCategoria = categorias.get(i).getCategoria();
+                Double tempSoma = 0.0;
+
+                for (Gasto gasto : categorias.get(i).getGastos()) {
+                    if (gasto.getConta().getUsuario().getId().equals(idUsuario)
+                            || gasto.getCartao().getUsuario().getId().equals(idUsuario)) {
+                        tempSoma += gasto.getValor();
+
+                    }
+                }
+
+                valorTotal += tempSoma;
+                categoriaSomada.add(new PorcentagemCategoriaDto(tempCategoria, tempSoma, 0.0));
+
             }
 
-            valorTotal += tempSoma;
-            tempHashmap.put(tempCategoria, tempSoma);
-            categoriaSomas.add(tempHashmap);
-
-        }
-
-        for (HashMap<String, Double> categoriaSoma : categoriaSomas) {
-            for (Map.Entry<String, Double> entry : categoriaSoma.entrySet()) {
-                Double porcentagem = (categoriaSoma.get(entry.getKey()) * 100.0) / valorTotal;
-                categoriaSomas.get(0).put(entry.getKey(), porcentagem);
+            for (PorcentagemCategoriaDto categoriaSoma : categoriaSomada) {
+                if (!categoriaSoma.getSoma().equals(0.0)) {
+                    categoriaSoma.setPorcentagem(categoriaSoma.getSoma() * 100.0 / valorTotal);
+                } else {
+                    categoriaSoma.setPorcentagem(0.0);
+                }
             }
+            return ResponseEntity.ok().body(categoriaSomada);
+        } else {
+            return ResponseEntity.notFound().build();
         }
-
-        System.out.println(categoriaSomas.get(0));
-        return categoriaSomas.get(0);
     }
 
     @PostMapping
