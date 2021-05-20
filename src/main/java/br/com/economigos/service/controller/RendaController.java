@@ -21,6 +21,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/economigos/rendas")
 public class RendaController {
