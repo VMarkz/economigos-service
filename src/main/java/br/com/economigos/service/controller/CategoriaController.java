@@ -86,7 +86,7 @@ public class CategoriaController {
         Categoria categoria = form.converter();
         categoriaRepository.save(categoria);
 
-        URI uri = uriBuilder.path("/usuarios/{id}").buildAndExpand(categoria.getId()).toUri();
+        URI uri = uriBuilder.path("/categorias/{id}").buildAndExpand(categoria.getId()).toUri();
         return ResponseEntity.created(uri).body(categoria);
     }
 
