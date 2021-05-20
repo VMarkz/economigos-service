@@ -112,9 +112,8 @@ public class RendaController {
     @Transactional
     public ResponseEntity<?> receberRenda(@PathVariable Long id) {
         Optional<Renda> optionalRenda = rendaRepository.findById(id);
-        Optional<Conta> optionalConta = contaRepository.findById(optionalRenda.get().getConta().getId());
 
-        if (optionalRenda.isPresent() && optionalConta.isPresent()) {
+        if (optionalRenda.isPresent()) {
             Renda renda = rendaRepository.getOne(id);
             Conta conta = contaRepository.getOne(renda.getConta().getId());
 
