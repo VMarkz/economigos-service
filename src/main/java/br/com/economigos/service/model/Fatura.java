@@ -15,6 +15,7 @@ public class Fatura extends Gasto{
     private Long id;
     private Double valor;
     private LocalDate vencimento;
+    private Cartao cartao;
 
     public Fatura(Conta conta, Categoria categoria, Double valor, String descricao, Boolean fixo, Boolean pago, String dataPagamento, Long id, Double valor1, LocalDate vencimento, Boolean pago1) {
         super(conta, categoria, valor, descricao, fixo, pago, dataPagamento);
