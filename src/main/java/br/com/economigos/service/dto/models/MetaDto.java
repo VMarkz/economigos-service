@@ -11,7 +11,7 @@ public class MetaDto {
     private String nome;
     private String descricao;
     private Boolean metaGasto;
-    private Double valorInicial;
+    private Double valorAtual;
     private Double valorFinal;
     private Boolean ativa;
     private Boolean finalizada;
@@ -21,7 +21,7 @@ public class MetaDto {
         this.nome = meta.getNome();
         this.descricao = meta.getDescricao();
         this.metaGasto = meta.getMetaGasto();
-        this.valorInicial = meta.getValorAtual();
+        this.valorAtual = meta.getValorAtual();
         this.valorFinal = meta.getValorFinal();
         this.ativa = meta.getAtiva();
         this.finalizada = meta.getFinalizada();
@@ -63,12 +63,12 @@ public class MetaDto {
         this.metaGasto = metaGasto;
     }
 
-    public Double getValorInicial() {
-        return valorInicial;
+    public Double getValorAtual() {
+        return valorAtual;
     }
 
-    public void setValorInicial(Double valorInicial) {
-        this.valorInicial = valorInicial;
+    public void setValorAtual(Double valorAtual) {
+        this.valorAtual = valorAtual;
     }
 
     public Double getValorFinal() {
