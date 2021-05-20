@@ -160,6 +160,4 @@ public class GastoController {
             return ResponseEntity.notFound().build();
         }
     }
-
-
 }
