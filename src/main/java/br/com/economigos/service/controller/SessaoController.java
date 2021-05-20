@@ -13,6 +13,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/economigos/sessao")
 public class SessaoController {
