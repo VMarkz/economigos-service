@@ -27,9 +27,9 @@ import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.util.*;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/economigos/contas")
-
 public class ContaController {
 
     @Autowired
