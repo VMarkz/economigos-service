@@ -117,6 +117,20 @@ public class ContaController {
         }
     }
 
+    @GetMapping("/conta")
+    @Transactional
+    public ResponseEntity<ContaDto> detalhar(@RequestParam String apelido) {
+        Optional<Conta> optionalConta = contaRepository.findByApelido(apelido);
+
+        if (optionalConta.isPresent()) {
+            Conta conta = contaRepository.getOne(optionalConta.get().getId());
+
+            return ResponseEntity.ok().body(new ContaDto(conta));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @GetMapping("{idConta}/ultimas-atividades")
     @Transactional
     public ResponseEntity<UltimasAtividadesDto> ultimasAtividades(@RequestParam Long idUsuario,

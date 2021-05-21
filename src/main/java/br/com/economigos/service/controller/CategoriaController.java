@@ -103,6 +103,18 @@ public class CategoriaController {
         }
     }
 
+    @GetMapping("/categoria")
+    @Transactional
+    public ResponseEntity<DetalhesCategoriaDto> detalharPorNome(@RequestParam String categoriaNome) {
+        Optional<Categoria> optional = categoriaRepository.findByCategoria(categoriaNome);
+        if (optional.isPresent()) {
+            Categoria categoria = categoriaRepository.getOne(optional.get().getId());
+            return ResponseEntity.ok().body(new DetalhesCategoriaDto(categoria));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<Categoria> alterar(@PathVariable Long id,
