@@ -83,8 +83,10 @@ public class CartaoController {
             List<ContabilUltimasAtividadesDto> ultimasAtividadesDtos = new ArrayList<>();
 
             for (Gasto gasto : gastos) {
+
                 ultimasAtividadesDtos.add(new ContabilUltimasAtividadesDto(gasto.getDescricao(),
-                        gasto.getDataPagamento(), gasto.getValor(), gasto.getTipo()));
+                        gasto.getDataPagamento(), gasto.getValor(), gasto.getTipo(), gasto.getCategoria().getCategoria(),
+                        gasto.getCartao().getNome()));
             }
 
             Collections.sort(ultimasAtividadesDtos);
