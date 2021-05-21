@@ -17,7 +17,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 @RestController
 @RequestMapping("/economigos/metas")
 public class MetaController {
@@ -29,14 +29,7 @@ public class MetaController {
 
     @GetMapping
     @Transactional
-    public List<Meta> listar() {
-        List<Meta> metas = metaRepository.findAll();
-        return metas;
-    }
-
-    @GetMapping("/usuario/{idUsuario}")
-    @Transactional
-    public ResponseEntity<List<MetaDto>> listar(@PathVariable Long idUsuario) {
+    public ResponseEntity<List<MetaDto>> listar(@RequestParam Long idUsuario) {
         Optional<Usuario> optional = usuarioRepository.findById(idUsuario);
 
         if (optional.isPresent()) {
@@ -56,7 +49,7 @@ public class MetaController {
         meta.addObserver(new Usuario());
         meta.notificaObservador("create");
 
-        URI uri = uriBuilder.path("/Metas/{id}").buildAndExpand(meta.getId()).toUri();
+        URI uri = uriBuilder.path("/metas/{id}").buildAndExpand(meta.getId()).toUri();
         return ResponseEntity.created(uri).body(new MetaDto(meta));
     }
 
@@ -94,18 +87,22 @@ public class MetaController {
     @PatchMapping("/{id}")
     @Transactional
     public ResponseEntity<MetaDto> atualizarValor(@PathVariable Long id,
-                                                  @RequestBody Double valor,
-                                                  @RequestBody Boolean acrecentando) {
+                                                  @RequestParam Double valor,
+                                                  @RequestParam Boolean acrescentando) {
         Optional<Meta> optionalMeta = metaRepository.findById(id);
 
         if (optionalMeta.isPresent()) {
             Meta meta = metaRepository.getOne(id);
-            if (acrecentando) {
-                meta.setValorAtual(meta.getValorAtual() + valor);
-                return ResponseEntity.ok().body(new MetaDto(meta));
+            if (meta.getAtiva() && !meta.getFinalizada()) {
+                if (acrescentando) {
+                    meta.setValorAtual(meta.getValorAtual() + valor);
+                    return ResponseEntity.ok().body(new MetaDto(meta));
+                } else {
+                    meta.setValorAtual(meta.getValorAtual() - valor);
+                    return ResponseEntity.ok().body(new MetaDto(meta));
+                }
             } else {
-                meta.setValorAtual(meta.getValorAtual() - valor);
-                return ResponseEntity.ok().body(new MetaDto(meta));
+                return ResponseEntity.badRequest().build();
             }
         } else {
             return ResponseEntity.notFound().build();
@@ -139,7 +136,11 @@ public class MetaController {
         if (optionalMeta.isPresent()) {
             Meta meta = metaRepository.getOne(id);
 
-            meta.setFinalizada(true);
+            if (!meta.getFinalizada()) {
+                meta.setFinalizada(true);
+            } else {
+                meta.setFinalizada(false);
+            }
             return ResponseEntity.ok().body(new MetaDto(meta));
         } else {
             return ResponseEntity.notFound().build();

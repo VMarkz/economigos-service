@@ -27,10 +27,9 @@ import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.util.*;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 @RestController
 @RequestMapping("/economigos/contas")
-
 public class ContaController {
 
     @Autowired
@@ -44,14 +43,7 @@ public class ContaController {
 
     @GetMapping
     @Transactional
-    public List<ContaDto> listar() {
-        List<Conta> contas = contaRepository.findAll();
-        return ContaDto.converter(contas);
-    }
-
-    @GetMapping("/usuario/{idUsuario}")
-    @Transactional
-    public ResponseEntity<List<ContaDto>> listar(@PathVariable Long idUsuario) {
+    public ResponseEntity<List<ContaDto>> listar(@RequestParam Long idUsuario) {
         Optional<Usuario> optional = usuarioRepository.findById(idUsuario);
 
         if (optional.isPresent()) {
@@ -99,10 +91,10 @@ public class ContaController {
         return ResponseEntity.created(uri).body(new ContaDto(conta));
     }
 
-    @GetMapping("/{id}/usuario/{idUsuario}")
+    @GetMapping("/{id}")
     @Transactional
     public ResponseEntity<DetalhesContaDto> detalhar(@PathVariable Long id,
-                                                     @PathVariable Long idUsuario) {
+                                                     @RequestParam Long idUsuario) {
         Optional<Conta> optionalConta = contaRepository.findById(id);
         Optional<Usuario> optionalUsuario = usuarioRepository.findById(idUsuario);
         Optional<Conta> optionalContaUsuario = contaRepository.findContaByUsuario(id, idUsuario);
@@ -125,9 +117,9 @@ public class ContaController {
         }
     }
 
-    @GetMapping("{idConta}/usuario/{idUsuario}/ultimas-atividades")
+    @GetMapping("{idConta}/ultimas-atividades")
     @Transactional
-    public ResponseEntity<UltimasAtividadesDto> ultimasAtividades(@PathVariable Long idUsuario,
+    public ResponseEntity<UltimasAtividadesDto> ultimasAtividades(@RequestParam Long idUsuario,
                                                                   @PathVariable Long idConta) {
         Optional<Conta> optionalConta = contaRepository.findContaByUsuario(idConta, idUsuario);
 

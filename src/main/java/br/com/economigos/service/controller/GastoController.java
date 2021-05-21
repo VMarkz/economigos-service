@@ -22,7 +22,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 @RestController
 @RequestMapping("/economigos/gastos")
 public class GastoController {
@@ -97,9 +97,8 @@ public class GastoController {
     @Transactional
     public ResponseEntity<?> pagarGasto(@PathVariable Long id) {
         Optional<Gasto> optionalGasto = gastoRepository.findById(id);
-        Optional<Conta> optionalConta = contaRepository.findById(optionalGasto.get().getConta().getId());
 
-        if (optionalGasto.isPresent() && optionalConta.isPresent()) {
+        if (optionalGasto.isPresent()) {
             Gasto gasto = gastoRepository.getOne(id);
             Conta conta = contaRepository.getOne(gasto.getConta().getId());
 
@@ -120,18 +119,24 @@ public class GastoController {
 
     @PutMapping("/cancelar-pagamento/{id}")
     @Transactional
-    public ResponseEntity<GastoDto> cancelarPagamento(@PathVariable Long id) {
-        Optional<Gasto> optional = gastoRepository.findById(id);
+    public ResponseEntity<?> cancelarPagamento(@PathVariable Long id) {
+        Optional<Gasto> optionalGasto = gastoRepository.findById(id);
 
-        if (optional.isPresent()) {
+        if (optionalGasto.isPresent()) {
             Gasto gasto = gastoRepository.getOne(id);
+            Conta conta = contaRepository.getOne(gasto.getConta().getId());
 
-            gasto.setPago(false);
-            gasto.addObserver(new Conta());
-            gasto.addObserver(new Categoria());
-            gasto.notificaObservador("update");
+            if (gasto.getPago()) {
+                gasto.setPago(false);
+                conta.setValorAtual((conta.getValorAtual() + gasto.getValor()));
+                gasto.addObserver(new Conta());
+                gasto.addObserver(new Categoria());
+                gasto.notificaObservador("update");
 
-            return ResponseEntity.ok().body(new GastoDto(gasto));
+                return ResponseEntity.ok().body(new ContaDto(conta));
+            }else {
+                return ResponseEntity.badRequest().body("Gasto ainda não foi pago");
+            }
         }
         return ResponseEntity.notFound().build();
     }
@@ -155,6 +160,4 @@ public class GastoController {
             return ResponseEntity.notFound().build();
         }
     }
-
-
 }

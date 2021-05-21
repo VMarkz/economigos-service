@@ -22,7 +22,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 @RestController
 @RequestMapping("/economigos/cartoes")
 public class CartaoController {
@@ -40,14 +40,7 @@ public class CartaoController {
 
     @GetMapping
     @Transactional
-    public List<CartaoDto> listar() {
-        List<Cartao> cartoes = cartaoRepository.findAll();
-        return CartaoDto.converter(cartoes);
-    }
-
-    @GetMapping("/usuario/{idUsuario}")
-    @Transactional
-    public ResponseEntity<List<CartaoDto>> listar(@PathVariable Long idUsuario) {
+    public ResponseEntity<List<CartaoDto>> listar(@RequestParam Long idUsuario) {
         Optional<Usuario> optional = usuarioRepository.findById(idUsuario);
 
         if (optional.isPresent()) {
@@ -79,8 +72,8 @@ public class CartaoController {
         }
     }
 
-    @GetMapping("{idCartao}/usuario/{idUsuario}/ultimas-atividades")
-    public ResponseEntity<UltimasAtividadesDto> ultimasAtividades(@PathVariable Long idUsuario,
+    @GetMapping("{idCartao}/ultimas-atividades")
+    public ResponseEntity<UltimasAtividadesDto> ultimasAtividades(@RequestParam Long idUsuario,
                                                                   @PathVariable Long idCartao) {
         Optional<Cartao> optionalCartao = cartaoRepository.findCartaoByUsuario(idCartao, idUsuario);
         if (optionalCartao.isPresent()) {

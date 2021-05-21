@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 @RestController
 @RequestMapping("/economigos/usuarios")
 public class UsuariosController {
