@@ -9,15 +9,19 @@ public class ContabilUltimasAtividadesDto implements Comparable<ContabilUltimasA
     private String data;
     private Double valor;
     private String tipo;
+    private String categoria;
+    private String fonte;
 
     public ContabilUltimasAtividadesDto() {
     }
 
-    public ContabilUltimasAtividadesDto(String descricao, String data, Double valor, String tipo) {
+    public ContabilUltimasAtividadesDto(String descricao, String data, Double valor, String tipo, String categoria, String fonte) {
         this.descricao = descricao;
         this.data = data;
         this.valor = valor;
         this.tipo = tipo;
+        this.categoria = categoria;
+        this.fonte = fonte;
     }
 
     public String getDescricao() {
@@ -50,6 +54,22 @@ public class ContabilUltimasAtividadesDto implements Comparable<ContabilUltimasA
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public String getFonte() {
+        return fonte;
+    }
+
+    public void setFonte(String fonte) {
+        this.fonte = fonte;
     }
 
     @Override
