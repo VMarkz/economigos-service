@@ -140,12 +140,14 @@ public class ContaController {
 
             for (Renda renda : rendas) {
                 ultimasAtividadesDtos.add(new ContabilUltimasAtividadesDto(renda.getDescricao(),
-                        renda.getDataPagamento(), renda.getValor(), renda.getTipo()));
+                        renda.getDataPagamento(), renda.getValor(), renda.getTipo(), renda.getCategoria().getCategoria(),
+                        renda.getConta().getApelido()));
             }
 
             for (Gasto gasto : gastos) {
                 ultimasAtividadesDtos.add(new ContabilUltimasAtividadesDto(gasto.getDescricao(),
-                        gasto.getDataPagamento(), gasto.getValor(), gasto.getTipo()));
+                        gasto.getDataPagamento(), gasto.getValor(), gasto.getTipo(), gasto.getCategoria().getCategoria(),
+                        gasto.getConta().getApelido()));
             }
 
             Collections.sort(ultimasAtividadesDtos);
