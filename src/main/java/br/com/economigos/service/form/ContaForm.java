@@ -25,6 +25,14 @@ public class ContaForm {
     @NotNull
     private Long idUsuario;
 
+    public ContaForm(String banco, String numeroConta, String descricao, String apelido, Long idUsuario) {
+        this.banco = banco;
+        this.numeroConta = numeroConta;
+        this.descricao = descricao;
+        this.apelido = apelido;
+        this.idUsuario = idUsuario;
+    }
+
     public Long getIdUsuario() {
         return idUsuario;
     }

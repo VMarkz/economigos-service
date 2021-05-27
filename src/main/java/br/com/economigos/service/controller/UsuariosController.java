@@ -4,17 +4,22 @@ import br.com.economigos.service.dto.ValorMensalDto;
 import br.com.economigos.service.dto.ValorMensalTipoDto;
 import br.com.economigos.service.dto.models.UsuarioDto;
 import br.com.economigos.service.dto.models.details.DetalhesUsuarioDto;
+import br.com.economigos.service.form.ContaForm;
 import br.com.economigos.service.form.UsuarioForm;
 import br.com.economigos.service.model.Conta;
 import br.com.economigos.service.model.Gasto;
 import br.com.economigos.service.model.Renda;
 import br.com.economigos.service.model.Usuario;
+import br.com.economigos.service.repository.ContaRepository;
 import br.com.economigos.service.repository.GastoRepository;
 import br.com.economigos.service.repository.RendaRepository;
 import br.com.economigos.service.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
@@ -38,6 +43,8 @@ public class UsuariosController {
     RendaRepository rendaRepository;
     @Autowired
     private UsuarioRepository usuarioRepository;
+    @Autowired
+    ContaRepository contaRepository;
 
     @GetMapping
     public List<UsuarioDto> listar() {
@@ -53,6 +60,10 @@ public class UsuariosController {
 
         if (!form.verificarCadastro(form.getEmail(), usuarioRepository)) {
             usuarioRepository.save(usuario);
+
+            contaRepository
+                    .save(new Conta(usuario, "Economigos", "00000001-01",
+                            "Economigos Carteira", "Carteira"));
 
             URI uri = uriBuilder.path("/usuarios/{id}").buildAndExpand(usuario.getId()).toUri();
             return ResponseEntity.created(uri).body(new UsuarioDto(usuario));
