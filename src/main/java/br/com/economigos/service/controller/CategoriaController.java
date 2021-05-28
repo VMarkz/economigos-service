@@ -17,9 +17,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @CrossOrigin
 @RestController
@@ -74,7 +73,9 @@ public class CategoriaController {
                     categoriaSoma.setPorcentagem(0.0);
                 }
             }
-            return ResponseEntity.ok().body(categoriaSomada);
+
+            return ResponseEntity.ok().body(categoriaSomada.stream().sorted(Comparator.comparingDouble(
+                    PorcentagemCategoriaDto::getPorcentagem).reversed()).collect(Collectors.toList()));
         } else {
             return ResponseEntity.notFound().build();
         }
