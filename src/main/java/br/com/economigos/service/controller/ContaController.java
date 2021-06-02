@@ -62,7 +62,7 @@ public class ContaController {
             List<ValorMensalDto> valorMensalRendasDtos = new ArrayList<>();
             List<ValorMensalTipoDto> valorMensalTipoDtos = new ArrayList<>();
 
-            for (int i = 1; i <= 3; i++) {
+            for (int i = 0; i < 3; i++) {
                 LocalDate localDate = LocalDate.now().minusMonths(i);
                 String anoMes = localDate.toString().substring(0, 7);
                 String mes = localDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.ENGLISH);
