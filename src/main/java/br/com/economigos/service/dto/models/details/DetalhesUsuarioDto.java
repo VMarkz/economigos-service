@@ -11,6 +11,7 @@ import java.util.List;
 public class DetalhesUsuarioDto {
 
     private Long id;
+    private String nome;
     private String email;
     private LocalDateTime dataCriacao;
     private Double valorAtual;
@@ -20,12 +21,21 @@ public class DetalhesUsuarioDto {
 
     public DetalhesUsuarioDto(Usuario usuario) {
         this.id = usuario.getId();
+        this.nome = usuario.getNome();
         this.email = usuario.getEmail();
         this.dataCriacao = usuario.getDataCriacao();
         this.contaDtos = ContaDto.converter(usuario.getContas());
         this.metaDtos = MetaDto.converter(usuario.getMetas());
         this.cartaoDtos = CartaoDto.converter(usuario.getCartoes());
         this.valorAtual = 0.0;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public Double getValorAtual() {
