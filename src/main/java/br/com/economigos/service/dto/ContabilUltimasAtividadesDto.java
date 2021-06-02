@@ -1,8 +1,12 @@
 package br.com.economigos.service.dto;
 
+import br.com.economigos.service.utils.converters.Data;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
+import java.util.zip.DataFormatException;
 
 public class ContabilUltimasAtividadesDto implements Comparable<ContabilUltimasAtividadesDto> {
     private String descricao;
@@ -74,11 +78,9 @@ public class ContabilUltimasAtividadesDto implements Comparable<ContabilUltimasA
 
     @Override
     public int compareTo(ContabilUltimasAtividadesDto o) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        formatter = formatter.withLocale(Locale.ENGLISH);
 
-        LocalDateTime thisRendaDate = LocalDateTime.parse(this.getData(), formatter);
-        LocalDateTime outraRendaDate = LocalDateTime.parse(o.getData(), formatter);
+        LocalDate thisRendaDate = Data.converterDate(this.getData());
+        LocalDate outraRendaDate = Data.converterDate(o.getData());
 
         if (thisRendaDate.isAfter(outraRendaDate)) {
             return -1;
