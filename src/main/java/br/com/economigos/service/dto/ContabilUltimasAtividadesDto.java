@@ -79,8 +79,8 @@ public class ContabilUltimasAtividadesDto implements Comparable<ContabilUltimasA
     @Override
     public int compareTo(ContabilUltimasAtividadesDto o) {
 
-        LocalDate thisRendaDate = Data.converterDate(this.getData());
-        LocalDate outraRendaDate = Data.converterDate(o.getData());
+        LocalDateTime thisRendaDate = Data.converterDateTime(this.getData());
+        LocalDateTime outraRendaDate = Data.converterDateTime(o.getData());
 
         if (thisRendaDate.isAfter(outraRendaDate)) {
             return -1;

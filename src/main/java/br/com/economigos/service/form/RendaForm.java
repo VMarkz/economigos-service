@@ -84,7 +84,8 @@ public class RendaForm {
     public Renda converter(ContaRepository contaRepository, CategoriaRepository categoriaRepository) {
         Conta conta = contaRepository.getOne(this.idConta);
         Categoria categoria = categoriaRepository.getOne(this.idCategoria);
-        return new Renda(conta, categoria, this.valor, this.descricao, this.fixo, this.recebido, this.dataPagamento);
+        this.setDataPagamento(getDataPagamento()+" 00:00:00");
+        return new Renda(conta, categoria, this.valor, this.descricao, this.fixo, this.recebido, this.getDataPagamento());
     }
 
     public Renda atualizar(Long id, RendaRepository rendaRepository) {

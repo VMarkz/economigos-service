@@ -104,14 +104,14 @@ public class GastoForm {
     }
 
     public Gasto converter(CartaoRepository cartaoRepository, ContaRepository contaRepository, CategoriaRepository categoriaRepository) {
-
+        this.setDataPagamento(getDataPagamento()+" 00:00:00");
         if (gastoCartao) {
             Optional<Cartao> optionalCartao = cartaoRepository.findById(this.idCartao);
             Optional<Categoria> optionalCategoria = categoriaRepository.findById(this.idCategoria);
             if (optionalCartao.isPresent() && optionalCategoria.isPresent()) {
                 Cartao cartao = cartaoRepository.getOne(idCartao);
                 Categoria categoria = categoriaRepository.getOne(idCategoria);
-                return new Gasto(cartao, categoria, this.valor, this.descricao, this.pago, this.fixo, this.dataPagamento, "cartão");
+                return new Gasto(cartao, categoria, this.valor, this.descricao, this.pago, this.fixo, this.getDataPagamento(), "cartão");
             } else {
                 return new Gasto();
             }
@@ -121,7 +121,7 @@ public class GastoForm {
             if (optionalConta.isPresent() && optionalCategoria.isPresent()) {
                 Conta conta = contaRepository.getOne(idConta);
                 Categoria categoria = categoriaRepository.getOne(idCategoria);
-                return new Gasto(conta, categoria, this.valor, this.descricao, this.fixo, this.pago, this.dataPagamento);
+                return new Gasto(conta, categoria, this.valor, this.descricao, this.fixo, this.pago, this.getDataPagamento());
             } else {
                 return new Gasto();
             }
