@@ -62,7 +62,7 @@ public class UsuariosController {
             usuarioRepository.save(usuario);
 
             contaRepository
-                    .save(new Conta(usuario, "Economigos", "00000001-01",
+                    .save(new Conta(usuario, "16", "00000001-01",
                             "Economigos Carteira", "Carteira"));
 
             URI uri = uriBuilder.path("/usuarios/{id}").buildAndExpand(usuario.getId()).toUri();
