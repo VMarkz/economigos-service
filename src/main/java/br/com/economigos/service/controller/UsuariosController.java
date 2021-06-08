@@ -1,19 +1,14 @@
 package br.com.economigos.service.controller;
 
+import br.com.economigos.service.dto.ContabilUltimasAtividadesDto;
 import br.com.economigos.service.dto.ValorMensalDto;
 import br.com.economigos.service.dto.ValorMensalTipoDto;
 import br.com.economigos.service.dto.models.UsuarioDto;
 import br.com.economigos.service.dto.models.details.DetalhesUsuarioDto;
 import br.com.economigos.service.form.ContaForm;
 import br.com.economigos.service.form.UsuarioForm;
-import br.com.economigos.service.model.Conta;
-import br.com.economigos.service.model.Gasto;
-import br.com.economigos.service.model.Renda;
-import br.com.economigos.service.model.Usuario;
-import br.com.economigos.service.repository.ContaRepository;
-import br.com.economigos.service.repository.GastoRepository;
-import br.com.economigos.service.repository.RendaRepository;
-import br.com.economigos.service.repository.UsuarioRepository;
+import br.com.economigos.service.model.*;
+import br.com.economigos.service.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
@@ -27,10 +22,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
 
 @CrossOrigin
 @RestController
@@ -45,6 +37,8 @@ public class UsuariosController {
     private UsuarioRepository usuarioRepository;
     @Autowired
     ContaRepository contaRepository;
+    @Autowired
+    CartaoRepository cartaoRepository;
 
     @GetMapping
     public List<UsuarioDto> listar() {
@@ -144,6 +138,53 @@ public class UsuariosController {
             return ResponseEntity.ok().body(valorMensalTipoDtos);
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/lancamentos")
+    public ResponseEntity<List<ContabilUltimasAtividadesDto>> lancamentos(@RequestParam Long idUsuario){
+
+        List<Conta> contas = contaRepository.findAllByUsuario(idUsuario);
+        List<Cartao> cartoes = cartaoRepository.findAllByUsuario(idUsuario);
+        List<ContabilUltimasAtividadesDto> ultimasAtividadesDtos = new ArrayList<>();
+
+        for (Conta conta : contas) {
+            List<Gasto> gastos = gastoRepository.findGastoByConta(conta.getId());
+            List<Renda> rendas = rendaRepository.findRendaByConta(conta.getId());
+            for (Gasto gasto : gastos) {
+                ultimasAtividadesDtos.add(new ContabilUltimasAtividadesDto(
+                        gasto.getDescricao(),
+                        gasto.getDataPagamento(),
+                        gasto.getValor(),
+                        gasto.getTipo(),
+                        gasto.getCategoria().getCategoria(),
+                        "Conta"));
+            }
+            for (Renda renda : rendas) {
+                ultimasAtividadesDtos.add(new ContabilUltimasAtividadesDto(
+                        renda.getDescricao(),
+                        renda.getDataPagamento(),
+                        renda.getValor(),
+                        renda.getTipo(),
+                        renda.getCategoria().getCategoria(),
+                        "Conta"));
+            }
+        }
+        for (Cartao cartao : cartoes) {
+            List<Gasto> gastos = gastoRepository.findGastoByCartao(cartao.getId());
+            for (Gasto gasto : gastos) {
+                ultimasAtividadesDtos.add(new ContabilUltimasAtividadesDto(
+                        gasto.getDescricao(),
+                        gasto.getDataPagamento(),
+                        gasto.getValor(),
+                        gasto.getTipo(),
+                        gasto.getCategoria().getCategoria(),
+                        "Cartão"));
+            }
+        }
+
+        Collections.sort(ultimasAtividadesDtos);
+
+        return ResponseEntity.ok().body(ultimasAtividadesDtos);
     }
 
 }
