@@ -12,7 +12,7 @@ public class Categoria implements Observer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String categoria, tipo;
+    private String categoria, tipo, path;
     @OneToMany(mappedBy = "categoria")
     private List<Gasto> gastos;
     @OneToMany(mappedBy = "categoria")
