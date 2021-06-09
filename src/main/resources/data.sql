@@ -26,6 +26,7 @@ VALUES ('Alimentação', 'G'),
        ('Empréstimos', 'R'),
        ('Salário', 'R'),
        ('Outros', 'R');
+
 INSERT INTO CONTA(apelido, banco, descricao, numero_conta, usuario_id, valor_atual)
 VALUES ("Carteira", "16", 'Conta Corrente', '1587389-032', 1, 0.0);
 INSERT INTO CARTAO(fechamento, limite, nome, pago, valor, vencimento, usuario_id)
