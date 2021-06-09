@@ -12,19 +12,28 @@ public class Categoria implements Observer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String categoria;
+    private String categoria, tipo;
     @OneToMany(mappedBy = "categoria")
     private List<Gasto> gastos;
     @OneToMany(mappedBy = "categoria")
     private List<Renda> rendas;
 
-    public Categoria(String categoria) {
+    public Categoria(String categoria, String tipo) {
         this.categoria = categoria;
+        this.tipo = tipo;
         this.gastos = new ArrayList<>();
         this.rendas = new ArrayList<>();
     }
 
     public Categoria() {
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public Long getId() {
