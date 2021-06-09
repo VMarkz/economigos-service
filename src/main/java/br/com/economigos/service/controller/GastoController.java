@@ -1,9 +1,5 @@
 package br.com.economigos.service.controller;
 
-import br.com.economigos.service.controler.dto.ContaDto;
-import br.com.economigos.service.controler.dto.DetalhesGastoDto;
-import br.com.economigos.service.controler.dto.GastoDto;
-import br.com.economigos.service.controler.form.GastoForm;
 import br.com.economigos.service.model.Cartao;
 import br.com.economigos.service.dto.models.ContaDto;
 import br.com.economigos.service.dto.models.GastoDto;
@@ -67,12 +63,13 @@ public class GastoController {
             }
             gasto.dividirParcela(gasto, gastoRepository);
             gasto.getValorParcela(gasto);
-        } else {
             gastoRepository.save(gasto);
+        } else {
             if (gasto.getPago()) {
                 gasto.setPago(false);
                 pagarGasto(gasto.getId());
             }
+            gastoRepository.save(gasto);
         }
 
         URI uri = uriBuilder.path("/receitas/{id}").buildAndExpand(gasto.getId()).toUri();

@@ -1,7 +1,5 @@
 package br.com.economigos.service.controller;
 
-import br.com.economigos.service.controler.dto.*;
-import br.com.economigos.service.controler.form.CartaoForm;
 import br.com.economigos.service.controler.form.PagarCartaoForm;
 import br.com.economigos.service.model.Cartao;
 import br.com.economigos.service.model.Conta;
@@ -9,15 +7,11 @@ import br.com.economigos.service.model.Gasto;
 import br.com.economigos.service.model.Usuario;
 import br.com.economigos.service.repository.CartaoRepository;
 import br.com.economigos.service.repository.UsuarioRepository;
-import br.com.economigos.service.model.*;
 import br.com.economigos.service.dto.ContabilUltimasAtividadesDto;
 import br.com.economigos.service.dto.UltimasAtividadesDto;
 import br.com.economigos.service.dto.models.CartaoDto;
 import br.com.economigos.service.dto.models.details.DetalhesCartaoDto;
 import br.com.economigos.service.form.CartaoForm;
-import br.com.economigos.service.model.Cartao;
-import br.com.economigos.service.model.Gasto;
-import br.com.economigos.service.model.Usuario;
 import br.com.economigos.service.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,9 +21,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @CrossOrigin

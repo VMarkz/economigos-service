@@ -7,7 +7,6 @@ import br.com.economigos.service.model.Gasto;
 public class DetalhesGastoDto {
 
     private Long id;
-    private ContaDto conta;
     private Double valor;
     private String descricao;
     private String dataPagamento;
@@ -16,7 +15,6 @@ public class DetalhesGastoDto {
 
     public DetalhesGastoDto(Gasto gasto) {
         this.id = gasto.getId();
-        this.conta = new ContaDto(gasto.getConta());
         this.valor = gasto.getValor();
         this.descricao = gasto.getDescricao();
         this.dataPagamento = gasto.getDataPagamento();
@@ -30,14 +28,6 @@ public class DetalhesGastoDto {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public ContaDto getConta() {
-        return conta;
-    }
-
-    public void setConta(ContaDto conta) {
-        this.conta = conta;
     }
 
     public Double getValor() {
