@@ -116,6 +116,22 @@ public class CategoriaController {
         }
     }
 
+    @GetMapping("/gastos")
+    @Transactional
+    public List<CategoriaDto> categoriaGasto() {
+        List<Categoria> categorias = categoriaRepository.findAll();
+        String tipo = "G";
+        return CategoriaDto.converter(categorias.stream().filter(categoria -> categoria.getTipo().equals(tipo)).collect(Collectors.toList()));
+    }
+
+    @GetMapping("/receitas")
+    @Transactional
+    public List<CategoriaDto> categoriaReceita() {
+        List<Categoria> categorias = categoriaRepository.findAll();
+        String tipo = "R";
+        return CategoriaDto.converter(categorias.stream().filter(categoria -> categoria.getTipo().equals(tipo)).collect(Collectors.toList()));
+    }
+
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<Categoria> alterar(@PathVariable Long id,

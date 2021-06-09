@@ -10,7 +10,8 @@ public class CategoriaForm {
 
     @NotNull
     @NotEmpty
-    private String categoria;
+    private String categoria, tipo;
+
 
     public CategoriaForm() {
     }
@@ -23,14 +24,23 @@ public class CategoriaForm {
         this.categoria = categoria;
     }
 
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
     public Categoria converter() {
-        return new Categoria(this.categoria);
+        return new Categoria(this.categoria, this.tipo);
     }
 
     public Categoria atualizar(Long id, CategoriaRepository categoriaRepository) {
         Categoria categoria = categoriaRepository.getOne(id);
 
         categoria.setCategoria(this.categoria);
+        categoria.setTipo(this.categoria);
 
         return categoria;
     }

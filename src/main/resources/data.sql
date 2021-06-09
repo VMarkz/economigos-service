@@ -1,15 +1,34 @@
 INSERT INTO USUARIO(data_criacao, nome, email, senha)
 VALUES ('2021-03-01', 'Vitor Marques', 'vitormarques@email.com', 'senha@123');
-INSERT INTO CATEGORIA(categoria)
-VALUES ('Alimento'),
-       ('Eletrônicos'),
-       ('Casa'),
-       ('Locomoção'),
-       ('Salário'),
-       ('Entretenimento'),
-       ('Investimento');
+INSERT INTO CATEGORIA(categoria, tipo)
+VALUES ('Alimentação', 'G'),
+       ('Assinaturas', 'G'),
+       ('Bar', 'G'),
+       ('Casa', 'G'),
+       ('Compras', 'G'),
+       ('Cuidados Pessoais', 'G'),
+       ('Dívidas', 'G'),
+       ('Educação', 'G'),
+       ('Família', 'G'),
+       ('Impostos', 'G'),
+       ('Investimentos', 'G'),
+       ('Investimentos', 'R'),
+       ('Lazer', 'G'),
+       ('Mercado', 'G'),
+       ('Outros', 'G'),
+       ('Presentes', 'G'),
+       ('Pets', 'G'),
+       ('Roupas', 'R'),
+       ('Saúde', 'G'),
+       ('Trabalho', 'G'),
+       ('Transporte', 'G'),
+       ('Viagem', 'G'),
+       ('Empréstimos', 'R'),
+       ('Salário', 'R'),
+       ('Outros', 'R');
+
 INSERT INTO CONTA(apelido, banco, descricao, numero_conta, usuario_id, valor_atual)
-VALUES ('C6BANK', 'C6BANK', 'Contra Corrente', '1587389-032', 1, 0.0);
+VALUES ('Carteira', '16', 'Conta Corrente', '1587389-032', 1, 0.0);
 INSERT INTO CARTAO(fechamento, limite, nome, pago, valor, vencimento, usuario_id)
 VALUES ('2021-03-15', 1000.0, 'C6Bank', true, 500.0, '2021-04-30', 1);
 INSERT INTO META(descricao, meta_gasto, nome, valor_atual, valor_final, usuario_id, ativa, finalizada)
