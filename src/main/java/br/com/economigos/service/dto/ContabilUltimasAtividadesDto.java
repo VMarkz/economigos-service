@@ -9,6 +9,7 @@ import java.util.Locale;
 import java.util.zip.DataFormatException;
 
 public class ContabilUltimasAtividadesDto implements Comparable<ContabilUltimasAtividadesDto> {
+    private Long id;
     private String descricao;
     private String data;
     private Double valor;
@@ -26,6 +27,24 @@ public class ContabilUltimasAtividadesDto implements Comparable<ContabilUltimasA
         this.tipo = tipo;
         this.categoria = categoria;
         this.fonte = fonte;
+    }
+
+    public ContabilUltimasAtividadesDto(Long id, String descricao, String data, Double valor, String tipo, String categoria, String fonte) {
+        this.id = id;
+        this.descricao = descricao;
+        this.data = data;
+        this.valor = valor;
+        this.tipo = tipo;
+        this.categoria = categoria;
+        this.fonte = fonte;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getDescricao() {

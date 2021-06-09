@@ -152,6 +152,7 @@ public class UsuariosController {
             List<Renda> rendas = rendaRepository.findRendaByConta(conta.getId());
             for (Gasto gasto : gastos) {
                 ultimasAtividadesDtos.add(new ContabilUltimasAtividadesDto(
+                        gasto.getId(),
                         gasto.getDescricao(),
                         gasto.getDataPagamento(),
                         gasto.getValor(),
@@ -161,6 +162,7 @@ public class UsuariosController {
             }
             for (Renda renda : rendas) {
                 ultimasAtividadesDtos.add(new ContabilUltimasAtividadesDto(
+                        renda.getId(),
                         renda.getDescricao(),
                         renda.getDataPagamento(),
                         renda.getValor(),
@@ -173,6 +175,7 @@ public class UsuariosController {
             List<Gasto> gastos = gastoRepository.findGastoByCartao(cartao.getId());
             for (Gasto gasto : gastos) {
                 ultimasAtividadesDtos.add(new ContabilUltimasAtividadesDto(
+                        gasto.getId(),
                         gasto.getDescricao(),
                         gasto.getDataPagamento(),
                         gasto.getValor(),
