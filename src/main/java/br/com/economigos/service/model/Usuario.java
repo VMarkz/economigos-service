@@ -10,8 +10,10 @@ import java.util.Observer;
 @Entity
 public class Usuario implements Observer {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String nome;
     private String email;
     private String senha;
     @OneToMany(mappedBy = "usuario")
@@ -25,7 +27,8 @@ public class Usuario implements Observer {
     public Usuario() {
     }
 
-    public Usuario(String email, String senha) {
+    public Usuario(String nome, String email, String senha) {
+        this.nome = nome;
         this.email = email;
         this.senha = senha;
         contas = new ArrayList<>();
@@ -36,8 +39,12 @@ public class Usuario implements Observer {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getEmail() {

@@ -16,7 +16,6 @@ services:
       - POSTGRES_PASSWORD=economigos@123
       - POSTGRES_DB=economigos_db
     restart: unless-stopped
-# APP***************
   springbootapp:
     image: economigos/economigos-service:latest
     network_mode: bridge
@@ -36,18 +35,34 @@ services:
       - postgres
     links:
       - postgres
+  springbootfiles:
+    image: economigos/economigos-files:latest
+    network_mode: bridge
+    container_name: springbootfiles
+    expose:
+      - 8081
+    ports:
+      - 8081:8081
+    environment:
+      - APP_PROFILE=dev
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/economigos_db
+      - SPRING_DATASOURCE_USERNAME=economigos
+      - SPRING_DATASOURCE_PASSWORD=economigos@123
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create-drop
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    links:
+      - postgres    
   reactapp:
     container_name: reactapp
     image: economigos/economigos-app:latest
-    # volumes:
-    #     - '.:/app'
-    #     - '/app/node_modules'
     expose:
       - 3000
     ports:
-        - 3000:3000
+      - 3000:3000
     environment:
-        - NODE_ENV=development
+      - NODE_ENV=development
     restart: unless-stopped
     depends_on:
       - springbootapp

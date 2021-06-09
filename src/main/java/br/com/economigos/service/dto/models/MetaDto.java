@@ -1,44 +1,34 @@
-package br.com.economigos.service.model;
+package br.com.economigos.service.dto.models;
 
-import javax.persistence.*;
-import java.util.Observable;
+import br.com.economigos.service.model.Meta;
 
-@Entity
-public class Meta extends Observable {
+import java.util.List;
+import java.util.stream.Collectors;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class MetaDto {
+
     private Long id;
     private String nome;
     private String descricao;
     private Boolean metaGasto;
     private Double valorAtual;
     private Double valorFinal;
-    @ManyToOne
-    private Usuario usuario;
     private Boolean ativa;
     private Boolean finalizada;
 
-    public Meta(String nome, String descricao, Boolean metaGasto, Double valorAtual, Double valorFinal, Usuario usuario) {
-        this.nome = nome;
-        this.descricao = descricao;
-        this.metaGasto = metaGasto;
-        this.valorAtual = valorAtual;
-        this.valorFinal = valorFinal;
-        this.usuario = usuario;
-        this.ativa = true;
-        this.finalizada = false;
+    public MetaDto(Meta meta) {
+        this.id = meta.getId();
+        this.nome = meta.getNome();
+        this.descricao = meta.getDescricao();
+        this.metaGasto = meta.getMetaGasto();
+        this.valorAtual = meta.getValorAtual();
+        this.valorFinal = meta.getValorFinal();
+        this.ativa = meta.getAtiva();
+        this.finalizada = meta.getFinalizada();
     }
 
-    public Meta() {
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public static List<MetaDto> converter(List<Meta> metas) {
+        return metas.stream().map(MetaDto::new).collect(Collectors.toList());
     }
 
     public Long getId() {
@@ -103,10 +93,5 @@ public class Meta extends Observable {
 
     public void setFinalizada(Boolean finalizada) {
         this.finalizada = finalizada;
-    }
-
-    public void notificaObservador(String acao) {
-        setChanged();
-        notifyObservers(acao);
     }
 }

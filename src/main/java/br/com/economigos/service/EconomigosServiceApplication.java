@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class EconomigosServiceApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(EconomigosServiceApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(EconomigosServiceApplication.class, args);
+    }
 
 }

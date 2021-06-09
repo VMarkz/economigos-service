@@ -1,9 +1,6 @@
 package br.com.economigos.service.repository;
 
-import br.com.economigos.service.model.Gasto;
 import br.com.economigos.service.model.Renda;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

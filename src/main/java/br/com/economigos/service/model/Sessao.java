@@ -1,6 +1,6 @@
 package br.com.economigos.service.model;
 
-import br.com.economigos.service.controler.dto.UsuarioDto;
+import br.com.economigos.service.dto.models.UsuarioDto;
 
 import java.time.LocalDateTime;
 

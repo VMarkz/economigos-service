@@ -14,7 +14,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     // Exemplo de query personalizada
     @Query("SELECT u FROM Usuario u WHERE u.email = :usuarioEmail AND u.senha = :usuarioSenha")
     List<Usuario> findByLogin(@Param("usuarioEmail") String usuarioEmail,
-                                  @Param("usuarioSenha") String usuarioSenha);
+                              @Param("usuarioSenha") String usuarioSenha);
 
     @Query("SELECT u FROM Usuario u WHERE u.email = :usuarioEmail")
     List<Usuario> findByEmail(@Param("usuarioEmail") String usuarioEmail);

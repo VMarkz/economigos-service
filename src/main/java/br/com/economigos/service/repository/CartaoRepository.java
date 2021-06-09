@@ -1,7 +1,6 @@
 package br.com.economigos.service.repository;
 
 import br.com.economigos.service.model.Cartao;
-import br.com.economigos.service.model.Conta;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,5 +14,5 @@ public interface CartaoRepository extends JpaRepository<Cartao, Long> {
 
     @Query("SELECT c FROM Cartao c WHERE usuario_id = :idUsuario AND id = :idCartao")
     Optional<Cartao> findCartaoByUsuario(@Param("idCartao") Long idCartao,
-                                       @Param("idUsuario") Long idUsuario);
+                                         @Param("idUsuario") Long idUsuario);
 }

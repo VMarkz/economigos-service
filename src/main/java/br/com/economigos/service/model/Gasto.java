@@ -3,32 +3,51 @@ package br.com.economigos.service.model;
 import br.com.economigos.service.repository.GastoRepository;
 import br.com.economigos.service.utils.converters.Data;
 
+<<<<<<< HEAD
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+=======
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+>>>>>>> main
 import java.util.List;
 
 @Entity
-public class Gasto extends Contabil{
+public class Gasto extends Contabil {
 
     private Boolean pago;
     @ManyToOne
     private Cartao cartao;
     private Integer parcelas;
 
-    public Gasto(Conta conta, Categoria categoria,Double valor, String descricao, Boolean fixo, Boolean pago, String dataPagamento) {
+    public Gasto(Conta conta, Categoria categoria, Double valor, String descricao, Boolean fixo, Boolean pago, String dataPagamento) {
         super(conta, categoria, valor, descricao, fixo, dataPagamento, "Gasto");
         this.pago = pago;
     }
 
+<<<<<<< HEAD
     public Gasto(Cartao cartao,  Categoria categoria,Double valor, Integer parcelas, String descricao, Boolean fixo, Boolean pago, String dataPagamento) {
+=======
+    public Gasto(Cartao cartao, Categoria categoria, Double valor, String descricao, Boolean fixo, Boolean pago, String dataPagamento, String a) {
+>>>>>>> main
         super(categoria, valor, descricao, fixo, dataPagamento, "Gasto");
         this.pago = pago;
         this.parcelas = parcelas;
         this.cartao = cartao;
     }
 
-    public Gasto(){
+    public Gasto() {
+    }
+
+    public static Double getUltimosMeses(String anoMes, GastoRepository gastoRepository, Long idConta) {
+        Double soma = 0.0;
+
+        List<Gasto> gastosMes01 = gastoRepository.findByDataPagamentoIsStartingWithByConta(anoMes, idConta);
+        for (Gasto gasto : gastosMes01) {
+            soma += gasto.getValor();
+        }
+        return soma;
     }
 
     public Long getId() {
@@ -55,6 +74,7 @@ public class Gasto extends Contabil{
         this.cartao = cartao;
     }
 
+<<<<<<< HEAD
     public Integer getParcelas() {
         return parcelas;
     }
@@ -87,4 +107,6 @@ public class Gasto extends Contabil{
 
     }
 
+=======
+>>>>>>> main
 }
