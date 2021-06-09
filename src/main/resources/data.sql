@@ -28,7 +28,7 @@ VALUES ('Alimentação', 'G'),
        ('Outros', 'R');
 
 INSERT INTO CONTA(apelido, banco, descricao, numero_conta, usuario_id, valor_atual)
-VALUES ("Carteira", "16", 'Conta Corrente', '1587389-032', 1, 0.0);
+VALUES ('Carteira', '16', 'Conta Corrente', '1587389-032', 1, 0.0);
 INSERT INTO CARTAO(fechamento, limite, nome, pago, valor, vencimento, usuario_id)
 VALUES ('2021-03-15', 1000.0, 'C6Bank', true, 500.0, '2021-04-30', 1);
 INSERT INTO META(descricao, meta_gasto, nome, valor_atual, valor_final, usuario_id, ativa, finalizada)
