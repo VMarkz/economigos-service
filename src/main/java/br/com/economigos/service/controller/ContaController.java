@@ -119,8 +119,9 @@ public class ContaController {
 
     @GetMapping("/conta")
     @Transactional
-    public ResponseEntity<ContaDto> detalhar(@RequestParam String apelido) {
-        Optional<Conta> optionalConta = contaRepository.findByApelido(apelido);
+    public ResponseEntity<ContaDto> findByApelido(@RequestParam String apelido,
+                                                  @RequestParam Long idUsuario) {
+        Optional<Conta> optionalConta = contaRepository.findByApelidoAndUsuario(apelido, idUsuario);
 
         if (optionalConta.isPresent()) {
             Conta conta = contaRepository.getOne(optionalConta.get().getId());

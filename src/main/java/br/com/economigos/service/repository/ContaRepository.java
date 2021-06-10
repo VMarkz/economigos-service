@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ContaRepository extends JpaRepository<Conta, Long> {
-    Optional<Conta> findByApelido(String apelido);
+    @Query("SELECT c FROM Conta c WHERE usuario_id = :idUsuario AND c.apelido = :apelido")
+    Optional<Conta> findByApelidoAndUsuario(String apelido, Long idUsuario);
 
     @Query("SELECT c FROM Conta c WHERE usuario_id = :idUsuario")
     List<Conta> findAllByUsuario(@Param("idUsuario") Long idUsuario);

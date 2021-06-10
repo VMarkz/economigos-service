@@ -82,6 +82,10 @@ public class UsuariosController {
         }
     }
 
+    @GetMapping("/email")
+    public ResponseEntity<Long> findByEmail(@RequestParam String email){
+        return ResponseEntity.ok().body(usuarioRepository.findByEmail(email).get(0).getId());
+    }
 
     @PutMapping("/{id}")
     @Transactional
