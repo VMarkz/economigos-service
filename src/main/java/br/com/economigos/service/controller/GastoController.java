@@ -61,8 +61,8 @@ public class GastoController {
                 Cartao cartao = cartaoRepository.getOne(gasto.getCartao().getId());
                 cartao.setLimite(cartao.getLimite() - gasto.getValor());
             }
-            gasto.dividirParcela(gasto, gastoRepository);
-            gasto.getValorParcela(gasto);
+//            gasto.dividirParcela(gasto, gastoRepository);
+//            gasto.getValorParcela(gasto);
             gastoRepository.save(gasto);
         } else {
             if (gasto.getPago()) {

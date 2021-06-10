@@ -23,8 +23,6 @@ public class GastoForm {
     @NotNull
     private Double valor;
     @NotNull
-    private Integer parcelas;
-    @NotNull
     private Boolean pago;
     @NotNull
     private String descricao;
@@ -73,14 +71,6 @@ public class GastoForm {
         this.valor = valor;
     }
 
-    public Integer getParcelas() {
-        return parcelas;
-    }
-
-    public void setParcelas(Integer parcelas) {
-        this.parcelas = parcelas;
-    }
-
     public Boolean getPago() {
         return pago;
     }
@@ -121,7 +111,7 @@ public class GastoForm {
             if (optionalCartao.isPresent() && optionalCategoria.isPresent()) {
                 Cartao cartao = cartaoRepository.getOne(idCartao);
                 Categoria categoria = categoriaRepository.getOne(idCategoria);
-                return new Gasto(cartao, categoria, this.valor, this.parcelas, this.descricao, this.fixo, this.pago, this.dataPagamento);
+                return new Gasto(cartao, categoria, this.valor, this.descricao, this.fixo, this.pago, this.dataPagamento);
             } else {
                 return new Gasto();
             }
