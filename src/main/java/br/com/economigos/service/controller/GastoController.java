@@ -1,5 +1,6 @@
 package br.com.economigos.service.controller;
 
+import br.com.economigos.service.model.Cartao;
 import br.com.economigos.service.dto.models.ContaDto;
 import br.com.economigos.service.dto.models.GastoDto;
 import br.com.economigos.service.dto.models.details.DetalhesGastoDto;
@@ -49,14 +50,26 @@ public class GastoController {
                                               UriComponentsBuilder uriBuilder) {
         Gasto gasto = form.converter(cartaoRepository, contaRepository, categoriaRepository);
 
-        gastoRepository.save(gasto);
         gasto.addObserver(new Conta());
         gasto.addObserver(new Categoria());
         gasto.notificaObservador("create");
 
-        if (gasto.getPago()) {
-            gasto.setPago(false);
-            pagarGasto(gasto.getId());
+
+        if (form.getGastoCartao()){
+            Optional<Cartao> cartaoOptional = cartaoRepository.findById(gasto.getCartao().getId());
+            if (cartaoOptional.isPresent()){
+                Cartao cartao = cartaoRepository.getOne(gasto.getCartao().getId());
+                cartao.setLimite(cartao.getLimite() - gasto.getValor());
+            }
+            gasto.dividirParcela(gasto, gastoRepository);
+            gasto.getValorParcela(gasto);
+            gastoRepository.save(gasto);
+        } else {
+            if (gasto.getPago()) {
+                gasto.setPago(false);
+                pagarGasto(gasto.getId());
+            }
+            gastoRepository.save(gasto);
         }
 
         URI uri = uriBuilder.path("/receitas/{id}").buildAndExpand(gasto.getId()).toUri();

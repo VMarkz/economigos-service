@@ -1,13 +1,17 @@
 package br.com.economigos.service.controller;
 
+import br.com.economigos.service.controler.form.PagarCartaoForm;
+import br.com.economigos.service.model.Cartao;
+import br.com.economigos.service.model.Conta;
+import br.com.economigos.service.model.Gasto;
+import br.com.economigos.service.model.Usuario;
+import br.com.economigos.service.repository.CartaoRepository;
+import br.com.economigos.service.repository.UsuarioRepository;
 import br.com.economigos.service.dto.ContabilUltimasAtividadesDto;
 import br.com.economigos.service.dto.UltimasAtividadesDto;
 import br.com.economigos.service.dto.models.CartaoDto;
 import br.com.economigos.service.dto.models.details.DetalhesCartaoDto;
 import br.com.economigos.service.form.CartaoForm;
-import br.com.economigos.service.model.Cartao;
-import br.com.economigos.service.model.Gasto;
-import br.com.economigos.service.model.Usuario;
 import br.com.economigos.service.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,10 +21,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @CrossOrigin
 @RestController
@@ -63,11 +64,12 @@ public class CartaoController {
 
     @GetMapping("/{id}")
     @Transactional
-    public ResponseEntity<DetalhesCartaoDto> detalhar(@PathVariable Long id) {
-        Optional<Cartao> cartao = cartaoRepository.findById(id);
-        if (cartao.isPresent()) {
-            return ResponseEntity.ok().body(new DetalhesCartaoDto(cartao.get()));
-        } else {
+    public ResponseEntity<DetalhesCartaoDto> detalhar(@PathVariable Long id){
+        Optional<Cartao> cartaoOptional = cartaoRepository.findById(id);
+        if(cartaoOptional.isPresent()){
+            Cartao cartao = cartaoRepository.getOne(id);
+            return ResponseEntity.ok().body(new DetalhesCartaoDto(cartao.setValorFatura(cartao,gastoRepository)));
+        }else{
             return ResponseEntity.badRequest().build();
         }
     }
@@ -110,6 +112,24 @@ public class CartaoController {
         }
     }
 
+    @PutMapping("/pagar")
+    @Transactional
+    public ResponseEntity<?> pagarFatura(@RequestBody @Valid PagarCartaoForm form){
+        Optional<Cartao> cartaoOptional = cartaoRepository.findById(form.getIdCartao());
+        Optional<Conta> contaOptional = contaRepository.findById(form.getIdConta());
+        if (cartaoOptional.isPresent() && contaOptional.isPresent()){
+            Cartao cartao = cartaoRepository.getOne(form.getIdCartao());
+            Conta conta = contaRepository.getOne(form.getIdConta());
+            cartao.setValorFatura(cartao,gastoRepository);
+            conta.setValorAtual(conta.getValorAtual()-cartao.getValor());
+            cartao.setLimite(cartao.getLimite()+ form.getValor());
+            cartao.setValor(cartao.getValor()-form.getValor());
+            cartao.setPago(true);
+            return null;
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<?> deletar(@PathVariable Long id) {
@@ -122,4 +142,6 @@ public class CartaoController {
             return ResponseEntity.notFound().build();
         }
     }
+
+
 }

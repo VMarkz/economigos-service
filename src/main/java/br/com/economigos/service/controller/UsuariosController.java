@@ -87,6 +87,7 @@ public class UsuariosController {
         return ResponseEntity.ok().body(usuarioRepository.findByEmail(email).get(0).getId());
     }
 
+
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<UsuarioDto> alterar(@PathVariable Long id,

@@ -3,6 +3,8 @@ package br.com.economigos.service.form;
 import br.com.economigos.service.model.Cartao;
 import br.com.economigos.service.model.Usuario;
 import br.com.economigos.service.repository.CartaoRepository;
+import br.com.economigos.service.repository.ContaRepository;
+import br.com.economigos.service.repository.GastoRepository;
 import br.com.economigos.service.repository.UsuarioRepository;
 
 import javax.validation.constraints.NotNull;

@@ -1,5 +1,7 @@
 package br.com.economigos.service.model;
 
+import br.com.economigos.service.repository.GastoRepository;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -107,6 +109,37 @@ public class Cartao {
 
     public void setGastos(List<Gasto> gastos) {
         this.gastos = gastos;
+    }
+
+    public Cartao setValorFatura(Cartao cartao, GastoRepository gastoRepository){
+        if (!cartao.getPago()){
+            Integer diaFechamento = cartao.getFechamento().getDayOfMonth();
+            Integer diaAtual = LocalDate.now().getDayOfMonth();
+            Integer mesAtual = LocalDate.now().getMonth().getValue();
+            Integer mesComparacao = 0;
+            String data1 ="";
+            String data2 = "";
+            Integer anoAtual = LocalDate.now().getYear();
+            Double somaGastosCartao = 0.0;
+            if (diaAtual > diaFechamento){
+                mesComparacao = mesAtual + 1;
+                data1 = String.format("%d-%02d-%02d", anoAtual,mesAtual,diaFechamento);
+                data2 = String.format("%d-%02d-%02d", anoAtual,mesComparacao,diaFechamento);
+                somaGastosCartao = cartao.getValor() + gastoRepository.somaGastosCartao(id, data1, data2);
+            } else {
+                mesComparacao = mesAtual - 1;
+                data1 = String.format("%d-%02d-%02d", anoAtual,mesComparacao,diaFechamento);
+                data2 = String.format("%d-%02d-%02d", anoAtual,mesAtual,diaFechamento);
+                somaGastosCartao = cartao.getValor() + gastoRepository.somaGastosCartao(id, data1, data2);
+            }
+            if (somaGastosCartao != null){
+                cartao.setValor(somaGastosCartao);
+            }
+            return cartao;
+        } else {
+            return cartao;
+        }
+
     }
 }
 
