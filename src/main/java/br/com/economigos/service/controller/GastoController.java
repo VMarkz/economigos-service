@@ -67,9 +67,9 @@ public class GastoController {
         } else {
             if (gasto.getPago()) {
                 gasto.setPago(false);
+                gastoRepository.save(gasto);
                 pagarGasto(gasto.getId());
             }
-            gastoRepository.save(gasto);
         }
 
         URI uri = uriBuilder.path("/receitas/{id}").buildAndExpand(gasto.getId()).toUri();
