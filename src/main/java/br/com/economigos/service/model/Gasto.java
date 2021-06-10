@@ -22,10 +22,10 @@ public class Gasto extends Contabil {
         this.pago = pago;
     }
 
-    public Gasto(Cartao cartao,  Categoria categoria,Double valor, Integer parcelas, String descricao, Boolean fixo, Boolean pago, String dataPagamento) {
+    public Gasto(Cartao cartao,  Categoria categoria,Double valor, String descricao, Boolean fixo, Boolean pago, String dataPagamento) {
         super(categoria, valor, descricao, fixo, dataPagamento, "Gasto");
         this.pago = pago;
-        this.parcelas = parcelas;
+        this.parcelas = 0;
         this.cartao = cartao;
     }
 
@@ -72,19 +72,19 @@ public class Gasto extends Contabil {
             soma += gasto.getValor(); }
         return soma;
     }
-    public Double getValorParcela(Gasto gasto){
-        return gasto.valor/ gasto.parcelas;
-    }
-    public void dividirParcela(Gasto gasto, GastoRepository gastoRepository){
-        Double valorDaParcela = getValorParcela(gasto);
-            for (int i = 0; i < parcelas; i++){
-                LocalDateTime dataConvertida = Data.converterDateTime(gasto.getDataPagamento());
-                String novaData = dataConvertida.plusMonths(i).toString();
-                gastoRepository.save(new Gasto(gasto.getCartao(),gasto.getCategoria(),valorDaParcela,
-                        i+1, gasto.getDescricao(), gasto.getFixo(),
-                        gasto.getPago(), novaData));
-                ;
-            }
-
-    }
+//    public Double getValorParcela(Gasto gasto){
+//        return gasto.valor/ gasto.parcelas;
+//    }
+//    public void dividirParcela(Gasto gasto, GastoRepository gastoRepository){
+//        Double valorDaParcela = getValorParcela(gasto);
+//            for (int i = 0; i < parcelas; i++){
+//                LocalDateTime dataConvertida = Data.converterDateTime(gasto.getDataPagamento());
+//                String novaData = dataConvertida.plusMonths(i).toString();
+//                gastoRepository.save(new Gasto(gasto.getCartao(),gasto.getCategoria(),valorDaParcela,
+//                        i+1, gasto.getDescricao(), gasto.getFixo(),
+//                        gasto.getPago(), novaData));
+//                ;
+//            }
+//
+//    }
 }

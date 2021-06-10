@@ -12,6 +12,7 @@ public class RendaDto {
     private Boolean recebido;
     private String descricao;
     private String dataPagamento;
+    private CategoriaDto categoria;
 
     public RendaDto(Renda renda) {
         this.id = renda.getId();
@@ -19,6 +20,7 @@ public class RendaDto {
         this.recebido = renda.getRecebido();
         this.descricao = renda.getDescricao();
         this.dataPagamento = renda.getDataPagamento();
+        this.categoria = new CategoriaDto(renda.getCategoria());
     }
 
     public static List<RendaDto> converter(List<Renda> rendas) {
@@ -63,6 +65,14 @@ public class RendaDto {
 
     public void setDataPagamento(String dataPagamento) {
         this.dataPagamento = dataPagamento;
+    }
+
+    public CategoriaDto getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(CategoriaDto categoria) {
+        this.categoria = categoria;
     }
 
 }

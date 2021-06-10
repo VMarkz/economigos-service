@@ -10,10 +10,18 @@ public class CategoriaForm {
 
     @NotNull
     @NotEmpty
-    private String categoria, tipo;
+    private String categoria, tipo, path;
 
 
     public CategoriaForm() {
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public String getCategoria() {
@@ -33,7 +41,7 @@ public class CategoriaForm {
     }
 
     public Categoria converter() {
-        return new Categoria(this.categoria, this.tipo);
+        return new Categoria(this.categoria, this.tipo, this.path);
     }
 
     public Categoria atualizar(Long id, CategoriaRepository categoriaRepository) {

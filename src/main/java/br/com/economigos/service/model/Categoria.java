@@ -18,14 +18,23 @@ public class Categoria implements Observer {
     @OneToMany(mappedBy = "categoria")
     private List<Renda> rendas;
 
-    public Categoria(String categoria, String tipo) {
+    public Categoria(String categoria, String tipo, String path) {
         this.categoria = categoria;
         this.tipo = tipo;
+        this.path = path;
         this.gastos = new ArrayList<>();
         this.rendas = new ArrayList<>();
     }
 
     public Categoria() {
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public String getTipo() {

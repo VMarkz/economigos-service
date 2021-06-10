@@ -8,19 +8,19 @@ import java.util.stream.Collectors;
 public class GastoDto {
 
     private Long id;
-    private String categoria;
     private Double valor;
     private Boolean pago;
     private String descricao;
     private String dataPagamento;
+    private CategoriaDto categoria;
 
     public GastoDto(Gasto gasto) {
         this.id = gasto.getId();
-        this.categoria = gasto.getCategoria().getCategoria();
         this.valor = gasto.getValor();
         this.pago = gasto.getPago();
         this.descricao = gasto.getDescricao();
         this.dataPagamento = gasto.getDataPagamento();
+        this.categoria = new CategoriaDto(gasto.getCategoria());
     }
 
     public static List<GastoDto> converter(List<Gasto> gastos) {
@@ -43,11 +43,11 @@ public class GastoDto {
         this.valor = valor;
     }
 
-    public String getCategoria() {
+    public CategoriaDto getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(String categoria) {
+    public void setCategoria(CategoriaDto categoria) {
         this.categoria = categoria;
     }
 
