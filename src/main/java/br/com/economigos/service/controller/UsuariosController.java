@@ -5,6 +5,7 @@ import br.com.economigos.service.dto.ValorMensalDto;
 import br.com.economigos.service.dto.ValorMensalTipoDto;
 import br.com.economigos.service.dto.models.UsuarioDto;
 import br.com.economigos.service.dto.models.details.DetalhesUsuarioDto;
+import br.com.economigos.service.dto.qroFeriasDto;
 import br.com.economigos.service.form.ContaForm;
 import br.com.economigos.service.form.UsuarioForm;
 import br.com.economigos.service.model.*;
@@ -146,7 +147,7 @@ public class UsuariosController {
     }
 
     @GetMapping("/lancamentos")
-    public ResponseEntity<List<ContabilUltimasAtividadesDto>> lancamentos(@RequestParam Long idUsuario){
+    public ResponseEntity<qroFeriasDto> lancamentos(@RequestParam Long idUsuario){
 
         List<Conta> contas = contaRepository.findAllByUsuario(idUsuario);
         List<Cartao> cartoes = cartaoRepository.findAllByUsuario(idUsuario);
@@ -192,7 +193,7 @@ public class UsuariosController {
 
         Collections.sort(ultimasAtividadesDtos);
 
-        return ResponseEntity.ok().body(ultimasAtividadesDtos);
+        return ResponseEntity.ok().body(new qroFeriasDto(ultimasAtividadesDtos));
     }
 
 }

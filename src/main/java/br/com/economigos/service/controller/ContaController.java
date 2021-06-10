@@ -123,8 +123,6 @@ public class ContaController {
                                                   @RequestParam Long idUsuario) {
         Optional<Conta> optionalConta = contaRepository.findByApelidoAndUsuario(apelido, idUsuario);
 
-        System.out.println(optionalConta.get());
-
         if (optionalConta.isPresent()) {
             Conta conta = contaRepository.getOne(optionalConta.get().getId());
 

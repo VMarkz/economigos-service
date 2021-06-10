@@ -13,6 +13,7 @@ public interface ContaRepository extends JpaRepository<Conta, Long> {
     Optional<Conta> findByApelidoAndUsuario(@Param("apelido") String apelido,
                                             @Param("idUsuario") Long idUsuario);
 
+
     @Query("SELECT c FROM Conta c WHERE usuario_id = :idUsuario")
     List<Conta> findAllByUsuario(@Param("idUsuario") Long idUsuario);
 
