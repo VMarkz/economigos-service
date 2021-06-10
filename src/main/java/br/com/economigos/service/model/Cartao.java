@@ -1,6 +1,7 @@
 package br.com.economigos.service.model;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +13,8 @@ public class Cartao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-    private LocalDateTime fechamento;
-    private LocalDateTime vencimento;
+    private LocalDate fechamento;
+    private LocalDate vencimento;
     private Boolean pago;
     private Double limite;
     private Double valor;
@@ -25,7 +26,7 @@ public class Cartao {
     public Cartao() {
     }
 
-    public Cartao(Usuario usuario, String nome, LocalDateTime fechamento, LocalDateTime vencimento, Boolean pago, Double limite) {
+    public Cartao(Usuario usuario, String nome, LocalDate fechamento, LocalDate vencimento, Boolean pago, Double limite) {
         this.usuario = usuario;
         this.nome = nome;
         this.fechamento = fechamento;
@@ -52,19 +53,19 @@ public class Cartao {
         this.nome = nome;
     }
 
-    public LocalDateTime getFechamento() {
+    public LocalDate getFechamento() {
         return fechamento;
     }
 
-    public void setFechamento(LocalDateTime fechamento) {
+    public void setFechamento(LocalDate fechamento) {
         this.fechamento = fechamento;
     }
 
-    public LocalDateTime getVencimento() {
+    public LocalDate getVencimento() {
         return vencimento;
     }
 
-    public void setVencimento(LocalDateTime vencimento) {
+    public void setVencimento(LocalDate vencimento) {
         this.vencimento = vencimento;
     }
 
