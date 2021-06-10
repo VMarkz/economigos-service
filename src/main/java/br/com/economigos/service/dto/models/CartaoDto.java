@@ -2,6 +2,7 @@ package br.com.economigos.service.dto.models;
 
 import br.com.economigos.service.model.Cartao;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,7 +11,7 @@ public class CartaoDto {
 
     private Long id;
     private String nome;
-    private LocalDateTime vencimento;
+    private LocalDate vencimento;
     private Double valor;
 
     public CartaoDto(Cartao cartao) {
@@ -40,11 +41,11 @@ public class CartaoDto {
         this.nome = nome;
     }
 
-    public LocalDateTime getVencimento() {
+    public LocalDate getVencimento() {
         return vencimento;
     }
 
-    public void setVencimento(LocalDateTime vencimento) {
+    public void setVencimento(LocalDate vencimento) {
         this.vencimento = vencimento;
     }
 

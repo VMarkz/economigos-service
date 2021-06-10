@@ -3,14 +3,15 @@ package br.com.economigos.service.dto.models.details;
 import br.com.economigos.service.dto.models.GastoDto;
 import br.com.economigos.service.model.Cartao;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class DetalhesCartaoDto {
     private Long id;
     private String nome;
-    private LocalDateTime fechamento;
-    private LocalDateTime vencimento;
+    private LocalDate fechamento;
+    private LocalDate vencimento;
     private Boolean pago;
     private Double limite;
     private Double valor;
@@ -43,19 +44,19 @@ public class DetalhesCartaoDto {
         this.nome = nome;
     }
 
-    public LocalDateTime getFechamento() {
+    public LocalDate getFechamento() {
         return fechamento;
     }
 
-    public void setFechamento(LocalDateTime fechamento) {
+    public void setFechamento(LocalDate fechamento) {
         this.fechamento = fechamento;
     }
 
-    public LocalDateTime getVencimento() {
+    public LocalDate getVencimento() {
         return vencimento;
     }
 
-    public void setVencimento(LocalDateTime vencimento) {
+    public void setVencimento(LocalDate vencimento) {
         this.vencimento = vencimento;
     }
 

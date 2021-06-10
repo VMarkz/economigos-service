@@ -6,6 +6,7 @@ import br.com.economigos.service.repository.CartaoRepository;
 import br.com.economigos.service.repository.UsuarioRepository;
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class CartaoForm {
@@ -15,9 +16,9 @@ public class CartaoForm {
     @NotNull
     private String nome;
     @NotNull
-    private LocalDateTime fechamento;
+    private LocalDate fechamento;
     @NotNull
-    private LocalDateTime vencimento;
+    private LocalDate vencimento;
     @NotNull
     private Boolean pago;
     @NotNull
@@ -39,19 +40,19 @@ public class CartaoForm {
         this.nome = nome;
     }
 
-    public LocalDateTime getFechamento() {
+    public LocalDate getFechamento() {
         return fechamento;
     }
 
-    public void setFechamento(LocalDateTime fechamento) {
+    public void setFechamento(LocalDate fechamento) {
         this.fechamento = fechamento;
     }
 
-    public LocalDateTime getVencimento() {
+    public LocalDate getVencimento() {
         return vencimento;
     }
 
-    public void setVencimento(LocalDateTime vencimento) {
+    public void setVencimento(LocalDate vencimento) {
         this.vencimento = vencimento;
     }
 
