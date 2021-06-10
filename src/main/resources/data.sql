@@ -24,7 +24,7 @@ VALUES ('Alimentação', 'G', 'categorias/alimentacao.svg'),
        ('Transporte', 'G', 'categorias/transporte.svg'),
        ('Viagem', 'G', 'categorias/viagem.svg'),
        ('Empréstimos', 'R', 'categorias/emprestimos.svg'),
-       ('Salário', 'R', 'categorias/salrios.svg'),
+       ('Salário', 'R', 'categorias/salarios.svg'),
        ('Outros', 'R', 'categorias/outros-receitas.svg');
 
 INSERT INTO CONTA(apelido, banco, descricao, numero_conta, usuario_id, valor_atual)
