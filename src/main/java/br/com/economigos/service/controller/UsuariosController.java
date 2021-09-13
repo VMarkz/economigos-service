@@ -3,19 +3,18 @@ package br.com.economigos.service.controller;
 import br.com.economigos.service.dto.ContabilUltimasAtividadesDto;
 import br.com.economigos.service.dto.ValorMensalDto;
 import br.com.economigos.service.dto.ValorMensalTipoDto;
+import br.com.economigos.service.dto.models.AmizadeDto;
 import br.com.economigos.service.dto.models.UsuarioDto;
 import br.com.economigos.service.dto.models.details.DetalhesUsuarioDto;
 import br.com.economigos.service.dto.qroFeriasDto;
-import br.com.economigos.service.form.ContaForm;
+import br.com.economigos.service.form.AmizadeForm;
 import br.com.economigos.service.form.UsuarioForm;
 import br.com.economigos.service.model.*;
 import br.com.economigos.service.repository.*;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
@@ -40,6 +39,8 @@ public class UsuariosController {
     ContaRepository contaRepository;
     @Autowired
     CartaoRepository cartaoRepository;
+    @Autowired
+    AmizadeRepository amizadeRepository;
 
     @GetMapping
     public List<UsuarioDto> listar() {
@@ -194,6 +195,57 @@ public class UsuariosController {
         Collections.sort(ultimasAtividadesDtos);
 
         return ResponseEntity.ok().body(new qroFeriasDto(ultimasAtividadesDtos));
+    }
+
+    @PostMapping("/amigos")
+    @Transactional
+    public ResponseEntity<AmizadeDto> adicionarAmigo(@RequestBody AmizadeForm form,
+                                                     UriComponentsBuilder uriBuilder){
+        Optional<Usuario> optionalUsuario = usuarioRepository.findById(form.getIdUsuario());
+
+        Amizade amizade = form.converter();
+
+        if (optionalUsuario.isPresent()){
+            Usuario usuario = usuarioRepository.getOne(optionalUsuario.get().getId());
+            amizadeRepository.save(amizade);
+
+            URI uri = uriBuilder.path("/{idUsuario}/amigos").buildAndExpand(usuario.getId()).toUri();
+            return ResponseEntity.created(uri).build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/{idUsuario}/amigos")
+    public ResponseEntity<AmizadeDto> amigos(@PathVariable Long idUsuario){
+        Optional<Usuario> optionalUsuario = usuarioRepository.findById(idUsuario);
+
+        if (optionalUsuario.isPresent()){
+            Usuario usuario = usuarioRepository.getOne(idUsuario);
+            UsuarioDto usuarioDto = new UsuarioDto(optionalUsuario.get());
+            List<Amizade> amizades = amizadeRepository.findAllByUsuario(idUsuario);
+            List<UsuarioDto> amigosDto = new ArrayList<>();
+
+            for (Amizade amizade : amizades) {
+                Optional<Usuario> optionalAmigo = usuarioRepository.findById(amizade.getIdAmigo());
+                optionalAmigo.ifPresent(amigo -> amigosDto.add(new UsuarioDto(amigo)));
+            }
+
+            return ResponseEntity.ok().body(new AmizadeDto(usuarioDto, amigosDto));
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/amigos")
+    @Transactional
+    public ResponseEntity<?> deletar(@RequestBody AmizadeForm form) {
+        Optional<Usuario> optionalUsuario = usuarioRepository.findById(form.getIdUsuario());
+
+        if (optionalUsuario.isPresent()) {
+            amizadeRepository.deleteAmizadeByIdUsuarioAndIdAmigo(form.getIdUsuario(), form.getIdAmigo());
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }
