@@ -14,6 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,6 +66,21 @@ public class MetaController {
             return ResponseEntity.notFound().build();
         }
     }
+
+//    @GetMapping("/{id}/economia-mensal")
+//    public ResponseEntity<Double> economiaMensal(@PathVariable Long id) {
+//        Optional<Meta> optionalMeta = metaRepository.findById(id);
+//
+//        if (optionalMeta.isPresent()){
+//            Meta meta = metaRepository.getOne(id);
+//            LocalDate hoje = LocalDate.now();
+//            Integer mesesFaltantes = meta.getDataFinal().getMonthValue()-hoje.getMonthValue();
+//            Double valorEconomia = (meta.getValorFinal()-meta.getValorAtual())/mesesFaltantes;
+//            return ResponseEntity.ok().body(valorEconomia);
+//        } else {
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
 
     @PutMapping("/{id}")
     @Transactional

@@ -6,6 +6,7 @@ import br.com.economigos.service.repository.MetaRepository;
 import br.com.economigos.service.repository.UsuarioRepository;
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 public class MetaForm {
 
@@ -18,6 +19,8 @@ public class MetaForm {
     private Double valorAtual;
     @NotNull
     private Double valorFinal;
+    private LocalDate dataFinal;
+
 
     public Long getIdUsuario() {
         return idUsuario;
@@ -67,9 +70,18 @@ public class MetaForm {
         this.valorFinal = valorFinal;
     }
 
+    public LocalDate getDataFinal() {
+        return dataFinal;
+    }
+
+    public void setDataFinal(LocalDate dataFinal) {
+        this.dataFinal = dataFinal;
+    }
+
     public Meta converter(UsuarioRepository usuarioRepository) {
         Usuario usuario = usuarioRepository.getOne(this.idUsuario);
-        return new Meta(this.nome, this.descricao, this.metaGasto, this.valorAtual, this.valorFinal, usuario);
+        return new Meta(this.nome, this.descricao, this.metaGasto, this.valorAtual, this.valorFinal,
+                this.dataFinal, usuario);
     }
 
     public Meta atualizar(Long id, MetaRepository metaRepository) {
