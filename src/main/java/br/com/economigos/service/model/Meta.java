@@ -1,6 +1,7 @@
 package br.com.economigos.service.model;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Observable;
 
 @Entity
@@ -14,17 +15,20 @@ public class Meta extends Observable {
     private Boolean metaGasto;
     private Double valorAtual;
     private Double valorFinal;
+    private LocalDate dataFinal;
     @ManyToOne
     private Usuario usuario;
     private Boolean ativa;
     private Boolean finalizada;
 
-    public Meta(String nome, String descricao, Boolean metaGasto, Double valorAtual, Double valorFinal, Usuario usuario) {
+    public Meta(String nome, String descricao, Boolean metaGasto, Double valorAtual, Double valorFinal,
+                LocalDate dataFinal, Usuario usuario) {
         this.nome = nome;
         this.descricao = descricao;
         this.metaGasto = metaGasto;
         this.valorAtual = valorAtual;
         this.valorFinal = valorFinal;
+        this.dataFinal = dataFinal;
         this.usuario = usuario;
         this.ativa = true;
         this.finalizada = false;
@@ -87,6 +91,14 @@ public class Meta extends Observable {
 
     public void setValorFinal(Double valorFinal) {
         this.valorFinal = valorFinal;
+    }
+
+    public LocalDate getDataFinal() {
+        return dataFinal;
+    }
+
+    public void setDataFinal(LocalDate dataFinal) {
+        this.dataFinal = dataFinal;
     }
 
     public Boolean getAtiva() {
