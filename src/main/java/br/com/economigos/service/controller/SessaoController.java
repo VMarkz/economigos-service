@@ -1,17 +1,25 @@
 package br.com.economigos.service.controller;
 
+import br.com.economigos.service.dto.AuthenticationResponse;
 import br.com.economigos.service.dto.models.UsuarioDto;
+import br.com.economigos.service.dto.models.details.DetalhesAutenticacaoUsuario;
 import br.com.economigos.service.form.UsuarioLoginForm;
 import br.com.economigos.service.model.Sessao;
 import br.com.economigos.service.model.Usuario;
 import br.com.economigos.service.repository.UsuarioRepository;
+import br.com.economigos.service.service.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -22,6 +30,10 @@ public class SessaoController {
     private List<Usuario> usuarios;
     @Autowired
     private UsuarioRepository usuarioRepository;
+    @Autowired
+    private AuthenticationManager authenticationManager;
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @PostMapping("/login")
     @Transactional
@@ -46,6 +58,30 @@ public class SessaoController {
         } else {
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @PostMapping("/authenticate")
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody @Valid UsuarioLoginForm form) throws Exception{
+        Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(form.getEmail());
+
+        if(optionalUsuario.isPresent()){
+            Usuario usuario = optionalUsuario.get();
+
+            try {
+                authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(form.getEmail(), form.getSenha())
+                );
+            }catch (BadCredentialsException e){
+                return ResponseEntity.badRequest().body("Incorrect email or password");
+            }
+
+            final UserDetails userDetails = new DetalhesAutenticacaoUsuario(usuario);
+
+            final String jwt = jwtUtil.generateToken(userDetails);
+
+            return ResponseEntity.ok(new AuthenticationResponse(jwt));
+        }
+        return ResponseEntity.notFound().build();
     }
 
 }
