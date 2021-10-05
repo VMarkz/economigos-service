@@ -21,7 +21,6 @@ public class DetalhesUsuarioDto {
 
     public DetalhesUsuarioDto(Usuario usuario) {
         this.id = usuario.getId();
-        this.nome = usuario.getNome();
         this.email = usuario.getEmail();
         this.dataCriacao = usuario.getDataCriacao();
         this.contaDtos = ContaDto.converter(usuario.getContas());
