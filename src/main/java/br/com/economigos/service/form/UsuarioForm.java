@@ -9,9 +9,7 @@ import javax.validation.constraints.Size;
 
 public class UsuarioForm {
 
-    @NotNull
-    @NotEmpty
-    private String nome;
+
     @NotNull
     @NotEmpty
     private String email;
@@ -19,13 +17,6 @@ public class UsuarioForm {
     @Size(min = 8)
     private String senha;
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
 
     public String getEmail() {
         return email;
@@ -44,13 +35,12 @@ public class UsuarioForm {
     }
 
     public Usuario converter() {
-        return new Usuario(this.nome, this.email, this.senha);
+        return new Usuario(this.email, this.senha);
     }
 
     public Usuario atualizar(Long id, UsuarioRepository usuarioRepository) {
         Usuario usuario = usuarioRepository.getOne(id);
 
-        usuario.setNome(this.nome);
         usuario.setEmail(this.email);
         usuario.setSenha(this.senha);
 
@@ -58,7 +48,7 @@ public class UsuarioForm {
     }
 
     public Boolean verificarCadastro(String email, UsuarioRepository usuarioRepository) {
-        if (usuarioRepository.findByEmail(email).size() > 0) {
+        if (usuarioRepository.findByEmail(email).isPresent()) {
             return true;
         }
         return false;
