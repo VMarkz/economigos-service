@@ -1,5 +1,5 @@
-INSERT INTO USUARIO(data_criacao, nome, email, senha)
-VALUES ('2021-03-01', 'Vitor Marques', 'vitormarques@email.com', 'senha@123');
+INSERT INTO USUARIO(data_criacao, email, senha, active, roles)
+VALUES ('2021-03-01', 'vitormarques@email.com', 'senha@123', true, 'USER,ADMIN');
 INSERT INTO CATEGORIA(categoria, tipo, path)
 VALUES ('Alimentação', 'G', 'categorias/alimentacao.svg'),
        ('Assinaturas', 'G', 'categorias/assinaturas.svg'),
