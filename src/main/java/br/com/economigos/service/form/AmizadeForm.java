@@ -1,7 +1,6 @@
 package br.com.economigos.service.form;
 
 import br.com.economigos.service.model.Amizade;
-import br.com.economigos.service.model.Usuario;
 import com.sun.istack.NotNull;
 
 import javax.validation.constraints.NotEmpty;
