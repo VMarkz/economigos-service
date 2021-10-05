@@ -7,11 +7,10 @@ import br.com.economigos.service.dto.models.AmizadeDto;
 import br.com.economigos.service.dto.models.UsuarioDto;
 import br.com.economigos.service.dto.models.details.DetalhesUsuarioDto;
 import br.com.economigos.service.dto.qroFeriasDto;
-import br.com.economigos.service.form.AmizadeForm;
 import br.com.economigos.service.form.UsuarioForm;
 import br.com.economigos.service.model.*;
 import br.com.economigos.service.repository.*;
-import org.hibernate.Hibernate;
+import br.com.economigos.service.service.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +40,8 @@ public class UsuariosController {
     CartaoRepository cartaoRepository;
     @Autowired
     AmizadeRepository amizadeRepository;
+    @Autowired
+    JwtUtil jwtUtil;
 
     @GetMapping
     public List<UsuarioDto> listar() {
@@ -67,12 +68,14 @@ public class UsuariosController {
         return ResponseEntity.badRequest().build();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/this")
     @Transactional
-    public ResponseEntity<DetalhesUsuarioDto> detalhar(@PathVariable Long id) {
-        Optional<Usuario> optional = usuarioRepository.findById(id);
-        if (optional.isPresent()) {
-            Usuario usuario = usuarioRepository.getOne(id);
+    public ResponseEntity<DetalhesUsuarioDto> detalhar(@RequestHeader("Authorization") String jwt) {
+
+        String email = jwtUtil.extractUsername(jwt.substring(7));
+        Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(email);
+        if (optionalUsuario.isPresent()) {
+            Usuario usuario = optionalUsuario.get();
             DetalhesUsuarioDto detalhesUsuarioDto = new DetalhesUsuarioDto(usuario);
             for (Conta conta : usuario.getContas()) {
                 detalhesUsuarioDto.setValorAtual(detalhesUsuarioDto.getValorAtual() + conta.getValorAtual());
@@ -85,44 +88,46 @@ public class UsuariosController {
 
     @GetMapping("/email")
     public ResponseEntity<Long> findByEmail(@RequestParam String email){
-        return ResponseEntity.ok().body(usuarioRepository.findByEmail(email).get(0).getId());
+        return ResponseEntity.ok().body(usuarioRepository.findByEmail(email).get().getId());
     }
 
 
-    @PutMapping("/{id}")
+    @PutMapping("/this")
     @Transactional
-    public ResponseEntity<UsuarioDto> alterar(@PathVariable Long id,
+    public ResponseEntity<UsuarioDto> alterar(@RequestHeader("Authorization") String jwt,
                                               @RequestBody @Valid UsuarioForm form) {
-        Optional<Usuario> optional = usuarioRepository.findById(id);
-
+        String email = jwtUtil.extractUsername(jwt.substring(7));
+        Optional<Usuario> optional = usuarioRepository.findByEmail(email);
         if (optional.isPresent()) {
-            Usuario usuario = form.atualizar(id, usuarioRepository);
+            Usuario usuario = form.atualizar(optional.get().getId(), usuarioRepository);
             return ResponseEntity.ok(new UsuarioDto(usuario));
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/this")
     @Transactional
-    public ResponseEntity<?> deletar(@PathVariable Long id) {
-        Optional<Usuario> usuario = usuarioRepository.findById(id);
+    public ResponseEntity<?> deletar(@RequestHeader("Authorization") String jwt) {
+        String email = jwtUtil.extractUsername(jwt.substring(7));
+        Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(email);
 
-        if (usuario.isPresent()) {
-            usuarioRepository.deleteById(id);
+        if (optionalUsuario.isPresent()) {
+            usuarioRepository.deleteById(optionalUsuario.get().getId());
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
-    @GetMapping("/{id}/ultimos-meses")
+    @GetMapping("/ultimos-meses")
     @Transactional
-    public ResponseEntity<List<ValorMensalTipoDto>> ultimosMeses(@PathVariable Long id) {
-        Optional<Usuario> optionalUsuario = usuarioRepository.findById(id);
+    public ResponseEntity<List<ValorMensalTipoDto>> ultimosMeses(@RequestHeader("Authorization") String jwt) {
+        String email = jwtUtil.extractUsername(jwt.substring(7));
+        Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(email);
 
         if (optionalUsuario.isPresent()) {
-            Usuario usuario = usuarioRepository.getOne(id);
+            Usuario usuario = usuarioRepository.getOne(optionalUsuario.get().getId());
 
             List<ValorMensalDto> valorMensalGastosDtos = new ArrayList<>();
             List<ValorMensalDto> valorMensalRendasDtos = new ArrayList<>();
@@ -148,78 +153,92 @@ public class UsuariosController {
     }
 
     @GetMapping("/lancamentos")
-    public ResponseEntity<qroFeriasDto> lancamentos(@RequestParam Long idUsuario){
+    public ResponseEntity<qroFeriasDto> lancamentos(@RequestHeader("Authorization") String jwt){
 
-        List<Conta> contas = contaRepository.findAllByUsuario(idUsuario);
-        List<Cartao> cartoes = cartaoRepository.findAllByUsuario(idUsuario);
-        List<ContabilUltimasAtividadesDto> ultimasAtividadesDtos = new ArrayList<>();
+        String email = jwtUtil.extractUsername(jwt.substring(7));
+        Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(email);
 
-        for (Conta conta : contas) {
-            List<Gasto> gastos = gastoRepository.findGastoByConta(conta.getId());
-            List<Renda> rendas = rendaRepository.findRendaByConta(conta.getId());
-            for (Gasto gasto : gastos) {
-                ultimasAtividadesDtos.add(new ContabilUltimasAtividadesDto(
-                        gasto.getId(),
-                        gasto.getDescricao(),
-                        gasto.getDataPagamento(),
-                        gasto.getValor(),
-                        gasto.getTipo(),
-                        gasto.getCategoria().getCategoria(),
-                        "Conta"));
+        if (optionalUsuario.isPresent()){
+            Long idUsuario = optionalUsuario.get().getId();
+
+            List<Conta> contas = contaRepository.findAllByUsuario(idUsuario);
+            List<Cartao> cartoes = cartaoRepository.findAllByUsuario(idUsuario);
+            List<ContabilUltimasAtividadesDto> ultimasAtividadesDtos = new ArrayList<>();
+
+            for (Conta conta : contas) {
+                List<Gasto> gastos = gastoRepository.findGastoByConta(conta.getId());
+                List<Renda> rendas = rendaRepository.findRendaByConta(conta.getId());
+                for (Gasto gasto : gastos) {
+                    ultimasAtividadesDtos.add(new ContabilUltimasAtividadesDto(
+                            gasto.getId(),
+                            gasto.getDescricao(),
+                            gasto.getDataPagamento(),
+                            gasto.getValor(),
+                            gasto.getTipo(),
+                            gasto.getCategoria().getCategoria(),
+                            "Conta"));
+                }
+                for (Renda renda : rendas) {
+                    ultimasAtividadesDtos.add(new ContabilUltimasAtividadesDto(
+                            renda.getId(),
+                            renda.getDescricao(),
+                            renda.getDataPagamento(),
+                            renda.getValor(),
+                            renda.getTipo(),
+                            renda.getCategoria().getCategoria(),
+                            "Conta"));
+                }
             }
-            for (Renda renda : rendas) {
-                ultimasAtividadesDtos.add(new ContabilUltimasAtividadesDto(
-                        renda.getId(),
-                        renda.getDescricao(),
-                        renda.getDataPagamento(),
-                        renda.getValor(),
-                        renda.getTipo(),
-                        renda.getCategoria().getCategoria(),
-                        "Conta"));
+            for (Cartao cartao : cartoes) {
+                List<Gasto> gastos = gastoRepository.findGastoByCartao(cartao.getId());
+                for (Gasto gasto : gastos) {
+                    ultimasAtividadesDtos.add(new ContabilUltimasAtividadesDto(
+                            gasto.getId(),
+                            gasto.getDescricao(),
+                            gasto.getDataPagamento(),
+                            gasto.getValor(),
+                            gasto.getTipo(),
+                            gasto.getCategoria().getCategoria(),
+                            "Cartão"));
+                }
             }
+
+            Collections.sort(ultimasAtividadesDtos);
+
+            return ResponseEntity.ok().body(new qroFeriasDto(ultimasAtividadesDtos));
         }
-        for (Cartao cartao : cartoes) {
-            List<Gasto> gastos = gastoRepository.findGastoByCartao(cartao.getId());
-            for (Gasto gasto : gastos) {
-                ultimasAtividadesDtos.add(new ContabilUltimasAtividadesDto(
-                        gasto.getId(),
-                        gasto.getDescricao(),
-                        gasto.getDataPagamento(),
-                        gasto.getValor(),
-                        gasto.getTipo(),
-                        gasto.getCategoria().getCategoria(),
-                        "Cartão"));
-            }
-        }
 
-        Collections.sort(ultimasAtividadesDtos);
-
-        return ResponseEntity.ok().body(new qroFeriasDto(ultimasAtividadesDtos));
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping("/amigos")
     @Transactional
-    public ResponseEntity<AmizadeDto> adicionarAmigo(@RequestBody AmizadeForm form,
+    public ResponseEntity<AmizadeDto> adicionarAmigo(@RequestHeader("Authorization") String jwt,
+                                                     @RequestParam String amigoEmail,
                                                      UriComponentsBuilder uriBuilder){
-        Optional<Usuario> optionalUsuario = usuarioRepository.findById(form.getIdUsuario());
 
-        Amizade amizade = form.converter();
+        String email = jwtUtil.extractUsername(jwt.substring(7));
+        Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(email);
+        Optional<Usuario> optionalAmigo = usuarioRepository.findByEmail(amigoEmail);
 
-        if (optionalUsuario.isPresent()){
+        if (optionalUsuario.isPresent() && optionalAmigo.isPresent()){
             Usuario usuario = usuarioRepository.getOne(optionalUsuario.get().getId());
-            amizadeRepository.save(amizade);
+            amizadeRepository.save(new Amizade(optionalUsuario.get().getId(), optionalAmigo.get().getId()));
 
-            URI uri = uriBuilder.path("/{idUsuario}/amigos").buildAndExpand(usuario.getId()).toUri();
+            URI uri = uriBuilder.path("/amigos").build().toUri();
             return ResponseEntity.created(uri).build();
         }
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/{idUsuario}/amigos")
-    public ResponseEntity<AmizadeDto> amigos(@PathVariable Long idUsuario){
-        Optional<Usuario> optionalUsuario = usuarioRepository.findById(idUsuario);
+    @GetMapping("/amigos")
+    public ResponseEntity<AmizadeDto> amigos(@RequestHeader("Authorization") String jwt){
+
+        String email = jwtUtil.extractUsername(jwt.substring(7));
+        Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(email);
 
         if (optionalUsuario.isPresent()){
+            Long idUsuario = optionalUsuario.get().getId();
             Usuario usuario = usuarioRepository.getOne(idUsuario);
             UsuarioDto usuarioDto = new UsuarioDto(optionalUsuario.get());
             List<Amizade> amizades = amizadeRepository.findAllByUsuario(idUsuario);
@@ -237,11 +256,15 @@ public class UsuariosController {
 
     @DeleteMapping("/amigos")
     @Transactional
-    public ResponseEntity<?> deletar(@RequestBody AmizadeForm form) {
-        Optional<Usuario> optionalUsuario = usuarioRepository.findById(form.getIdUsuario());
+    public ResponseEntity<?> deletar(@RequestHeader("Authorization") String jwt,
+                                     @RequestParam String amigoEmail) {
 
-        if (optionalUsuario.isPresent()) {
-            amizadeRepository.deleteAmizadeByIdUsuarioAndIdAmigo(form.getIdUsuario(), form.getIdAmigo());
+        String email = jwtUtil.extractUsername(jwt.substring(7));
+        Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(email);
+        Optional<Usuario> optionalAmigo = usuarioRepository.findByEmail(amigoEmail);
+
+        if (optionalUsuario.isPresent() && optionalAmigo.isPresent()) {
+            amizadeRepository.deleteAmizadeByIdUsuarioAndIdAmigo(optionalUsuario.get().getId(), optionalAmigo.get().getId());
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.notFound().build();
