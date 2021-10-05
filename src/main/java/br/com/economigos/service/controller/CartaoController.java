@@ -74,7 +74,7 @@ public class CartaoController {
         }
     }
 
-    @GetMapping("{idCartao}/ultimas-atividades")
+    @GetMapping("/{idCartao}/ultimas-atividades")
     public ResponseEntity<UltimasAtividadesDto> ultimasAtividades(@RequestParam Long idUsuario,
                                                                   @PathVariable Long idCartao) {
         Optional<Cartao> optionalCartao = cartaoRepository.findCartaoByUsuario(idCartao, idUsuario);
@@ -142,6 +142,4 @@ public class CartaoController {
             return ResponseEntity.notFound().build();
         }
     }
-
-
 }

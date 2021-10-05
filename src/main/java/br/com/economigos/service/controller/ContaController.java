@@ -132,7 +132,7 @@ public class ContaController {
         }
     }
 
-    @GetMapping("{idConta}/ultimas-atividades")
+    @GetMapping("/{idConta}/ultimas-atividades")
     @Transactional
     public ResponseEntity<UltimasAtividadesDto> ultimasAtividades(@RequestParam Long idUsuario,
                                                                   @PathVariable Long idConta) {
