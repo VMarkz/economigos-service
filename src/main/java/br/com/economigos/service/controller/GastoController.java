@@ -72,7 +72,7 @@ public class GastoController {
             }
         }
 
-        URI uri = uriBuilder.path("/receitas/{id}").buildAndExpand(gasto.getId()).toUri();
+        URI uri = uriBuilder.path("/gastos/{id}").buildAndExpand(gasto.getId()).toUri();
         return ResponseEntity.created(uri).body(new GastoDto(gasto));
     }
 
