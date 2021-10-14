@@ -6,6 +6,7 @@ import br.com.economigos.service.model.Meta;
 import br.com.economigos.service.model.Usuario;
 import br.com.economigos.service.repository.MetaRepository;
 import br.com.economigos.service.repository.UsuarioRepository;
+import br.com.economigos.service.service.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,14 +27,18 @@ public class MetaController {
     private MetaRepository metaRepository;
     @Autowired
     private UsuarioRepository usuarioRepository;
+    @Autowired
+    JwtUtil jwtUtil;
 
     @GetMapping
     @Transactional
-    public ResponseEntity<List<MetaDto>> listar(@RequestParam Long idUsuario) {
-        Optional<Usuario> optional = usuarioRepository.findById(idUsuario);
+    public ResponseEntity<List<MetaDto>> listar(@RequestHeader("Authorization") String jwt) {
 
-        if (optional.isPresent()) {
-            List<Meta> metas = metaRepository.findAllByUsuario(idUsuario);
+        String email = jwtUtil.extractUsername(jwt.substring(7));
+        Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(email);
+
+        if (optionalUsuario.isPresent()) {
+            List<Meta> metas = metaRepository.findAllByUsuario(optionalUsuario.get().getId());
             return ResponseEntity.ok().body(MetaDto.converter(metas));
         }
         return ResponseEntity.notFound().build();

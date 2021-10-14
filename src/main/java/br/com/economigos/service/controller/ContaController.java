@@ -15,6 +15,7 @@ import br.com.economigos.service.repository.ContaRepository;
 import br.com.economigos.service.repository.GastoRepository;
 import br.com.economigos.service.repository.RendaRepository;
 import br.com.economigos.service.repository.UsuarioRepository;
+import br.com.economigos.service.service.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,14 +41,18 @@ public class ContaController {
     ContaRepository contaRepository;
     @Autowired
     UsuarioRepository usuarioRepository;
+    @Autowired
+    JwtUtil jwtUtil;
 
     @GetMapping
     @Transactional
-    public ResponseEntity<List<ContaDto>> listar(@RequestParam Long idUsuario) {
-        Optional<Usuario> optional = usuarioRepository.findById(idUsuario);
+    public ResponseEntity<List<ContaDto>> listar(@RequestHeader("Authorization") String jwt) {
 
-        if (optional.isPresent()) {
-            List<Conta> contas = contaRepository.findAllByUsuario(idUsuario);
+        String email = jwtUtil.extractUsername(jwt.substring(7));
+        Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(email);
+
+        if (optionalUsuario.isPresent()) {
+            List<Conta> contas = contaRepository.findAllByUsuario(optionalUsuario.get().getId());
             return ResponseEntity.ok().body(ContaDto.converter(contas));
         }
         return ResponseEntity.notFound().build();
@@ -94,10 +99,11 @@ public class ContaController {
     @GetMapping("/{id}")
     @Transactional
     public ResponseEntity<DetalhesContaDto> detalhar(@PathVariable Long id,
-                                                     @RequestParam Long idUsuario) {
+                                                     @RequestHeader("Authorization") String jwt) {
         Optional<Conta> optionalConta = contaRepository.findById(id);
-        Optional<Usuario> optionalUsuario = usuarioRepository.findById(idUsuario);
-        Optional<Conta> optionalContaUsuario = contaRepository.findContaByUsuario(id, idUsuario);
+        String email = jwtUtil.extractUsername(jwt.substring(7));
+        Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(email);
+        Optional<Conta> optionalContaUsuario = contaRepository.findContaByUsuario(id, optionalUsuario.get().getId());
 
         if (optionalConta.isPresent() && optionalUsuario.isPresent() && optionalContaUsuario.isPresent()) {
             Conta conta = contaRepository.getOne(id);
@@ -120,8 +126,11 @@ public class ContaController {
     @GetMapping("/conta")
     @Transactional
     public ResponseEntity<ContaDto> findByApelido(@RequestParam String apelido,
-                                                  @RequestParam Long idUsuario) {
-        Optional<Conta> optionalConta = contaRepository.findByApelidoAndUsuario(apelido, idUsuario);
+                                                  @RequestHeader("Authorization") String jwt) {
+
+        String email = jwtUtil.extractUsername(jwt.substring(7));
+        Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(email);
+        Optional<Conta> optionalConta = contaRepository.findByApelidoAndUsuario(apelido, optionalUsuario.get().getId());
 
         if (optionalConta.isPresent()) {
             Conta conta = contaRepository.getOne(optionalConta.get().getId());
@@ -134,9 +143,11 @@ public class ContaController {
 
     @GetMapping("/{idConta}/ultimas-atividades")
     @Transactional
-    public ResponseEntity<UltimasAtividadesDto> ultimasAtividades(@RequestParam Long idUsuario,
+    public ResponseEntity<UltimasAtividadesDto> ultimasAtividades(@RequestHeader("Authorization") String jwt,
                                                                   @PathVariable Long idConta) {
-        Optional<Conta> optionalConta = contaRepository.findContaByUsuario(idConta, idUsuario);
+        String email = jwtUtil.extractUsername(jwt.substring(7));
+        Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(email);
+        Optional<Conta> optionalConta = contaRepository.findContaByUsuario(idConta, optionalUsuario.get().getId());
 
         if (optionalConta.isPresent()) {
             Conta conta = contaRepository.getOne(idConta);

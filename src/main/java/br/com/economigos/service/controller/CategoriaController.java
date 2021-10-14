@@ -9,6 +9,7 @@ import br.com.economigos.service.model.Gasto;
 import br.com.economigos.service.model.Usuario;
 import br.com.economigos.service.repository.CategoriaRepository;
 import br.com.economigos.service.repository.UsuarioRepository;
+import br.com.economigos.service.service.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +30,8 @@ public class CategoriaController {
     private CategoriaRepository categoriaRepository;
     @Autowired
     private UsuarioRepository usuarioRepository;
+    @Autowired
+    JwtUtil jwtUtil;
 
     @GetMapping
     @Transactional
@@ -39,10 +42,12 @@ public class CategoriaController {
 
     @GetMapping("/porcentagem-gastos")
     @Transactional
-    public ResponseEntity<List<PorcentagemCategoriaDto>> listarPorcentagemCategoriaGasto(@RequestParam Long idUsuario) {
+    public ResponseEntity<List<PorcentagemCategoriaDto>> listarPorcentagemCategoriaGasto(@RequestHeader("Authorization") String jwt) {
         List<Categoria> categorias = categoriaRepository.findAll();
 
-        Optional<Usuario> optionalUsuario = usuarioRepository.findById(idUsuario);
+        String email = jwtUtil.extractUsername(jwt.substring(7));
+        Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(email);
+        Long idUsuario = optionalUsuario.get().getId();
 
         if (optionalUsuario.isPresent()) {
             Double valorTotal = 0.0;

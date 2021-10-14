@@ -13,6 +13,7 @@ import br.com.economigos.service.dto.models.CartaoDto;
 import br.com.economigos.service.dto.models.details.DetalhesCartaoDto;
 import br.com.economigos.service.form.CartaoForm;
 import br.com.economigos.service.repository.*;
+import br.com.economigos.service.service.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,14 +39,17 @@ public class CartaoController {
     RendaRepository rendaRepository;
     @Autowired
     ContaRepository contaRepository;
+    @Autowired
+    JwtUtil jwtUtil;
 
     @GetMapping
     @Transactional
-    public ResponseEntity<List<CartaoDto>> listar(@RequestParam Long idUsuario) {
-        Optional<Usuario> optional = usuarioRepository.findById(idUsuario);
+    public ResponseEntity<List<CartaoDto>> listar(@RequestHeader("Authorization") String jwt) {
+        String email = jwtUtil.extractUsername(jwt.substring(7));
+        Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(email);
 
-        if (optional.isPresent()) {
-            List<Cartao> cartoes = cartaoRepository.findAllByUsuario(idUsuario);
+        if (optionalUsuario.isPresent()) {
+            List<Cartao> cartoes = cartaoRepository.findAllByUsuario(optionalUsuario.get().getId());
             return ResponseEntity.ok().body(CartaoDto.converter(cartoes));
         }
         return ResponseEntity.notFound().build();
@@ -75,9 +79,11 @@ public class CartaoController {
     }
 
     @GetMapping("/{idCartao}/ultimas-atividades")
-    public ResponseEntity<UltimasAtividadesDto> ultimasAtividades(@RequestParam Long idUsuario,
+    public ResponseEntity<UltimasAtividadesDto> ultimasAtividades(@RequestHeader("Authorization") String jwt,
                                                                   @PathVariable Long idCartao) {
-        Optional<Cartao> optionalCartao = cartaoRepository.findCartaoByUsuario(idCartao, idUsuario);
+        String email = jwtUtil.extractUsername(jwt.substring(7));
+        Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(email);
+        Optional<Cartao> optionalCartao = cartaoRepository.findCartaoByUsuario(idCartao, optionalUsuario.get().getId());
         if (optionalCartao.isPresent()) {
             Cartao cartao = cartaoRepository.getOne(idCartao);
 
