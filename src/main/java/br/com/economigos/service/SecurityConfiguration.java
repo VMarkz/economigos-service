@@ -36,7 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/economigos/sessao/logout").permitAll()
                 .antMatchers("/economigos/sessao/authenticate").permitAll()
                 .antMatchers(HttpMethod.GET,"/economigos/usuarios").hasAuthority("ADMIN")
-                .antMatchers(HttpMethod.POST,"/economigos/usuarios").hasAnyAuthority("USER","ADMIN")
+                .antMatchers(HttpMethod.POST,"/economigos/usuarios").permitAll()
                 .antMatchers(HttpMethod.GET,"/economigos/usuarios/{id}").hasAnyAuthority("USER","ADMIN")
                 .antMatchers(HttpMethod.GET,"/economigos/usuarios/email").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.PUT,"/economigos/usuarios/{id}").hasAnyAuthority("USER","ADMIN")
