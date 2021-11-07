@@ -10,8 +10,6 @@ import java.time.LocalDate;
 
 public class MetaForm {
 
-    private Long idUsuario;
-    @NotNull
     private String nome;
     private String descricao;
     @NotNull
@@ -20,15 +18,6 @@ public class MetaForm {
     @NotNull
     private Double valorFinal;
     private LocalDate dataFinal;
-
-
-    public Long getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(Long idUsuario) {
-        this.idUsuario = idUsuario;
-    }
 
     public String getNome() {
         return nome;
@@ -78,8 +67,7 @@ public class MetaForm {
         this.dataFinal = dataFinal;
     }
 
-    public Meta converter(UsuarioRepository usuarioRepository) {
-        Usuario usuario = usuarioRepository.getOne(this.idUsuario);
+    public Meta converter(Usuario usuario) {
         return new Meta(this.nome, this.descricao, this.metaGasto, this.valorAtual, this.valorFinal,
                 this.dataFinal, usuario);
     }

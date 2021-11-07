@@ -58,8 +58,12 @@ public class CartaoController {
     @PostMapping
     @Transactional
     public ResponseEntity<CartaoDto> cadastrar(@RequestBody @Valid CartaoForm form,
-                                               UriComponentsBuilder uriBuilder) {
-        Cartao cartao = form.converter(usuarioRepository);
+                                               UriComponentsBuilder uriBuilder,
+                                               @RequestHeader("Authorization") String jwt) {
+        String email = jwtUtil.extractUsername(jwt.substring(7));
+        Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(email);
+
+        Cartao cartao = form.converter(optionalUsuario.get());
         cartaoRepository.save(cartao);
 
         URI uri = uriBuilder.path("economigos/cartoes/{id}").buildAndExpand(cartao.getId()).toUri();

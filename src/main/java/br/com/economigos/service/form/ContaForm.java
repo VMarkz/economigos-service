@@ -22,24 +22,14 @@ public class ContaForm {
     @NotNull
     @NotEmpty
     private String apelido;
-    @NotNull
-    private Long idUsuario;
 
     public ContaForm(String banco, String numeroConta, String descricao, String apelido, Long idUsuario) {
         this.banco = banco;
         this.numeroConta = numeroConta;
         this.descricao = descricao;
         this.apelido = apelido;
-        this.idUsuario = idUsuario;
     }
 
-    public Long getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(Long idUsuario) {
-        this.idUsuario = idUsuario;
-    }
 
     public String getBanco() {
         return banco;
@@ -73,8 +63,7 @@ public class ContaForm {
         this.apelido = apelido;
     }
 
-    public Conta converter(UsuarioRepository usuarioRepository) {
-        Usuario usuario = usuarioRepository.getOne(this.idUsuario);
+    public Conta converter(Usuario usuario) {
         return (new Conta(usuario, this.banco, this.numeroConta, this.descricao, this.apelido));
     }
 

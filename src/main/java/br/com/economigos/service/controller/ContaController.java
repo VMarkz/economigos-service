@@ -86,8 +86,12 @@ public class ContaController {
     @PostMapping
     @Transactional
     public ResponseEntity<ContaDto> cadastrar(@RequestBody @Valid ContaForm form,
-                                              UriComponentsBuilder uriBuilder) {
-        Conta conta = form.converter(usuarioRepository);
+                                              UriComponentsBuilder uriBuilder,
+                                              @RequestHeader("Authorization") String jwt) {
+        String email = jwtUtil.extractUsername(jwt.substring(7));
+        Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(email);
+
+        Conta conta = form.converter(optionalUsuario.get());
         contaRepository.save(conta);
         conta.addObserver(new Usuario());
         conta.notificaObservador("create");

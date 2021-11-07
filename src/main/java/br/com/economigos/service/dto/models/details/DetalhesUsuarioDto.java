@@ -11,7 +11,6 @@ import java.util.List;
 public class DetalhesUsuarioDto {
 
     private Long id;
-    private String nome;
     private String email;
     private LocalDateTime dataCriacao;
     private Double valorAtual;
@@ -29,13 +28,7 @@ public class DetalhesUsuarioDto {
         this.valorAtual = 0.0;
     }
 
-    public String getNome() {
-        return nome;
-    }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
 
     public Double getValorAtual() {
         return valorAtual;
