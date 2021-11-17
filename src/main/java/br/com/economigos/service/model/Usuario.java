@@ -33,6 +33,7 @@ public class Usuario implements Observer {
         this.senha = senha;
         contas = new ArrayList<>();
         metas = new ArrayList<>();
+        roles = "USER";
     }
 
     public Long getId() {
