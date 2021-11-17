@@ -14,8 +14,6 @@ import java.time.LocalDateTime;
 public class CartaoForm {
 
     @NotNull
-    private Long idUsuario;
-    @NotNull
     private String nome;
     @NotNull
     private LocalDate fechamento;
@@ -25,14 +23,6 @@ public class CartaoForm {
     private Boolean pago;
     @NotNull
     private Double limite;
-
-    public Long getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(Long idUsuario) {
-        this.idUsuario = idUsuario;
-    }
 
     public String getNome() {
         return nome;
@@ -74,8 +64,7 @@ public class CartaoForm {
         this.limite = limite;
     }
 
-    public Cartao converter(UsuarioRepository usuarioRepository) {
-        Usuario usuario = usuarioRepository.getOne(idUsuario);
+    public Cartao converter(Usuario usuario) {
         return (new Cartao(usuario, this.nome, this.fechamento, this.vencimento, this.pago, this.limite));
     }
 

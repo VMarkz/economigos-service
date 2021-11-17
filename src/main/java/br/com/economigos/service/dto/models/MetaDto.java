@@ -40,10 +40,11 @@ public class MetaDto {
         return metas.stream().map(MetaDto::new).collect(Collectors.toList());
     }
 
-    private static DecimalFormat df = new DecimalFormat("0.00");
+    private DecimalFormat df = new DecimalFormat("0.00");
 
     public Double calcularEconomia(){
         LocalDate hoje = LocalDate.now();
+        System.out.println("DATA FINAAAAAAL" + this.dataFinal);
         Period period = Period.between(hoje, this.dataFinal);
         Integer mesesFaltantes = 0;
         if (period.getYears() > 0){
@@ -52,7 +53,7 @@ public class MetaDto {
             mesesFaltantes = period.getMonths();
         }
         Double valorEconomia = (this.valorFinal-this.valorAtual)/mesesFaltantes;
-        return Double.valueOf(df.format(valorEconomia));
+        return valorEconomia;
     }
 
     public Long getId() {

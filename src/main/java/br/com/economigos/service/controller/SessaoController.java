@@ -14,6 +14,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -48,17 +49,17 @@ public class SessaoController {
         }
     }
 
-    @GetMapping("/logout")
-    @Transactional
-    public ResponseEntity<?> logout() {
-
-        if (sessao.getStatus()) {
-            sessao.logout();
-            return ResponseEntity.ok(sessao);
-        } else {
-            return ResponseEntity.badRequest().build();
-        }
-    }
+//    @GetMapping("/logout")
+//    @Transactional
+//    public ResponseEntity<?> logout() {
+//
+//        if (sessao.getStatus()) {
+//            sessao.logout();
+//            return ResponseEntity.ok(sessao);
+//        } else {
+//            return ResponseEntity.badRequest().build();
+//        }
+//    }
 
     @PostMapping("/authenticate")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody @Valid UsuarioLoginForm form) throws Exception{
@@ -82,6 +83,23 @@ public class SessaoController {
             return ResponseEntity.ok(new AuthenticationResponse(jwt));
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/verificar")
+    @Transactional
+    public ResponseEntity<?> verificar(@RequestHeader("Authorization") String jwt) {
+        String email = jwtUtil.extractUsername(jwt.substring(7));
+        Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(email);
+
+        if (optionalUsuario.isPresent()){
+            if (jwtUtil.validateToken(jwt, new DetalhesAutenticacaoUsuario())) {
+                return ResponseEntity.ok().build();
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
 }

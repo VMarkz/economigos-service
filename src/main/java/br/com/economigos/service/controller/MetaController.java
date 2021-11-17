@@ -48,8 +48,12 @@ public class MetaController {
     @PostMapping
     @Transactional
     public ResponseEntity<MetaDto> cadastrar(@RequestBody @Valid MetaForm form,
-                                             UriComponentsBuilder uriBuilder) {
-        Meta meta = form.converter(usuarioRepository);
+                                             UriComponentsBuilder uriBuilder,
+                                             @RequestHeader("Authorization") String jwt) {
+        String email = jwtUtil.extractUsername(jwt.substring(7));
+        Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(email);
+
+        Meta meta = form.converter(optionalUsuario.get());
 
         metaRepository.save(meta);
         meta.addObserver(new Usuario());

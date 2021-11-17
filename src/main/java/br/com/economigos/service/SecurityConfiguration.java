@@ -15,6 +15,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -31,7 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http.cors().and().authorizeRequests()
                 .antMatchers("/economigos/sessao/login").permitAll()
                 .antMatchers("/economigos/sessao/logout").permitAll()
                 .antMatchers("/economigos/sessao/authenticate").permitAll()
@@ -79,7 +84,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET,"/economigos/contas/{idConta}/ultimas-atividades").hasAnyAuthority("USER","ADMIN")
                 .antMatchers(HttpMethod.PUT,"/economigos/contas/{id}").hasAnyAuthority("USER","ADMIN")
                 .antMatchers(HttpMethod.DELETE,"/economigos/contas/{id}").hasAnyAuthority("USER","ADMIN")
-                .antMatchers(HttpMethod.GET,"/economigos/categorias").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.GET,"/economigos/categorias").hasAnyAuthority("USER","ADMIN")
                 .antMatchers(HttpMethod.GET,"/economigos/categorias/porcentagem-gastos").hasAnyAuthority("USER","ADMIN")
                 .antMatchers(HttpMethod.POST,"/economigos/categorias").hasAnyAuthority("USER","ADMIN")
                 .antMatchers(HttpMethod.GET,"/economigos/categorias/{id}").hasAnyAuthority("USER","ADMIN")
@@ -107,9 +112,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and().headers().frameOptions().sameOrigin()
                 .and().csrf().disable().authorizeRequests().antMatchers("/economigos/sessao/authenticate").permitAll()
                 .anyRequest().authenticated()
-                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().csrf().disable();
 //                .and().formLogin();
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList("authorization", "content-type", "x-auth-token"));
+        configuration.setExposedHeaders(Arrays.asList("x-auth-token"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 
     @Override
