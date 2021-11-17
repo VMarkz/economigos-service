@@ -23,7 +23,7 @@ public class Usuario implements Observer {
     private List<Cartao> cartoes;
     private LocalDateTime dataCriacao = LocalDateTime.now();
     private Boolean active = true;
-    private String roles;
+    private String roles = "USER";
 
     public Usuario() {
     }
@@ -33,7 +33,7 @@ public class Usuario implements Observer {
         this.senha = senha;
         contas = new ArrayList<>();
         metas = new ArrayList<>();
-        roles = "USER";
+        this.roles = "USER";
     }
 
     public Long getId() {
