@@ -42,8 +42,15 @@ public class CategoriaController {
 
     @GetMapping("/porcentagem-gastos")
     @Transactional
-    public ResponseEntity<List<PorcentagemCategoriaDto>> listarPorcentagemCategoriaGasto(@RequestHeader("Authorization") String jwt) {
-        List<Categoria> categorias = categoriaRepository.findAll();
+    public ResponseEntity<List<PorcentagemCategoriaDto>> listarPorcentagemCategoriaGasto(@RequestHeader("Authorization") String jwt,
+                                                                                         @RequestParam(required = false) String tipo) {
+        List<Categoria> categorias = new ArrayList<Categoria>();
+
+        if (tipo != null){
+            categorias = categoriaRepository.findAllByTipo(tipo);
+        }else{
+            categorias = categoriaRepository.findAll();
+        }
 
         String email = jwtUtil.extractUsername(jwt.substring(7));
         Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(email);
