@@ -76,7 +76,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET,"/economigos/contatos").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.POST,"/economigos/contatos").hasAnyAuthority("USER","ADMIN")
                 .antMatchers(HttpMethod.GET,"/economigos/contatos/{id}").hasAuthority("ADMIN")
-                .antMatchers(HttpMethod.GET,"/economigos/contas").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.GET,"/economigos/contas").hasAnyAuthority("USER","ADMIN")
                 .antMatchers(HttpMethod.GET,"/economigos/contas/{idConta}/ultimos-meses").hasAnyAuthority("USER","ADMIN")
                 .antMatchers(HttpMethod.POST,"/economigos/contas").hasAnyAuthority("USER","ADMIN")
                 .antMatchers(HttpMethod.GET,"/economigos/contas/{id}").hasAnyAuthority("USER","ADMIN")

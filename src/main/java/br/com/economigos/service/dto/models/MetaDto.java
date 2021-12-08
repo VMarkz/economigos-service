@@ -44,7 +44,6 @@ public class MetaDto {
 
     public Double calcularEconomia(){
         LocalDate hoje = LocalDate.now();
-        System.out.println("DATA FINAAAAAAL" + this.dataFinal);
         Period period = Period.between(hoje, this.dataFinal);
         Integer mesesFaltantes = 0;
         if (period.getYears() > 0){
